@@ -1,5 +1,5 @@
 name: dartdosh
-version: 0.0.1
+version: 0.0.3
 description: A simple Flutter build CLI wrapper
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -9,7 +9,10 @@ executables:
 
 dependencies:
   args: ^2.4.2
+  yaml: ^3.1.0
 
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.26.3
+
+
