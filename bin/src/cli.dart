@@ -18,8 +18,15 @@ class CLI {
 
     final target = arguments[1];
     final env = parseEnv(arguments);
-    final List<String> extraFlags =
-        arguments.length > 2 ? arguments.sublist(2) : [];
+
+    // Extract extra flags, excluding environment flags
+    final List<String> extraFlags = arguments.length > 2
+        ? arguments.sublist(2).where((arg) =>
+            arg != '--production' && arg != '-p' &&
+            arg != '--staging' && arg != '-s' &&
+            arg != '--development' && arg != '-d'
+          ).toList()
+        : [];
 
     BuildManager().execute(target, env, extraFlags);
   }

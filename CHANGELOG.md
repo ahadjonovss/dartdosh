@@ -1,3 +1,9 @@
+## 0.1.2
+
+### Bug Fixes
+- 🐛 **Fixed Environment Flag Parsing**: Environment flags (--production, --staging, --development) are now correctly recognized and excluded from extra build flags
+- 🐛 **Resolved "Unknown" Environment Error**: Fixed issue where environment was being detected as "unknown" even when flags were provided
+
 ## 0.1.1
 
 ### Code Quality Improvements
