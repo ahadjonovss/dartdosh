@@ -26,15 +26,13 @@ dartdosh build appbundle --staging
 
 ## Installation
 
-### Clone and Activate
+### Install from pub.dev
 
 ```bash
-git clone https://github.com/username/dartdosh.git
-cd dartdosh
-dart pub global activate --source path .
+dart pub global activate dartdosh
 ```
 
-### Add to PATH
+### Add to PATH (if needed)
 
 **Mac/Linux (`.zshrc` or `.bashrc`):**
 
