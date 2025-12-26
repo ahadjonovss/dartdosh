@@ -16,44 +16,44 @@ class Logger {
 
   static final Map<LogType, List<String>> _messages = {
     LogType.start: [
-      '🚀 Boshlash: Build {target} ({env} mode)',
-      '✨ Tayyor tur: {target} build ishga tushdi ({env})',
-      '🏁 Jarayon boshlandi: {target} ({env})'
+      '🚀 Boshlash: Build {target} ({env} mode), Xo\'jayiin!',
+      '✨ Tayyor tur: {target} build ishga tushdi ({env}), Xo\'jayiin!',
+      '🏁 Jarayon boshlandi: {target} ({env}), Xo\'jayiin!'
     ],
     LogType.info: [
-      'ℹ️ Malumot: Target file "{file}" topilmadi.',
-      '⚠️ Ogohlantirish: "{file}" mavjud emas, build davom etadi.',
-      'ℹ️ Eslatma: "{file}" yo‘q, default fayllar ishlatiladi.'
+      'ℹ️ Malumot: Target file "{file}" topilmadi, Xo\'jayiin.',
+      '⚠️ Ogohlantirish: "{file}" mavjud emas, build davom etadi, Xo\'jayiin.',
+      'ℹ️ Eslatma: "{file}" yo\'q, default fayllar ishlatiladi, Xo\'jayiin.'
     ],
     LogType.step: [
-      '🔧 {target} build bosqichi: Flutter komandalar bajarilmoqda...',
-      '⚙️ Jarayon: Build bosqichlari ishlamoqda...',
-      '🛠️ Step: {target} build jarayoni davom etmoqda...'
+      '🔧 {target} build bosqichi: Flutter komandalar bajarilmoqda, Xo\'jayiin...',
+      '⚙️ Jarayon: Build bosqichlari ishlamoqda, Xo\'jayiin...',
+      '🛠️ Step: {target} build jarayoni davom etmoqda, Xo\'jayiin...'
     ],
     LogType.success: [
-      '✅ {target} build muvaffaqiyatli yakunlandi!',
-      '🎉 Ilova tayyor: {target} ({env})',
-      '🏆 {target} build completed successfully!'
+      '✅ {target} build muvaffaqiyatli yakunlandi, Xo\'jayiin!',
+      '🎉 Ilova tayyor: {target} ({env}), Xo\'jayiin!',
+      '🏆 {target} build completed successfully, Xo\'jayiin!'
     ],
     LogType.error: [
-      '❌ {target} build xatolik yuz berdi!',
-      '💥 Nimadir noto‘g‘ri ketdi: {target} ({env})',
-      '⚠️ Build bajarilmadi: {target} ({env})'
+      '❌ {target} build xatolik yuz berdi, Xo\'jayiin!',
+      '💥 Nimadir noto\'g\'ri ketdi: {target} ({env}), Xo\'jayiin!',
+      '⚠️ Build bajarilmadi: {target} ({env}), Xo\'jayiin!'
     ],
     LogType.finished: [
-      '🏁 Build yakunlandi: {target} ({env})',
-      '🎯 {target} build finished successfully!',
-      '🛑 Build tugadi: {target} ({env})'
+      '🏁 Build yakunlandi: {target} ({env}), Xo\'jayiin!',
+      '🎯 {target} build finished successfully, Xo\'jayiin!',
+      '🛑 Build tugadi: {target} ({env}), Xo\'jayiin!'
     ],
     LogType.buildConfigIsNotExist: [
-      '⚠️ Build config topilmadi: build_config.json mavjud emas!',
-      '❌ Fayl yo‘q: build_config.json topilmadi, build to‘xtadi!',
-      'ℹ️ Eslatma: build_config.json faylini yaratishingiz kerak!'
+      '⚠️ Build config topilmadi: build_config.json mavjud emas, Xo\'jayiin!',
+      '❌ Fayl yo\'q: build_config.json topilmadi, build to\'xtadi, Xo\'jayiin!',
+      'ℹ️ Eslatma: build_config.json faylini yaratishingiz kerak, Xo\'jayiin!'
     ],
     LogType.running: [
-      '🔄 Ishga tushirilmoqda: {command}',
-      '⏳ Komanda bajarilmoqda: {command}',
-      '🏃 Jarayon: {command}'
+      '🔄 Ishga tushirilmoqda: {command}, Xo\'jayiin!',
+      '⏳ Komanda bajarilmoqda: {command}, Xo\'jayiin!',
+      '🏃 Jarayon: {command}, Xo\'jayiin!'
     ]
   };
 

@@ -8,8 +8,7 @@ class BuildManager {
     final configFile = File('${Directory.current.path}/build_config.json');
 
     if (!configFile.existsSync()) {
-      Logger.log(LogType.buildConfigIsNotExist, target: target, env: env);
-      return;
+      _createDefaultConfig(configFile);
     }
 
     final config = jsonDecode(configFile.readAsStringSync());
@@ -32,6 +31,9 @@ class BuildManager {
       cmdString += ' ${extraFlags.join(' ')}';
     }
 
+    // Build boshlashdan oldin pubspec.yaml da build number oshirish
+    _incrementBuildNumber();
+
     Logger.log(LogType.step, target: target, env: env);
     Logger.log(LogType.running, target: target, env: env, command: cmdString);
 
@@ -49,7 +51,7 @@ class BuildManager {
 
       if (result.exitCode == 0) {
         Logger.log(LogType.success, target: target, env: env);
-        _renameOutputFile(target, env);
+        _renameAndMoveOutputFile(target, env, config);
       } else {
         Logger.log(LogType.error, target: target, env: env);
       }
@@ -58,34 +60,133 @@ class BuildManager {
     }
   }
 
-  void _renameOutputFile(String target, String env) {
+  // Default config yaratish
+  void _createDefaultConfig(File configFile) {
+    print('\n🔍 build_config.json topilmadi...');
+    print('📝 Default konfiguratsiya yaratilmoqda, Xo\'jayiin!\n');
+
+    final defaultConfig = {
+      "output_path": "releases",
+      "apk": {
+        "production": "flutter build apk --release --flavor production",
+        "staging": "flutter build apk --release --flavor staging",
+        "development": "flutter build apk --debug --flavor development"
+      },
+      "ipa": {
+        "production": "flutter build ipa --release --flavor production",
+        "staging": "flutter build ipa --release --flavor staging"
+      },
+      "appbundle": {
+        "production": "flutter build appbundle --release --flavor production",
+        "staging": "flutter build appbundle --release --flavor staging",
+        "development": "flutter build appbundle --debug --flavor development"
+      }
+    };
+
+    const encoder = JsonEncoder.withIndent('  ');
+    final prettyJson = encoder.convert(defaultConfig);
+    configFile.writeAsStringSync(prettyJson);
+
+    print('✅ build_config.json muvaffaqiyatli yaratildi!');
+    print('📁 Joylashuv: ${configFile.path}');
+    print('ℹ️  Kerakli o\'zgarishlarni build_config.json da amalga oshiring.\n');
+  }
+
+  // Pubspec.yaml dan version va build number o'qish
+  Map<String, String> _getVersionInfo() {
     try {
       final pubspecFile = File('${Directory.current.path}/pubspec.yaml');
-      if (!pubspecFile.existsSync()) return;
+      if (!pubspecFile.existsSync()) {
+        return {'version': '1.0.0', 'build': '1'};
+      }
 
       final pubspecContent = loadYaml(pubspecFile.readAsStringSync());
       final versionField = pubspecContent['version']?.toString() ?? '1.0.0+1';
       final versionParts = versionField.split('+');
       final version = versionParts.isNotEmpty ? versionParts[0] : '1.0.0';
-      final versionCode = versionParts.length > 1 ? versionParts[1] : '1';
+      final build = versionParts.length > 1 ? versionParts[1] : '1';
 
-      final flavor = env.toLowerCase();
-      // Requested format: flavor+version+version_code
-      final newName = '${flavor}_${version}_${versionCode}';
-
-      if (target == 'apk') {
-        _renameApk(newName);
-      } else if (target == 'ipa' || target == 'ios') {
-        _renameIpa(newName);
-      } else if (target == 'appbundle' || target == 'aab') {
-        _renameAab(newName);
-      }
+      return {'version': version, 'build': build};
     } catch (e) {
-      print('⚠️ Rename failed: $e');
+      print('⚠️ Version ma\'lumotini o\'qishda xatolik: $e');
+      return {'version': '1.0.0', 'build': '1'};
     }
   }
 
-  void _renameApk(String newName) {
+  // Build number ni +1 qilish
+  void _incrementBuildNumber() {
+    try {
+      final pubspecFile = File('${Directory.current.path}/pubspec.yaml');
+      if (!pubspecFile.existsSync()) {
+        print('⚠️ pubspec.yaml topilmadi');
+        return;
+      }
+
+      final content = pubspecFile.readAsStringSync();
+      final pubspecContent = loadYaml(content);
+      final versionField = pubspecContent['version']?.toString() ?? '1.0.0+1';
+      final versionParts = versionField.split('+');
+      final version = versionParts.isNotEmpty ? versionParts[0] : '1.0.0';
+      final currentBuild = versionParts.length > 1 ? int.tryParse(versionParts[1]) ?? 1 : 1;
+      final newBuild = currentBuild + 1;
+
+      // Yangi version stringini yaratish
+      final newVersion = '$version+$newBuild';
+
+      // Faylni yangilash (regex bilan version qatorini topib almashtirish)
+      final updatedContent = content.replaceFirst(
+        RegExp(r'^version:\s*.*$', multiLine: true),
+        'version: $newVersion',
+      );
+
+      pubspecFile.writeAsStringSync(updatedContent);
+      print('✅ Build number yangilandi: $currentBuild → $newBuild');
+    } catch (e) {
+      print('⚠️ Build number yangilashda xatolik: $e');
+    }
+  }
+
+  // Build tugagach fayllarni rename qilib output_path ga ko'chirish
+  void _renameAndMoveOutputFile(String target, String env, Map<String, dynamic> config) {
+    try {
+      final versionInfo = _getVersionInfo();
+      final version = versionInfo['version']!;
+      final buildNumber = versionInfo['build']!;
+
+      final flavor = env.toLowerCase();
+      // Format: flavor_version_buildNumber
+      final newName = '${flavor}_${version}_${buildNumber}';
+
+      // Config dan output_path olish
+      String? outputPath = config['output_path'];
+
+      if (outputPath != null && outputPath.isNotEmpty) {
+        // Output path ni to'liq path ga aylantirish
+        if (!outputPath.startsWith('/')) {
+          outputPath = '${Directory.current.path}/$outputPath';
+        }
+
+        // Output directory ni yaratish (agar mavjud bo'lmasa)
+        final outputDir = Directory(outputPath);
+        if (!outputDir.existsSync()) {
+          outputDir.createSync(recursive: true);
+          print('📁 Output directory yaratildi: $outputPath');
+        }
+      }
+
+      if (target == 'apk') {
+        _renameAndMoveApk(newName, outputPath);
+      } else if (target == 'ipa' || target == 'ios') {
+        _renameAndMoveIpa(newName, outputPath);
+      } else if (target == 'appbundle' || target == 'aab') {
+        _renameAndMoveAab(newName, outputPath);
+      }
+    } catch (e) {
+      print('⚠️ Rename va ko\'chirish xatosi: $e');
+    }
+  }
+
+  void _renameAndMoveApk(String newName, String? outputPath) {
     final apkPaths = [
       'build/app/outputs/flutter-apk/app-release.apk',
       'build/app/outputs/apk/release/app-release.apk',
@@ -94,9 +195,19 @@ class BuildManager {
     for (final path in apkPaths) {
       final file = File('${Directory.current.path}/$path');
       if (file.existsSync()) {
-        final newPath = file.parent.path + '/$newName.apk';
-        file.renameSync(newPath);
-        print('✅ Renamed: $newName.apk');
+        final fileName = '$newName.apk';
+
+        if (outputPath != null && outputPath.isNotEmpty) {
+          // Output path ga ko'chirish
+          final destinationPath = '$outputPath/$fileName';
+          file.copySync(destinationPath);
+          print('✅ Build saqlandi: $destinationPath');
+        } else {
+          // Faqat rename qilish (build papkasida)
+          final newPath = '${file.parent.path}/$fileName';
+          file.renameSync(newPath);
+          print('✅ Renamed: $fileName');
+        }
         return;
       }
     }
@@ -112,31 +223,51 @@ class BuildManager {
           final fileName = file.path.split('/').last;
           final arch =
               fileName.replaceAll('app-', '').replaceAll('-release.apk', '');
-          final newPath = '${file.parent.path}/${newName}_$arch.apk';
-          file.renameSync(newPath);
-          print('✅ Renamed: ${newName}_$arch.apk');
+          final newFileName = '${newName}_$arch.apk';
+
+          if (outputPath != null && outputPath.isNotEmpty) {
+            // Output path ga ko'chirish
+            final destinationPath = '$outputPath/$newFileName';
+            file.copySync(destinationPath);
+            print('✅ Build saqlandi: $destinationPath');
+          } else {
+            // Faqat rename qilish
+            final newPath = '${file.parent.path}/$newFileName';
+            file.renameSync(newPath);
+            print('✅ Renamed: $newFileName');
+          }
         }
       }
     }
   }
 
-  void _renameIpa(String newName) {
+  void _renameAndMoveIpa(String newName, String? outputPath) {
     final dir = Directory('${Directory.current.path}/build/ios/ipa');
 
     if (dir.existsSync()) {
       final ipaFiles = dir.listSync().where((e) => e.path.endsWith('.ipa'));
       for (final file in ipaFiles) {
         if (file is File) {
-          final newPath = '${file.parent.path}/$newName.ipa';
-          file.renameSync(newPath);
-          print('✅ Renamed: $newName.ipa');
+          final fileName = '$newName.ipa';
+
+          if (outputPath != null && outputPath.isNotEmpty) {
+            // Output path ga ko'chirish
+            final destinationPath = '$outputPath/$fileName';
+            file.copySync(destinationPath);
+            print('✅ Build saqlandi: $destinationPath');
+          } else {
+            // Faqat rename qilish
+            final newPath = '${file.parent.path}/$fileName';
+            file.renameSync(newPath);
+            print('✅ Renamed: $fileName');
+          }
           return;
         }
       }
     }
   }
 
-  void _renameAab(String newName) {
+  void _renameAndMoveAab(String newName, String? outputPath) {
     final aabPaths = [
       'build/app/outputs/bundle/release/app-release.aab',
     ];
@@ -144,9 +275,19 @@ class BuildManager {
     for (final path in aabPaths) {
       final file = File('${Directory.current.path}/$path');
       if (file.existsSync()) {
-        final newPath = file.parent.path + '/$newName.aab';
-        file.renameSync(newPath);
-        print('✅ Renamed: $newName.aab');
+        final fileName = '$newName.aab';
+
+        if (outputPath != null && outputPath.isNotEmpty) {
+          // Output path ga ko'chirish
+          final destinationPath = '$outputPath/$fileName';
+          file.copySync(destinationPath);
+          print('✅ Build saqlandi: $destinationPath');
+        } else {
+          // Faqat rename qilish
+          final newPath = '${file.parent.path}/$fileName';
+          file.renameSync(newPath);
+          print('✅ Renamed: $fileName');
+        }
         return;
       }
     }

@@ -1,6 +1,6 @@
 name: dartdosh
-version: 0.0.3
-description: A simple Flutter build CLI wrapper
+version: 0.1.0
+description: A powerful Flutter build CLI tool with automatic version management, smart file naming, and personalized experience
 environment:
   sdk: '>=3.0.0 <4.0.0'
 

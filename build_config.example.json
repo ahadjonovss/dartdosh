@@ -1,0 +1,17 @@
+{
+  "output_path": "releases",
+  "apk": {
+    "production": "flutter build apk --release --flavor production",
+    "staging": "flutter build apk --release --flavor staging",
+    "development": "flutter build apk --debug --flavor development"
+  },
+  "ipa": {
+    "production": "flutter build ipa --release --flavor production",
+    "staging": "flutter build ipa --release --flavor staging"
+  },
+  "appbundle": {
+    "production": "flutter build appbundle --release --flavor production",
+    "staging": "flutter build appbundle --release --flavor staging",
+    "development": "flutter build appbundle --debug --flavor development"
+  }
+}
