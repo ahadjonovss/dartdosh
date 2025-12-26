@@ -1,3 +1,10 @@
+## 0.1.3
+
+### Critical Bug Fix
+- 🔥 **Fixed Entry Point**: Updated main entry point to use the new CLI class architecture
+- 🐛 **Resolved Environment Detection**: Fixed critical issue where dartdosh.dart was using old ArgParser code instead of the new CLI class
+- ✅ **Simplified Architecture**: Main entry point now properly delegates to CLI class for cleaner code organization
+
 ## 0.1.2
 
 ### Bug Fixes
