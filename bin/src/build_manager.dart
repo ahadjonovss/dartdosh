@@ -158,7 +158,7 @@ class BuildManager {
       final newName = '${flavor}_${version}_${buildNumber}';
 
       // Config dan output_path olish
-      String? outputPath = config['output_path'];
+      String? outputPath = config['output_path'] as String?;
 
       if (outputPath != null && outputPath.isNotEmpty) {
         // Output path ni to'liq path ga aylantirish

@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:convert';
 import 'build_manager.dart';
 
 class CLI {
@@ -17,11 +15,15 @@ class CLI {
   }
 
   static String parseEnv(List<String> args) {
-    if (args.contains('--production') || args.contains('-p'))
+    if (args.contains('--production') || args.contains('-p')) {
       return 'Production';
-    if (args.contains('--staging') || args.contains('-s')) return 'Staging';
-    if (args.contains('--development') || args.contains('-d'))
+    }
+    if (args.contains('--staging') || args.contains('-s')) {
+      return 'Staging';
+    }
+    if (args.contains('--development') || args.contains('-d')) {
       return 'Development';
+    }
     return 'unknown';
   }
 }
