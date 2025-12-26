@@ -1,6 +1,16 @@
 import 'build_manager.dart';
 
+/// Command-line interface handler for DartDosh build commands.
+///
+/// This class processes command-line arguments and delegates build operations
+/// to the [BuildManager].
 class CLI {
+  /// Runs the CLI with the provided [arguments].
+  ///
+  /// Expects arguments in the format: `build <target> --<environment> [flags]`
+  /// where target can be `apk`, `ipa`, or `appbundle`.
+  ///
+  /// Throws an [Exception] if the command format is invalid.
   void run(List<String> arguments) {
     if (arguments.isEmpty || arguments[0] != 'build') {
       throw Exception('Invalid command');
@@ -14,6 +24,12 @@ class CLI {
     BuildManager().execute(target, env, extraFlags);
   }
 
+  /// Parses the environment from command-line arguments.
+  ///
+  /// Recognizes `--production` or `-p`, `--staging` or `-s`,
+  /// and `--development` or `-d` flags.
+  ///
+  /// Returns the environment name or 'unknown' if not recognized.
   static String parseEnv(List<String> args) {
     if (args.contains('--production') || args.contains('-p')) {
       return 'Production';

@@ -3,7 +3,21 @@ import 'dart:convert';
 import 'package:yaml/yaml.dart';
 import 'logger.dart';
 
+/// Manages Flutter build operations with automatic version management.
+///
+/// This class handles the execution of Flutter build commands, automatically
+/// increments build numbers, and manages output file naming and placement.
 class BuildManager {
+  /// Executes a Flutter build for the specified [target] and [env]ironment.
+  ///
+  /// The [target] can be 'apk', 'ipa', or 'appbundle'.
+  /// The [env] specifies the build environment (production, staging, development).
+  /// Optional [extraFlags] are appended to the build command.
+  ///
+  /// This method automatically:
+  /// - Creates build_config.json if it doesn't exist
+  /// - Increments the build number in pubspec.yaml
+  /// - Renames and moves output files according to configuration
   void execute(String target, String env, List<String> extraFlags) {
     final configFile = File('${Directory.current.path}/build_config.json');
 
@@ -89,7 +103,8 @@ class BuildManager {
 
     print('✅ build_config.json muvaffaqiyatli yaratildi!');
     print('📁 Joylashuv: ${configFile.path}');
-    print('ℹ️  Kerakli o\'zgarishlarni build_config.json da amalga oshiring.\n');
+    print(
+        'ℹ️  Kerakli o\'zgarishlarni build_config.json da amalga oshiring.\n');
   }
 
   // Pubspec.yaml dan version va build number o'qish
@@ -127,7 +142,8 @@ class BuildManager {
       final versionField = pubspecContent['version']?.toString() ?? '1.0.0+1';
       final versionParts = versionField.split('+');
       final version = versionParts.isNotEmpty ? versionParts[0] : '1.0.0';
-      final currentBuild = versionParts.length > 1 ? int.tryParse(versionParts[1]) ?? 1 : 1;
+      final currentBuild =
+          versionParts.length > 1 ? int.tryParse(versionParts[1]) ?? 1 : 1;
       final newBuild = currentBuild + 1;
 
       // Yangi version stringini yaratish
@@ -147,7 +163,8 @@ class BuildManager {
   }
 
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
-  void _renameAndMoveOutputFile(String target, String env, Map<String, dynamic> config) {
+  void _renameAndMoveOutputFile(
+      String target, String env, Map<String, dynamic> config) {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -155,7 +172,7 @@ class BuildManager {
 
       final flavor = env.toLowerCase();
       // Format: flavor_version_buildNumber
-      final newName = '${flavor}_${version}_${buildNumber}';
+      final newName = '${flavor}_${version}_$buildNumber';
 
       // Config dan output_path olish
       String? outputPath = config['output_path'] as String?;

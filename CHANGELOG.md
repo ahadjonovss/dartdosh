@@ -1,3 +1,16 @@
+## 0.1.1
+
+### Code Quality Improvements
+- ✅ **Added Dartdoc Comments**: All public APIs now have comprehensive documentation
+- ✅ **Fixed Formatting Issues**: All files formatted with `dart format`
+- ✅ **Fixed Linting Issues**: Removed unnecessary braces in string interpolation
+- ✅ **Improved Pub Score**: Achieved 50/50 pub points with proper documentation
+
+### Technical Changes
+- Added dartdoc comments to CLI, BuildManager, and public functions
+- Fixed string interpolation warnings
+- Applied Dart formatting to entire codebase
+
 ## 0.1.0
 
 ### New Features
