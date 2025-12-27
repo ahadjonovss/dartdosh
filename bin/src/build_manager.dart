@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:async';
 import 'package:yaml/yaml.dart';
 import 'logger.dart';
 
@@ -116,24 +117,34 @@ class BuildManager {
   /// Handles process output with progress bar
   Future<int> _handleProcessOutput(Future<Process> processFuture) async {
     final process = await processFuture;
-    final outputBuffer = StringBuffer();
     int currentProgress = 0;
+    String currentTask = 'Boshlanyapti...';
+
+    // Timer for periodic updates
+    final timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      _showProgress(currentProgress, currentTask);
+    });
 
     // Listen to stdout
     process.stdout.transform(utf8.decoder).listen((data) {
-      outputBuffer.write(data);
       stdout.write(data);
 
-      // Flutter build progress patterns
-      if (data.contains('Built ') || data.contains('Gradle task')) {
-        currentProgress = (currentProgress + 10).clamp(0, 90);
-        _showProgress(currentProgress);
-      } else if (data.contains('Running Gradle task')) {
+      // Detect build stages
+      if (data.contains('Running Gradle task')) {
         currentProgress = 20;
-        _showProgress(currentProgress);
-      } else if (data.contains('Built build/app/outputs')) {
+        currentTask = 'Gradle ishlayapti...';
+      } else if (data.contains('Downloading') || data.contains('download')) {
+        currentProgress = 30;
+        currentTask = 'Fayllar yuklanmoqda...';
+      } else if (data.contains('Compiling') || data.contains('compileFlutter')) {
+        currentProgress = 50;
+        currentTask = 'Flutter kodi kompilyatsiya qilinyapti...';
+      } else if (data.contains('Gradle task') && data.contains('assemble')) {
+        currentProgress = 70;
+        currentTask = 'APK/AAB yig\'ilmoqda...';
+      } else if (data.contains('Built ')) {
         currentProgress = 95;
-        _showProgress(currentProgress);
+        currentTask = 'Tugallanmoqda...';
       }
     });
 
@@ -143,17 +154,20 @@ class BuildManager {
     });
 
     final exitCode = await process.exitCode;
+    timer.cancel();
 
     if (exitCode == 0) {
-      _showProgress(100);
-      stdout.write('\n');
+      _showProgress(100, 'Tayyor!');
+      stdout.write('\n\n');
+    } else {
+      stdout.write('\n\n');
     }
 
     return exitCode;
   }
 
-  /// Shows progress bar
-  void _showProgress(int percent) {
+  /// Shows progress bar with task info
+  void _showProgress(int percent, String task) {
     final barLength = 30;
     final filled = (barLength * percent / 100).round();
     final empty = barLength - filled;
@@ -161,7 +175,9 @@ class BuildManager {
     final bar = '█' * filled + '░' * empty;
     final percentStr = percent.toString().padLeft(3);
 
-    stdout.write('\r\x1B[36m[$bar] $percentStr%\x1B[0m');
+    // Clear line and show progress
+    stdout.write('\r\x1B[2K'); // Clear line
+    stdout.write('\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[33m$task\x1B[0m');
   }
 
   // Pubspec.yaml dan version va build number o'qish
@@ -260,7 +276,13 @@ class BuildManager {
 
   void _renameAndMoveApk(String newName, String? outputPath) {
     final apkPaths = [
+      'build/app/outputs/flutter-apk/app-production-release.apk',
+      'build/app/outputs/flutter-apk/app-staging-release.apk',
+      'build/app/outputs/flutter-apk/app-development-debug.apk',
       'build/app/outputs/flutter-apk/app-release.apk',
+      'build/app/outputs/apk/productionRelease/app-production-release.apk',
+      'build/app/outputs/apk/stagingRelease/app-staging-release.apk',
+      'build/app/outputs/apk/developmentDebug/app-development-debug.apk',
       'build/app/outputs/apk/release/app-release.apk',
     ];
 
@@ -293,9 +315,19 @@ class BuildManager {
       for (final file in apkFiles) {
         if (file is File) {
           final fileName = file.path.split('/').last;
-          final arch =
-              fileName.replaceAll('app-', '').replaceAll('-release.apk', '');
-          final newFileName = '${newName}_$arch.apk';
+          // Extract only architecture from filename
+          String arch = '';
+          if (fileName.contains('armeabi-v7a')) {
+            arch = 'armeabi-v7a';
+          } else if (fileName.contains('arm64-v8a')) {
+            arch = 'arm64-v8a';
+          } else if (fileName.contains('x86_64')) {
+            arch = 'x86_64';
+          } else if (fileName.contains('x86')) {
+            arch = 'x86';
+          }
+
+          final newFileName = arch.isNotEmpty ? '${newName}_$arch.apk' : '$newName.apk';
 
           if (outputPath != null && outputPath.isNotEmpty) {
             // Output path ga ko'chirish
@@ -341,6 +373,9 @@ class BuildManager {
 
   void _renameAndMoveAab(String newName, String? outputPath) {
     final aabPaths = [
+      'build/app/outputs/bundle/productionRelease/app-production-release.aab',
+      'build/app/outputs/bundle/stagingRelease/app-staging-release.aab',
+      'build/app/outputs/bundle/developmentDebug/app-development-debug.aab',
       'build/app/outputs/bundle/release/app-release.aab',
     ];
 

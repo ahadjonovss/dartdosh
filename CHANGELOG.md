@@ -1,3 +1,26 @@
+## 0.1.9
+
+### Features
+- 🔄 **Live Progress Updates**: Progress bar updates every 2 seconds with current task info
+- 📋 **Task Indicator**: Shows what's happening: "Gradle ishlayapti...", "Flutter kodi kompilyatsiya qilinyapti..."
+- 🎯 **AAB Support**: Full support for `aab` and `appbundle` commands with proper file detection
+- 🔧 **Better File Detection**: Improved APK/AAB path detection for all flavors
+
+### Changes
+- Progress bar now updates periodically (every 2 seconds) instead of on-demand
+- Added `Timer.periodic` for continuous progress updates
+- Fixed appbundle/aab not being copied to output path
+- Fixed flavor name duplication in Android build files
+- Improved split APK architecture extraction (only arch name, no flavor duplication)
+- Added more AAB path variants: productionRelease, stagingRelease, developmentDebug
+- Added more APK path variants for different flavor configurations
+
+### Bug Fixes
+- Fixed: `aab` command not recognized
+- Fixed: Progress bar showing only once and freezing
+- Fixed: Appbundle files not moved to output directory
+- Fixed: Android file names containing duplicate flavor names (e.g., `production_production_1.0.8.apk`)
+
 ## 0.1.8
 
 ### Features
