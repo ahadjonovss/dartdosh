@@ -64,7 +64,7 @@ class BuildManager {
         workingDirectory: Directory.current.path,
       );
 
-      final exitCode = await _handleProcessOutput(process);
+      final exitCode = await _handleProcessOutput(process, target, env);
 
       if (exitCode == 0) {
         Logger.log(LogType.success, target: target, env: env);
@@ -115,14 +115,14 @@ class BuildManager {
   }
 
   /// Handles process output with progress bar
-  Future<int> _handleProcessOutput(Future<Process> processFuture) async {
+  Future<int> _handleProcessOutput(Future<Process> processFuture, String target, String env) async {
     final process = await processFuture;
     int currentProgress = 0;
     String currentTask = 'Boshlanyapti...';
 
     // Timer for periodic updates
-    final timer = Timer.periodic(Duration(seconds: 2), (timer) {
-      _showProgress(currentProgress, currentTask);
+    final timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _showProgress(currentProgress, currentTask, target, env);
     });
 
     // Listen to stdout
@@ -157,7 +157,7 @@ class BuildManager {
     timer.cancel();
 
     if (exitCode == 0) {
-      _showProgress(100, 'Tayyor!');
+      _showProgress(100, 'Tayyor!', target, env);
       stdout.write('\n\n');
     } else {
       stdout.write('\n\n');
@@ -167,7 +167,7 @@ class BuildManager {
   }
 
   /// Shows progress bar with task info
-  void _showProgress(int percent, String task) {
+  void _showProgress(int percent, String task, String target, String env) {
     final barLength = 30;
     final filled = (barLength * percent / 100).round();
     final empty = barLength - filled;
@@ -175,9 +175,10 @@ class BuildManager {
     final bar = '█' * filled + '░' * empty;
     final percentStr = percent.toString().padLeft(3);
 
-    // Clear line and show progress
-    stdout.write('\r\x1B[2K'); // Clear line
-    stdout.write('\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[33m$task\x1B[0m');
+    // Clear previous line and move cursor up, then write new progress
+    stdout.write('\r'); // Move cursor to start
+    stdout.write('\x1B[K'); // Clear from cursor to end of line
+    stdout.write('\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[35m[$target - ${env.toLowerCase()}]\x1B[0m - \x1B[33m$task\x1B[0m');
   }
 
   // Pubspec.yaml dan version va build number o'qish

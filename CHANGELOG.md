@@ -1,3 +1,15 @@
+## 0.1.10
+
+### Features
+- ⚡ **Faster Progress Updates**: Progress bar now updates every 1 second (improved from 2 seconds)
+- 📱 **Build Info Display**: Progress bar now shows target and flavor being built (e.g., `[apk - production]`)
+- 🍎 **macOS Terminal Fix**: Improved terminal clearing for better compatibility on macOS
+
+### Changes
+- Changed progress update interval from 2 seconds to 1 second for more responsive feedback
+- Added target and environment info to progress bar display
+- Improved ANSI escape codes for terminal clearing on macOS
+
 ## 0.1.9
 
 ### Features
