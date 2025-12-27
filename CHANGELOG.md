@@ -1,3 +1,9 @@
+## 0.1.5
+
+### Package Maintenance
+- ✅ **Added Verified Publisher**: Package now published under verified publisher `ahadjonovss.uz`
+- 📦 **Publisher Information**: Added publisher field to pubspec.yaml for better package credibility
+
 ## 0.1.4
 
 ### Bug Fixes
