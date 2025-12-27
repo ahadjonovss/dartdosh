@@ -1,3 +1,25 @@
+## 0.2.0
+
+### Features
+- 🌍 **Multi-Language Support**: Full support for Uzbek (uz), English (en), and Russian (ru) languages
+- 🎯 **Language Configuration**: Added `language` field to build_config.json (default: "uz")
+- 💬 **Localized Messages**: All log messages translated with positive, encouraging tone across all languages
+- 🌟 **Cultural Adaptation**: Language-appropriate addressing - "Xo'jayiin" (uz), "Boss" (en), "Босс" (ru)
+
+### Changes
+- Completely rewrote Logger class with multi-language support
+- Added static language state management in Logger
+- Implemented nested Map structure for translations: `Map<String, Map<LogType, List<String>>>`
+- All LogTypes now support 3 languages with multiple message variants
+- Language is read from build_config.json and applied to all log messages
+- BuildManager now sets language from config before executing builds
+
+### Technical
+- Added `Logger.setLanguage(String language)` static method
+- Language validation: only accepts 'uz', 'en', 'ru'
+- Default language: 'uz' (Uzbek) if not specified in config
+- Maintains random message selection within each language
+
 ## 0.1.12
 
 ### Features

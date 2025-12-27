@@ -27,6 +27,11 @@ class BuildManager {
     }
 
     final config = jsonDecode(configFile.readAsStringSync());
+
+    // Set language from config
+    final language = config['language'] as String? ?? 'uz';
+    Logger.setLanguage(language);
+
     String cmdString = config[target]?[env.toLowerCase()] ?? '';
 
     if (cmdString.isEmpty) {
@@ -89,6 +94,7 @@ class BuildManager {
     Logger.log(LogType.buildConfigIsNotExist);
 
     final defaultConfig = {
+      "language": "uz",
       "output_path": desktopPath,
       "apk": {
         "production": "flutter build apk --release --flavor production",
