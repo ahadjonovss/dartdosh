@@ -1,3 +1,31 @@
+## 0.2.1
+
+### Features
+- ⚡ **Short Flag Support**: Added convenient shorthand flags for environments
+  - Production: `--production`, `-p`, `-prod`
+  - Staging: `--staging`, `-s`
+  - Development: `--development`, `-d`, `-dev`
+
+### Changes
+- Enhanced CLI flag parsing to accept multiple variants for each environment
+- Updated environment flag filtering in extra flags extraction
+- Improved documentation for flag options
+
+### Examples
+```bash
+# All these commands work the same:
+dartdosh build apk --production
+dartdosh build apk -p
+dartdosh build apk -prod
+
+dartdosh build apk --development
+dartdosh build apk -d
+dartdosh build apk -dev
+
+dartdosh build apk --staging
+dartdosh build apk -s
+```
+
 ## 0.2.0
 
 ### Features

@@ -22,9 +22,9 @@ class CLI {
     // Extract extra flags, excluding environment flags
     final List<String> extraFlags = arguments.length > 2
         ? arguments.sublist(2).where((arg) =>
-            arg != '--production' && arg != '-p' &&
+            arg != '--production' && arg != '-p' && arg != '-prod' &&
             arg != '--staging' && arg != '-s' &&
-            arg != '--development' && arg != '-d'
+            arg != '--development' && arg != '-d' && arg != '-dev'
           ).toList()
         : [];
 
@@ -33,18 +33,19 @@ class CLI {
 
   /// Parses the environment from command-line arguments.
   ///
-  /// Recognizes `--production` or `-p`, `--staging` or `-s`,
-  /// and `--development` or `-d` flags.
+  /// Recognizes production flags: `--production`, `-p`, `-prod`
+  /// Recognizes staging flags: `--staging`, `-s`
+  /// Recognizes development flags: `--development`, `-d`, `-dev`
   ///
   /// Returns the environment name or 'unknown' if not recognized.
   static String parseEnv(List<String> args) {
-    if (args.contains('--production') || args.contains('-p')) {
+    if (args.contains('--production') || args.contains('-p') || args.contains('-prod')) {
       return 'Production';
     }
     if (args.contains('--staging') || args.contains('-s')) {
       return 'Staging';
     }
-    if (args.contains('--development') || args.contains('-d')) {
+    if (args.contains('--development') || args.contains('-d') || args.contains('-dev')) {
       return 'Development';
     }
     return 'unknown';
