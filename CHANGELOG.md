@@ -1,3 +1,24 @@
+## 0.2.3
+
+### Features
+- ⚠️ **Language Validation**: Unsupported languages now show warning and fallback to English
+- 📚 **Comprehensive Documentation**: Updated README with detailed language support, flag variants, and examples
+- 🌍 **Language Configuration Guide**: Clear documentation on how to set and use language preferences
+
+### Changes
+- Added language validation in `Logger.setLanguage()` with user-friendly warning
+- Unsupported languages automatically fallback to English with informative message
+- Updated README with multi-language examples in Uzbek and English
+- Documented all environment flag variants (`-p`, `-prod`, `-d`, `-dev`, `-s`)
+- Added language support notes and behavior documentation
+
+### Documentation
+- Added multi-language support section with examples
+- Documented all short flag variants for environments
+- Added language fallback behavior explanation
+- Improved configuration examples with language field
+- Added comprehensive feature descriptions
+
 ## 0.2.2
 
 ### Features

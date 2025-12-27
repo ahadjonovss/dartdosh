@@ -1,6 +1,6 @@
 # DartDosh CLI – User Guide
 
-`DartDosh` is a CLI tool for simplifying Flutter builds with automatic version management and output handling. Run commands directly:
+`DartDosh` is a powerful CLI tool for simplifying Flutter builds with automatic version management, multi-language support, and smart output handling.
 
 ```bash
 dartdosh build <target> --<environment> [extra flags]
@@ -9,9 +9,17 @@ dartdosh build <target> --<environment> [extra flags]
 **Examples:**
 
 ```bash
+# Full environment flags
 dartdosh build ipa --production --split
 dartdosh build apk --development --other-flag
 dartdosh build appbundle --staging
+
+# Short flags (convenient!)
+dartdosh build apk -p              # production
+dartdosh build apk -prod           # production
+dartdosh build apk -d              # development
+dartdosh build apk -dev            # development
+dartdosh build apk -s              # staging
 ```
 
 ---
@@ -55,7 +63,8 @@ The `build_config.json` file is automatically created with default settings when
 
 ```json
 {
-  "output_path": "releases",
+  "language": "uz",
+  "output_path": "~/Desktop/dartdosh-builds",
   "apk": {
     "production": "flutter build apk --release --flavor production",
     "staging": "flutter build apk --release --flavor staging",
@@ -67,17 +76,30 @@ The `build_config.json` file is automatically created with default settings when
   },
   "appbundle": {
     "production": "flutter build appbundle --release --flavor production",
-    "staging": "flutter build appbundle --release --flavor staging"
+    "staging": "flutter build appbundle --release --flavor staging",
+    "development": "flutter build appbundle --debug --flavor development"
   }
 }
 ```
 
 **Config Parameters:**
 
+* `language` (optional): Interface language for all log messages and progress indicators
+  - **Supported languages**: `uz` (Uzbek), `en` (English), `ru` (Russian)
+  - **Default**: `uz`
+  - **Fallback**: If unsupported language is set, defaults to English with a warning
+  - Examples:
+    ```json
+    "language": "en"  // English interface
+    "language": "ru"  // Russian interface
+    "language": "uz"  // Uzbek interface (default)
+    ```
+
 * `output_path` (optional): Path where built files will be copied after build
   - If not specified, files will only be renamed in the build directory
   - Can be absolute path (`/Users/you/releases`) or relative to project (`releases`)
   - Directory will be created automatically if it doesn't exist
+  - Default: `~/Desktop/dartdosh-builds`
 
 ---
 
@@ -87,22 +109,65 @@ The `build_config.json` file is automatically created with default settings when
 dartdosh build <target> --<environment> [extra flags]
 ```
 
-* `<target>`: `ipa`, `apk`, `appbundle`
-* `<environment>`: `--production`, `--staging`, `--development`
-* `[extra flags]`: e.g., `--split`, `--obfuscate`, etc.
+**Parameters:**
+
+* `<target>`: Build target
+  - `apk` - Android APK
+  - `ipa` - iOS IPA
+  - `appbundle` (or `aab`) - Android App Bundle
+
+* `<environment>`: Build environment (multiple flag variants supported!)
+  - **Production**: `--production`, `-p`, `-prod`
+  - **Staging**: `--staging`, `-s`
+  - **Development**: `--development`, `-d`, `-dev`
+
+* `[extra flags]`: Additional Flutter build flags
+  - `--split` - For APK builds, automatically adds `--split-per-abi`
+  - `--obfuscate` - Obfuscate Dart code
+  - `--dart-define=KEY=VALUE` - Define environment variables
+  - Any other Flutter build flags
 
 ---
 
 ## Features
 
-### 🤖 Auto Configuration
-If `build_config.json` doesn't exist in your Flutter project, DartDosh will automatically create it with sensible defaults. You'll be greeted with:
-```
-🔍 build_config.json topilmadi...
-📝 Default konfiguratsiya yaratilmoqda, Xo'jayiin!
+### 🌍 Multi-Language Support
+DartDosh supports three languages for all interface messages and progress indicators:
 
-✅ build_config.json muvaffaqiyatli yaratildi!
+* **Uzbek (uz)** - Default language with "Xo'jayiin" (Boss) addressing
+* **English (en)** - Professional English interface with "Boss" addressing
+* **Russian (ru)** - Russian interface with "Босс" (Boss) addressing
+
+**Setting Language:**
+```json
+{
+  "language": "en"  // Set in build_config.json
+}
 ```
+
+**Language Features:**
+* All log messages translated
+* Progress bar stages localized
+* Build status messages in selected language
+* Donation messages with cultural humor
+* Automatic fallback to English for unsupported languages with warning
+
+**Example Uzbek:**
+```
+📈 Yangi build number: 46 (oldingi: 45), Xo'jayiin!
+[████████████████░░░░░░░░░░░░░░]  60% - [apk - production] - Bundle yaratilmoqda...
+✅ apk build muvaffaqiyatli yakunlandi, Xo'jayiin!
+```
+
+**Example English:**
+```
+📈 New build number: 46 (previous: 45), Boss!
+[████████████████░░░░░░░░░░░░░░]  60% - [apk - production] - Creating bundle...
+✅ apk build completed successfully, Boss!
+```
+
+### 🤖 Auto Configuration
+If `build_config.json` doesn't exist in your Flutter project, DartDosh will automatically create it with sensible defaults on first run.
 
 ### 🔢 Automatic Version Management
 
@@ -151,8 +216,24 @@ Without `output_path`:
 
 ## Notes
 
+### Environment Flags
+* **Full flags**: `--production`, `--staging`, `--development`
+* **Short flags**: `-p`, `-prod`, `-s`, `-d`, `-dev`
+* All variants work identically
+
+### Language Support
+* **Supported**: `uz` (Uzbek), `en` (English), `ru` (Russian)
+* **Default**: Uzbek (`uz`)
+* **Unsupported language**: Automatically falls back to English with a warning:
+  ```
+  ⚠️  Warning: Language "fr" is not supported. Falling back to English.
+     Supported languages: uz (Uzbek), en (English), ru (Russian)
+  ```
+
+### Build Behavior
 * For APK builds, `--split` automatically adds `--split-per-abi`
 * Any additional flags after the base command are appended automatically
 * Build number is incremented **before** the build starts
-* All messages are personalized with "Xo'jayiin" (Boss) for a friendly experience
-* Missing `build_config.json` is automatically created with default Flutter build commands
+* All messages are personalized ("Xo'jayiin" for Uzbek, "Boss" for English/Russian)
+* Missing `build_config.json` is automatically created with default settings
+* Progress bar shows real-time build stages in your selected language

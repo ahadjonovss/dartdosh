@@ -22,6 +22,13 @@ class Logger {
   static void setLanguage(String language) {
     if (['uz', 'en', 'ru'].contains(language)) {
       _currentLanguage = language;
+    } else {
+      // Unsupported language - fallback to English with warning
+      _currentLanguage = 'en';
+      print(
+          '\x1B[33m⚠️  Warning: Language "$language" is not supported. Falling back to English.\x1B[0m');
+      print(
+          '\x1B[33m   Supported languages: uz (Uzbek), en (English), ru (Russian)\x1B[0m\n');
     }
   }
 
