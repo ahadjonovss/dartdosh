@@ -34,11 +34,15 @@ class BuildManager {
       return;
     }
 
-    if (target == 'apk' && extraFlags.contains('--split')) {
+    // Handle --split flag based on target
+    if (extraFlags.contains('--split')) {
       extraFlags.remove('--split');
-      if (!cmdString.contains('--split-per-abi')) {
+
+      // Only apply split for APK builds
+      if (target == 'apk' && !cmdString.contains('--split-per-abi')) {
         cmdString += ' --split-per-abi';
       }
+      // For IPA and AppBundle, --split is ignored (iOS doesn't support it)
     }
 
     if (extraFlags.isNotEmpty) {

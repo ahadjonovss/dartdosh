@@ -1,3 +1,10 @@
+## 0.1.4
+
+### Bug Fixes
+- 🐛 **Fixed --split Flag for IPA**: The `--split` flag is now properly ignored for IPA builds (iOS doesn't support split builds)
+- ✅ **Improved Flag Handling**: `--split` flag now only applies to APK builds, converting to `--split-per-abi`
+- 📱 **Better Platform Support**: Different build targets now handle flags appropriately based on platform capabilities
+
 ## 0.1.3
 
 ### Critical Bug Fix
