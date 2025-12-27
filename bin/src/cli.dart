@@ -11,7 +11,7 @@ class CLI {
   /// where target can be `apk`, `ipa`, or `appbundle`.
   ///
   /// Throws an [Exception] if the command format is invalid.
-  void run(List<String> arguments) {
+  Future<void> run(List<String> arguments) async {
     if (arguments.isEmpty || arguments[0] != 'build') {
       throw Exception('Invalid command');
     }
@@ -28,7 +28,7 @@ class CLI {
           ).toList()
         : [];
 
-    BuildManager().execute(target, env, extraFlags);
+    await BuildManager().execute(target, env, extraFlags);
   }
 
   /// Parses the environment from command-line arguments.

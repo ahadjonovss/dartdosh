@@ -1,5 +1,5 @@
 name: dartdosh
-version: 0.1.7
+version: 0.1.8
 description: A powerful Flutter build CLI tool with automatic version management, smart file naming, and personalized experience
 repository: https://github.com/ahadjonovss/dartdosh
 homepage: https://github.com/ahadjonovss/dartdosh

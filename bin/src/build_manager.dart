@@ -18,7 +18,7 @@ class BuildManager {
   /// - Creates build_config.json if it doesn't exist
   /// - Increments the build number in pubspec.yaml
   /// - Renames and moves output files according to configuration
-  void execute(String target, String env, List<String> extraFlags) {
+  Future<void> execute(String target, String env, List<String> extraFlags) async {
     final configFile = File('${Directory.current.path}/build_config.json');
 
     if (!configFile.existsSync()) {
@@ -56,17 +56,16 @@ class BuildManager {
 
     try {
       final parts = cmdString.split(' ');
-      final result = Process.runSync(
+      final process = Process.start(
         parts[0],
         parts.sublist(1),
         runInShell: true,
         workingDirectory: Directory.current.path,
       );
 
-      stdout.write(result.stdout);
-      stderr.write(result.stderr);
+      final exitCode = await _handleProcessOutput(process);
 
-      if (result.exitCode == 0) {
+      if (exitCode == 0) {
         Logger.log(LogType.success, target: target, env: env);
         _renameAndMoveOutputFile(target, env, config);
         Logger.log(LogType.donation);
@@ -112,38 +111,57 @@ class BuildManager {
 
     Logger.log(LogType.fileSaved, path: configFile.path);
     Logger.log(LogType.outputDirCreated, path: desktopPath);
-
-    // Open config file in default editor
-    _openConfigFile(configFile.path);
   }
 
-  /// Opens the config file in the user's default editor
-  void _openConfigFile(String filePath) {
-    try {
-      final String command;
+  /// Handles process output with progress bar
+  Future<int> _handleProcessOutput(Future<Process> processFuture) async {
+    final process = await processFuture;
+    final outputBuffer = StringBuffer();
+    int currentProgress = 0;
 
-      if (Platform.isMacOS) {
-        command = 'open';
-      } else if (Platform.isLinux) {
-        command = 'xdg-open';
-      } else if (Platform.isWindows) {
-        command = 'start';
-      } else {
-        print(
-            '⚠️  Faylni avtomatik ochib bo\'lmadi. Qo\'lda oching: $filePath');
-        return;
+    // Listen to stdout
+    process.stdout.transform(utf8.decoder).listen((data) {
+      outputBuffer.write(data);
+      stdout.write(data);
+
+      // Flutter build progress patterns
+      if (data.contains('Built ') || data.contains('Gradle task')) {
+        currentProgress = (currentProgress + 10).clamp(0, 90);
+        _showProgress(currentProgress);
+      } else if (data.contains('Running Gradle task')) {
+        currentProgress = 20;
+        _showProgress(currentProgress);
+      } else if (data.contains('Built build/app/outputs')) {
+        currentProgress = 95;
+        _showProgress(currentProgress);
       }
+    });
 
-      Process.runSync(
-        command,
-        [filePath],
-        runInShell: true,
-      );
+    // Listen to stderr
+    process.stderr.transform(utf8.decoder).listen((data) {
+      stderr.write(data);
+    });
 
-      Logger.log(LogType.configFileOpened);
-    } catch (e) {
-      // Xatolik bo'lsa, hech narsa qilmaymiz - fayl yaratildi, lekin ochilmadi
+    final exitCode = await process.exitCode;
+
+    if (exitCode == 0) {
+      _showProgress(100);
+      stdout.write('\n');
     }
+
+    return exitCode;
+  }
+
+  /// Shows progress bar
+  void _showProgress(int percent) {
+    final barLength = 30;
+    final filled = (barLength * percent / 100).round();
+    final empty = barLength - filled;
+
+    final bar = '█' * filled + '░' * empty;
+    final percentStr = percent.toString().padLeft(3);
+
+    stdout.write('\r\x1B[36m[$bar] $percentStr%\x1B[0m');
   }
 
   // Pubspec.yaml dan version va build number o'qish

@@ -1,10 +1,24 @@
+## 0.1.8
+
+### Features
+- 📊 **Build Progress Bar**: Real-time progress bar with percentage during builds
+- ⚡ **Async Build Process**: Non-blocking build execution with live output streaming
+- 🎯 **Smart Progress Detection**: Automatically detects Flutter build stages and updates progress
+
+### Changes
+- Removed auto-open config file feature (config file no longer opens automatically)
+- Converted build process from sync to async for better performance
+- Added `_handleProcessOutput()` method for streaming build output
+- Added `_showProgress()` method with animated progress bar
+- Removed `configFileOpened` LogType (no longer needed)
+
 ## 0.1.7
 
 ### Features
 - 💝 **Donation Messages**: After successful builds, random humorous donation messages appear (10 variants)
 - 📝 **Logger System**: All console output now goes through the Logger system for consistency
 - 🎨 **Better File Naming**: Build files now named as `{target}_{env}_{version}_{buildNumber}` (e.g., `apk_production_1.0.8_2150.apk`)
-- 🔧 **Enhanced LogTypes**: Added `buildNumberIncremented`, `fileSaved`, `outputDirCreated`, `configFileOpened` for detailed logging
+- 🔧 **Enhanced LogTypes**: Added `buildNumberIncremented`, `fileSaved`, `outputDirCreated` for detailed logging
 
 ### Changes
 - Removed all `print()` statements in favor of `Logger.log()`

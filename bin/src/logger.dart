@@ -12,8 +12,7 @@ enum LogType {
   donation,
   buildNumberIncremented,
   fileSaved,
-  outputDirCreated,
-  configFileOpened
+  outputDirCreated
 }
 
 class Logger {
@@ -86,11 +85,6 @@ class Logger {
       '📁 Output directory yaratildi: {path}, Xo\'jayiin!',
       '🗂️ Yangi papka tuzildi: {path}, Xo\'jayiin!',
       '✨ Output papka tayyor: {path}, Xo\'jayiin!'
-    ],
-    LogType.configFileOpened: [
-      '📝 Config fayl ochildi, Xo\'jayiin!',
-      '✅ Konfiguratsiya fayli ochiq, Xo\'jayiin!',
-      '📄 build_config.json ochildi, Xo\'jayiin!'
     ]
   };
 
@@ -130,7 +124,6 @@ class Logger {
       case LogType.buildNumberIncremented:
       case LogType.fileSaved:
       case LogType.outputDirCreated:
-      case LogType.configFileOpened:
         coloredMessage = _color(message, '32'); // Green
         break;
       case LogType.error:

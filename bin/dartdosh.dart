@@ -1,9 +1,9 @@
 import 'src/cli.dart';
 
 /// Entry point for the DartDosh CLI application.
-void main(List<String> arguments) {
+Future<void> main(List<String> arguments) async {
   try {
-    CLI().run(arguments);
+    await CLI().run(arguments);
   } catch (e) {
     print('❌ Xatolik: $e');
   }
