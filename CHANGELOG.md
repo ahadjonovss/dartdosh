@@ -1,3 +1,16 @@
+## 0.1.11
+
+### Bug Fixes
+- 🔧 **Fixed Terminal Clearing**: Progress bar now properly clears on macOS instead of creating new lines
+- 📊 **Enhanced Progress Detection**: Added more build stage patterns (bundling, signing, assembling) for accurate progress tracking
+- 🎯 **Better Stage Recognition**: Progress now advances beyond 20% by detecting bundle, sign, and assemble stages
+
+### Changes
+- Clear progress bar before showing stdout to prevent line duplication
+- Added comprehensive lowercase pattern matching for build stages
+- Added new build stages: bundling (60%), signing (80%), improved detection for assembling (70%)
+- Progress bar only shows after first stdout output to avoid premature display
+
 ## 0.1.10
 
 ### Features

@@ -119,30 +119,47 @@ class BuildManager {
     final process = await processFuture;
     int currentProgress = 0;
     String currentTask = 'Boshlanyapti...';
+    bool progressBarShown = false;
 
     // Timer for periodic updates
     final timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      _showProgress(currentProgress, currentTask, target, env);
+      if (progressBarShown) {
+        _showProgress(currentProgress, currentTask, target, env);
+      }
     });
 
     // Listen to stdout
     process.stdout.transform(utf8.decoder).listen((data) {
-      stdout.write(data);
+      // Clear progress bar before showing stdout
+      if (progressBarShown) {
+        stdout.write('\r\x1B[K');
+      }
 
-      // Detect build stages
-      if (data.contains('Running Gradle task')) {
+      stdout.write(data);
+      progressBarShown = true;
+
+      // Detect build stages with more comprehensive patterns
+      final lowerData = data.toLowerCase();
+
+      if (lowerData.contains('running gradle task')) {
         currentProgress = 20;
         currentTask = 'Gradle ishlayapti...';
-      } else if (data.contains('Downloading') || data.contains('download')) {
+      } else if (lowerData.contains('downloading') || lowerData.contains('download')) {
         currentProgress = 30;
         currentTask = 'Fayllar yuklanmoqda...';
-      } else if (data.contains('Compiling') || data.contains('compileFlutter')) {
+      } else if (lowerData.contains('compiling') || lowerData.contains('compileflutter')) {
         currentProgress = 50;
         currentTask = 'Flutter kodi kompilyatsiya qilinyapti...';
-      } else if (data.contains('Gradle task') && data.contains('assemble')) {
+      } else if (lowerData.contains('bundling') || lowerData.contains('bundle')) {
+        currentProgress = 60;
+        currentTask = 'Bundle yaratilmoqda...';
+      } else if (lowerData.contains('assembling') || lowerData.contains('assemble')) {
         currentProgress = 70;
         currentTask = 'APK/AAB yig\'ilmoqda...';
-      } else if (data.contains('Built ')) {
+      } else if (lowerData.contains('signing') || lowerData.contains('sign')) {
+        currentProgress = 80;
+        currentTask = 'Imzolanmoqda...';
+      } else if (lowerData.contains('built ') || lowerData.contains('build complete')) {
         currentProgress = 95;
         currentTask = 'Tugallanmoqda...';
       }
@@ -175,10 +192,8 @@ class BuildManager {
     final bar = '█' * filled + '░' * empty;
     final percentStr = percent.toString().padLeft(3);
 
-    // Clear previous line and move cursor up, then write new progress
-    stdout.write('\r'); // Move cursor to start
-    stdout.write('\x1B[K'); // Clear from cursor to end of line
-    stdout.write('\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[35m[$target - ${env.toLowerCase()}]\x1B[0m - \x1B[33m$task\x1B[0m');
+    // Clear line and write progress bar
+    stdout.write('\r\x1B[K\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[35m[$target - ${env.toLowerCase()}]\x1B[0m - \x1B[33m$task\x1B[0m');
   }
 
   // Pubspec.yaml dan version va build number o'qish
