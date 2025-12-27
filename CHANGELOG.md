@@ -1,3 +1,16 @@
+## 0.1.12
+
+### Features
+- 🎯 **Clean Progress Display**: Build output is now hidden, showing only clean progress bar
+- ⚠️ **Smart Error Display**: Warnings and errors are still shown when they occur
+- 📊 **Enhanced Stage Detection**: Added dependency resolution (30%) and "Got dependencies" (40%) stages
+
+### Changes
+- Removed verbose Flutter build output for cleaner terminal
+- Only show warnings, errors, and failures from build output
+- Added dependency-related progress stages
+- Progress bar updates smoothly through all build stages (20% → 40% → 60% → 95%)
+
 ## 0.1.11
 
 ### Bug Fixes

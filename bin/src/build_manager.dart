@@ -130,23 +130,20 @@ class BuildManager {
 
     // Listen to stdout
     process.stdout.transform(utf8.decoder).listen((data) {
-      // Clear progress bar before showing stdout
-      if (progressBarShown) {
-        stdout.write('\r\x1B[K');
-      }
-
-      stdout.write(data);
       progressBarShown = true;
 
       // Detect build stages with more comprehensive patterns
       final lowerData = data.toLowerCase();
 
-      if (lowerData.contains('running gradle task')) {
+      if (lowerData.contains('running gradle task') || lowerData.contains('gradle task')) {
         currentProgress = 20;
         currentTask = 'Gradle ishlayapti...';
-      } else if (lowerData.contains('downloading') || lowerData.contains('download')) {
+      } else if (lowerData.contains('resolving dependencies') || lowerData.contains('downloading')) {
         currentProgress = 30;
-        currentTask = 'Fayllar yuklanmoqda...';
+        currentTask = 'Dependencylar yuklanmoqda...';
+      } else if (lowerData.contains('got dependencies')) {
+        currentProgress = 40;
+        currentTask = 'Dependencylar tayyor...';
       } else if (lowerData.contains('compiling') || lowerData.contains('compileflutter')) {
         currentProgress = 50;
         currentTask = 'Flutter kodi kompilyatsiya qilinyapti...';
@@ -162,6 +159,12 @@ class BuildManager {
       } else if (lowerData.contains('built ') || lowerData.contains('build complete')) {
         currentProgress = 95;
         currentTask = 'Tugallanmoqda...';
+      }
+
+      // Show warnings and errors
+      if (lowerData.contains('warning') || lowerData.contains('error') || lowerData.contains('failed')) {
+        stdout.write('\r\x1B[K'); // Clear progress bar
+        stdout.write(data); // Show warning/error
       }
     });
 
