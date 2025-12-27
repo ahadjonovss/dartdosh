@@ -1,3 +1,19 @@
+## 0.2.2
+
+### Features
+- 🌐 **Localized Progress Bar**: Progress bar tasks now translate according to selected language
+- 📊 **Multi-Language Build Stages**: All build stages (Gradle, Dependencies, Compiling, etc.) display in user's language
+
+### Changes
+- Added `Logger.getProgressTask()` static method for progress task translations
+- Created `_progressTasks` map with translations for all build stages
+- Updated `_handleProcessOutput()` to use localized progress messages
+- Progress stages now support Uzbek, English, and Russian
+
+### Technical
+- New progress task keys: `starting`, `gradle`, `dependencies_downloading`, `dependencies_ready`, `compiling`, `bundling`, `assembling`, `signing`, `finishing`, `ready`
+- BuildManager now calls `Logger.getProgressTask()` for all stage updates
+
 ## 0.2.1
 
 ### Features

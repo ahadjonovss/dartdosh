@@ -21,11 +21,18 @@ class CLI {
 
     // Extract extra flags, excluding environment flags
     final List<String> extraFlags = arguments.length > 2
-        ? arguments.sublist(2).where((arg) =>
-            arg != '--production' && arg != '-p' && arg != '-prod' &&
-            arg != '--staging' && arg != '-s' &&
-            arg != '--development' && arg != '-d' && arg != '-dev'
-          ).toList()
+        ? arguments
+            .sublist(2)
+            .where((arg) =>
+                arg != '--production' &&
+                arg != '-p' &&
+                arg != '-prod' &&
+                arg != '--staging' &&
+                arg != '-s' &&
+                arg != '--development' &&
+                arg != '-d' &&
+                arg != '-dev')
+            .toList()
         : [];
 
     await BuildManager().execute(target, env, extraFlags);
@@ -39,13 +46,17 @@ class CLI {
   ///
   /// Returns the environment name or 'unknown' if not recognized.
   static String parseEnv(List<String> args) {
-    if (args.contains('--production') || args.contains('-p') || args.contains('-prod')) {
+    if (args.contains('--production') ||
+        args.contains('-p') ||
+        args.contains('-prod')) {
       return 'Production';
     }
     if (args.contains('--staging') || args.contains('-s')) {
       return 'Staging';
     }
-    if (args.contains('--development') || args.contains('-d') || args.contains('-dev')) {
+    if (args.contains('--development') ||
+        args.contains('-d') ||
+        args.contains('-dev')) {
       return 'Development';
     }
     return 'unknown';

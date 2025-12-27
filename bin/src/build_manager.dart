@@ -19,7 +19,8 @@ class BuildManager {
   /// - Creates build_config.json if it doesn't exist
   /// - Increments the build number in pubspec.yaml
   /// - Renames and moves output files according to configuration
-  Future<void> execute(String target, String env, List<String> extraFlags) async {
+  Future<void> execute(
+      String target, String env, List<String> extraFlags) async {
     final configFile = File('${Directory.current.path}/build_config.json');
 
     if (!configFile.existsSync()) {
@@ -121,10 +122,11 @@ class BuildManager {
   }
 
   /// Handles process output with progress bar
-  Future<int> _handleProcessOutput(Future<Process> processFuture, String target, String env) async {
+  Future<int> _handleProcessOutput(
+      Future<Process> processFuture, String target, String env) async {
     final process = await processFuture;
     int currentProgress = 0;
-    String currentTask = 'Boshlanyapti...';
+    String currentTask = Logger.getProgressTask('starting');
     bool progressBarShown = false;
 
     // Timer for periodic updates
@@ -141,34 +143,42 @@ class BuildManager {
       // Detect build stages with more comprehensive patterns
       final lowerData = data.toLowerCase();
 
-      if (lowerData.contains('running gradle task') || lowerData.contains('gradle task')) {
+      if (lowerData.contains('running gradle task') ||
+          lowerData.contains('gradle task')) {
         currentProgress = 20;
-        currentTask = 'Gradle ishlayapti...';
-      } else if (lowerData.contains('resolving dependencies') || lowerData.contains('downloading')) {
+        currentTask = Logger.getProgressTask('gradle');
+      } else if (lowerData.contains('resolving dependencies') ||
+          lowerData.contains('downloading')) {
         currentProgress = 30;
-        currentTask = 'Dependencylar yuklanmoqda...';
+        currentTask = Logger.getProgressTask('dependencies_downloading');
       } else if (lowerData.contains('got dependencies')) {
         currentProgress = 40;
-        currentTask = 'Dependencylar tayyor...';
-      } else if (lowerData.contains('compiling') || lowerData.contains('compileflutter')) {
+        currentTask = Logger.getProgressTask('dependencies_ready');
+      } else if (lowerData.contains('compiling') ||
+          lowerData.contains('compileflutter')) {
         currentProgress = 50;
-        currentTask = 'Flutter kodi kompilyatsiya qilinyapti...';
-      } else if (lowerData.contains('bundling') || lowerData.contains('bundle')) {
+        currentTask = Logger.getProgressTask('compiling');
+      } else if (lowerData.contains('bundling') ||
+          lowerData.contains('bundle')) {
         currentProgress = 60;
-        currentTask = 'Bundle yaratilmoqda...';
-      } else if (lowerData.contains('assembling') || lowerData.contains('assemble')) {
+        currentTask = Logger.getProgressTask('bundling');
+      } else if (lowerData.contains('assembling') ||
+          lowerData.contains('assemble')) {
         currentProgress = 70;
-        currentTask = 'APK/AAB yig\'ilmoqda...';
+        currentTask = Logger.getProgressTask('assembling');
       } else if (lowerData.contains('signing') || lowerData.contains('sign')) {
         currentProgress = 80;
-        currentTask = 'Imzolanmoqda...';
-      } else if (lowerData.contains('built ') || lowerData.contains('build complete')) {
+        currentTask = Logger.getProgressTask('signing');
+      } else if (lowerData.contains('built ') ||
+          lowerData.contains('build complete')) {
         currentProgress = 95;
-        currentTask = 'Tugallanmoqda...';
+        currentTask = Logger.getProgressTask('finishing');
       }
 
       // Show warnings and errors
-      if (lowerData.contains('warning') || lowerData.contains('error') || lowerData.contains('failed')) {
+      if (lowerData.contains('warning') ||
+          lowerData.contains('error') ||
+          lowerData.contains('failed')) {
         stdout.write('\r\x1B[K'); // Clear progress bar
         stdout.write(data); // Show warning/error
       }
@@ -183,7 +193,7 @@ class BuildManager {
     timer.cancel();
 
     if (exitCode == 0) {
-      _showProgress(100, 'Tayyor!', target, env);
+      _showProgress(100, Logger.getProgressTask('ready'), target, env);
       stdout.write('\n\n');
     } else {
       stdout.write('\n\n');
@@ -202,7 +212,8 @@ class BuildManager {
     final percentStr = percent.toString().padLeft(3);
 
     // Clear line and write progress bar
-    stdout.write('\r\x1B[K\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[35m[$target - ${env.toLowerCase()}]\x1B[0m - \x1B[33m$task\x1B[0m');
+    stdout.write(
+        '\r\x1B[K\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[35m[$target - ${env.toLowerCase()}]\x1B[0m - \x1B[33m$task\x1B[0m');
   }
 
   // Pubspec.yaml dan version va build number o'qish
@@ -352,7 +363,8 @@ class BuildManager {
             arch = 'x86';
           }
 
-          final newFileName = arch.isNotEmpty ? '${newName}_$arch.apk' : '$newName.apk';
+          final newFileName =
+              arch.isNotEmpty ? '${newName}_$arch.apk' : '$newName.apk';
 
           if (outputPath != null && outputPath.isNotEmpty) {
             // Output path ga ko'chirish

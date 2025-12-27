@@ -25,6 +25,52 @@ class Logger {
     }
   }
 
+  /// Returns localized progress task message
+  static String getProgressTask(String taskKey) {
+    final tasks = _progressTasks[_currentLanguage];
+    return tasks?[taskKey] ?? taskKey;
+  }
+
+  /// Progress task translations
+  static final Map<String, Map<String, String>> _progressTasks = {
+    'uz': {
+      'starting': 'Boshlanyapti...',
+      'gradle': 'Gradle ishlayapti...',
+      'dependencies_downloading': 'Dependencylar yuklanmoqda...',
+      'dependencies_ready': 'Dependencylar tayyor...',
+      'compiling': 'Flutter kodi kompilyatsiya qilinyapti...',
+      'bundling': 'Bundle yaratilmoqda...',
+      'assembling': 'APK/AAB yig\'ilmoqda...',
+      'signing': 'Imzolanmoqda...',
+      'finishing': 'Tugallanmoqda...',
+      'ready': 'Tayyor!',
+    },
+    'en': {
+      'starting': 'Starting...',
+      'gradle': 'Running Gradle...',
+      'dependencies_downloading': 'Downloading dependencies...',
+      'dependencies_ready': 'Dependencies ready...',
+      'compiling': 'Compiling Flutter code...',
+      'bundling': 'Creating bundle...',
+      'assembling': 'Assembling APK/AAB...',
+      'signing': 'Signing...',
+      'finishing': 'Finishing...',
+      'ready': 'Ready!',
+    },
+    'ru': {
+      'starting': 'Начинается...',
+      'gradle': 'Запуск Gradle...',
+      'dependencies_downloading': 'Загрузка зависимостей...',
+      'dependencies_ready': 'Зависимости готовы...',
+      'compiling': 'Компиляция кода Flutter...',
+      'bundling': 'Создание bundle...',
+      'assembling': 'Сборка APK/AAB...',
+      'signing': 'Подписывается...',
+      'finishing': 'Завершается...',
+      'ready': 'Готово!',
+    },
+  };
+
   static final Map<String, Map<LogType, List<String>>> _translations = {
     'uz': {
       LogType.start: [
