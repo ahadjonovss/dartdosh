@@ -1,3 +1,17 @@
+## 0.1.7
+
+### Features
+- 💝 **Donation Messages**: After successful builds, random humorous donation messages appear (10 variants)
+- 📝 **Logger System**: All console output now goes through the Logger system for consistency
+- 🎨 **Better File Naming**: Build files now named as `{target}_{env}_{version}_{buildNumber}` (e.g., `apk_production_1.0.8_2150.apk`)
+- 🔧 **Enhanced LogTypes**: Added `buildNumberIncremented`, `fileSaved`, `outputDirCreated`, `configFileOpened` for detailed logging
+
+### Changes
+- Removed all `print()` statements in favor of `Logger.log()`
+- Fixed file naming bug where environment was duplicated in filename
+- Added new LogType variants with random message selection
+- Improved code organization and consistency
+
 ## 0.1.6
 
 ### Features

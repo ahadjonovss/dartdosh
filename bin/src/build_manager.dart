@@ -30,7 +30,6 @@ class BuildManager {
 
     if (cmdString.isEmpty) {
       Logger.log(LogType.error, target: target, env: env);
-      print('❌ Config topilmadi: $target -> $env');
       return;
     }
 
@@ -70,6 +69,7 @@ class BuildManager {
       if (result.exitCode == 0) {
         Logger.log(LogType.success, target: target, env: env);
         _renameAndMoveOutputFile(target, env, config);
+        Logger.log(LogType.donation);
       } else {
         Logger.log(LogType.error, target: target, env: env);
       }
@@ -86,8 +86,7 @@ class BuildManager {
         Directory.current.path;
     final desktopPath = '$home/Desktop/dartdosh-builds';
 
-    print('\n🔍 build_config.json topilmadi...');
-    print('📝 Default konfiguratsiya yaratilmoqda, Xo\'jayiin!\n');
+    Logger.log(LogType.buildConfigIsNotExist);
 
     final defaultConfig = {
       "output_path": desktopPath,
@@ -111,10 +110,8 @@ class BuildManager {
     final prettyJson = encoder.convert(defaultConfig);
     configFile.writeAsStringSync(prettyJson);
 
-    print('✅ build_config.json muvaffaqiyatli yaratildi, Xo\'jayiin!');
-    print('📁 Joylashuv: ${configFile.path}');
-    print('📂 Output papka: $desktopPath');
-    print('\n💡 Xo\'jayiin, default configlarni yaratdim, tekshirib ko\'ring!\n');
+    Logger.log(LogType.fileSaved, path: configFile.path);
+    Logger.log(LogType.outputDirCreated, path: desktopPath);
 
     // Open config file in default editor
     _openConfigFile(configFile.path);
@@ -143,10 +140,9 @@ class BuildManager {
         runInShell: true,
       );
 
-      print('📝 Config fayl ochildi!\n');
+      Logger.log(LogType.configFileOpened);
     } catch (e) {
-      print('⚠️  Faylni ochishda xatolik: $e');
-      print('📝 Faylni qo\'lda oching: $filePath\n');
+      // Xatolik bo'lsa, hech narsa qilmaymiz - fayl yaratildi, lekin ochilmadi
     }
   }
 
@@ -166,7 +162,6 @@ class BuildManager {
 
       return {'version': version, 'build': build};
     } catch (e) {
-      print('⚠️ Version ma\'lumotini o\'qishda xatolik: $e');
       return {'version': '1.0.0', 'build': '1'};
     }
   }
@@ -176,7 +171,6 @@ class BuildManager {
     try {
       final pubspecFile = File('${Directory.current.path}/pubspec.yaml');
       if (!pubspecFile.existsSync()) {
-        print('⚠️ pubspec.yaml topilmadi');
         return;
       }
 
@@ -199,9 +193,10 @@ class BuildManager {
       );
 
       pubspecFile.writeAsStringSync(updatedContent);
-      print('✅ Build number yangilandi: $currentBuild → $newBuild');
+      Logger.log(LogType.buildNumberIncremented,
+          oldBuild: currentBuild.toString(), newBuild: newBuild.toString());
     } catch (e) {
-      print('⚠️ Build number yangilashda xatolik: $e');
+      // Xatolik bo'lsa, davom ettirish
     }
   }
 
@@ -213,9 +208,8 @@ class BuildManager {
       final version = versionInfo['version']!;
       final buildNumber = versionInfo['build']!;
 
-      final flavor = env.toLowerCase();
-      // Format: flavor_version_buildNumber
-      final newName = '${flavor}_${version}_$buildNumber';
+      // Format: target_env_version_buildNumber
+      final newName = '${target}_${env.toLowerCase()}_${version}_$buildNumber';
 
       // Config dan output_path olish
       String? outputPath = config['output_path'] as String?;
@@ -230,7 +224,7 @@ class BuildManager {
         final outputDir = Directory(outputPath);
         if (!outputDir.existsSync()) {
           outputDir.createSync(recursive: true);
-          print('📁 Output directory yaratildi: $outputPath');
+          Logger.log(LogType.outputDirCreated, path: outputPath);
         }
       }
 
@@ -242,7 +236,7 @@ class BuildManager {
         _renameAndMoveAab(newName, outputPath);
       }
     } catch (e) {
-      print('⚠️ Rename va ko\'chirish xatosi: $e');
+      // Xatolik bo'lsa davom ettirish
     }
   }
 
@@ -261,12 +255,12 @@ class BuildManager {
           // Output path ga ko'chirish
           final destinationPath = '$outputPath/$fileName';
           file.copySync(destinationPath);
-          print('✅ Build saqlandi: $destinationPath');
+          Logger.log(LogType.fileSaved, path: destinationPath);
         } else {
           // Faqat rename qilish (build papkasida)
           final newPath = '${file.parent.path}/$fileName';
           file.renameSync(newPath);
-          print('✅ Renamed: $fileName');
+          Logger.log(LogType.fileSaved, path: fileName);
         }
         return;
       }
@@ -289,12 +283,12 @@ class BuildManager {
             // Output path ga ko'chirish
             final destinationPath = '$outputPath/$newFileName';
             file.copySync(destinationPath);
-            print('✅ Build saqlandi: $destinationPath');
+            Logger.log(LogType.fileSaved, path: destinationPath);
           } else {
             // Faqat rename qilish
             final newPath = '${file.parent.path}/$newFileName';
             file.renameSync(newPath);
-            print('✅ Renamed: $newFileName');
+            Logger.log(LogType.fileSaved, path: newFileName);
           }
         }
       }
@@ -314,12 +308,12 @@ class BuildManager {
             // Output path ga ko'chirish
             final destinationPath = '$outputPath/$fileName';
             file.copySync(destinationPath);
-            print('✅ Build saqlandi: $destinationPath');
+            Logger.log(LogType.fileSaved, path: destinationPath);
           } else {
             // Faqat rename qilish
             final newPath = '${file.parent.path}/$fileName';
             file.renameSync(newPath);
-            print('✅ Renamed: $fileName');
+            Logger.log(LogType.fileSaved, path: fileName);
           }
           return;
         }
@@ -341,12 +335,12 @@ class BuildManager {
           // Output path ga ko'chirish
           final destinationPath = '$outputPath/$fileName';
           file.copySync(destinationPath);
-          print('✅ Build saqlandi: $destinationPath');
+          Logger.log(LogType.fileSaved, path: destinationPath);
         } else {
           // Faqat rename qilish
           final newPath = '${file.parent.path}/$fileName';
           file.renameSync(newPath);
-          print('✅ Renamed: $fileName');
+          Logger.log(LogType.fileSaved, path: fileName);
         }
         return;
       }
