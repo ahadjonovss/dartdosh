@@ -80,11 +80,17 @@ class BuildManager {
 
   // Default config yaratish
   void _createDefaultConfig(File configFile) {
+    // Get Desktop path cross-platform
+    final home = Platform.environment['HOME'] ??
+        Platform.environment['USERPROFILE'] ??
+        Directory.current.path;
+    final desktopPath = '$home/Desktop/dartdosh-builds';
+
     print('\n🔍 build_config.json topilmadi...');
     print('📝 Default konfiguratsiya yaratilmoqda, Xo\'jayiin!\n');
 
     final defaultConfig = {
-      "output_path": "releases",
+      "output_path": desktopPath,
       "apk": {
         "production": "flutter build apk --release --flavor production",
         "staging": "flutter build apk --release --flavor staging",
@@ -105,10 +111,43 @@ class BuildManager {
     final prettyJson = encoder.convert(defaultConfig);
     configFile.writeAsStringSync(prettyJson);
 
-    print('✅ build_config.json muvaffaqiyatli yaratildi!');
+    print('✅ build_config.json muvaffaqiyatli yaratildi, Xo\'jayiin!');
     print('📁 Joylashuv: ${configFile.path}');
-    print(
-        'ℹ️  Kerakli o\'zgarishlarni build_config.json da amalga oshiring.\n');
+    print('📂 Output papka: $desktopPath');
+    print('\n💡 Xo\'jayiin, default configlarni yaratdim, tekshirib ko\'ring!\n');
+
+    // Open config file in default editor
+    _openConfigFile(configFile.path);
+  }
+
+  /// Opens the config file in the user's default editor
+  void _openConfigFile(String filePath) {
+    try {
+      final String command;
+
+      if (Platform.isMacOS) {
+        command = 'open';
+      } else if (Platform.isLinux) {
+        command = 'xdg-open';
+      } else if (Platform.isWindows) {
+        command = 'start';
+      } else {
+        print(
+            '⚠️  Faylni avtomatik ochib bo\'lmadi. Qo\'lda oching: $filePath');
+        return;
+      }
+
+      Process.runSync(
+        command,
+        [filePath],
+        runInShell: true,
+      );
+
+      print('📝 Config fayl ochildi!\n');
+    } catch (e) {
+      print('⚠️  Faylni ochishda xatolik: $e');
+      print('📝 Faylni qo\'lda oching: $filePath\n');
+    }
   }
 
   // Pubspec.yaml dan version va build number o'qish

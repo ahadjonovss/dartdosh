@@ -1,3 +1,16 @@
+## 0.1.6
+
+### Features
+- 🎯 **Desktop Output Path**: Default output path now points to `~/Desktop/dartdosh-builds` instead of `releases`
+- 📂 **Auto File Open**: Config file automatically opens in default editor after creation
+- 💬 **Improved Messages**: Better user feedback when config is created for first time
+- 🖥️ **Cross-Platform**: Supports macOS, Linux, and Windows for auto file opening
+
+### Changes
+- Changed default `output_path` from `releases` to `~/Desktop/dartdosh-builds`
+- Added `_openConfigFile()` helper method for opening config in default editor
+- Enhanced console messages: "Xo'jayiin, default configlarni yaratdim, tekshirib ko'ring!"
+
 ## 0.1.5
 
 ### Package Maintenance
