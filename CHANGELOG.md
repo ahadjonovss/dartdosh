@@ -1,3 +1,24 @@
+## 0.2.5
+
+### Features
+- 📦 **File Management for All Builds**: Files are now renamed and moved to output_path even without environment flags
+- 🎯 **Consistent Output**: Both flavor and plain builds get organized file naming
+
+### Changes
+- Non-environment builds now rename files to `{target}_{version}_{buildNumber}` format
+- Files are moved to output_path regardless of environment flag presence
+- Only version increment is skipped for non-environment builds
+- File organization works for all build types
+
+### Examples
+```bash
+# With environment - increments version, renames: apk_production_1.2.3_46.apk
+dartdosh build apk --production
+
+# Without environment - no version increment, renames: apk_1.2.3_46.apk
+dartdosh build apk
+```
+
 ## 0.2.4
 
 ### Features

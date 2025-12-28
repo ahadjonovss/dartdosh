@@ -87,9 +87,11 @@ class BuildManager {
 
       if (exitCode == 0) {
         Logger.log(LogType.success, target: target, env: envDisplay);
-        // Only rename/move files if environment is specified
+        // Always rename/move files, regardless of environment
         if (env != null) {
           _renameAndMoveOutputFile(target, env, config);
+        } else {
+          _renameAndMoveOutputFileNoEnv(target, config);
         }
         Logger.log(LogType.donation);
       } else {
@@ -296,6 +298,46 @@ class BuildManager {
 
       // Format: target_env_version_buildNumber
       final newName = '${target}_${env.toLowerCase()}_${version}_$buildNumber';
+
+      // Config dan output_path olish
+      String? outputPath = config['output_path'] as String?;
+
+      if (outputPath != null && outputPath.isNotEmpty) {
+        // Output path ni to'liq path ga aylantirish
+        if (!outputPath.startsWith('/')) {
+          outputPath = '${Directory.current.path}/$outputPath';
+        }
+
+        // Output directory ni yaratish (agar mavjud bo'lmasa)
+        final outputDir = Directory(outputPath);
+        if (!outputDir.existsSync()) {
+          outputDir.createSync(recursive: true);
+          Logger.log(LogType.outputDirCreated, path: outputPath);
+        }
+      }
+
+      if (target == 'apk') {
+        _renameAndMoveApk(newName, outputPath);
+      } else if (target == 'ipa' || target == 'ios') {
+        _renameAndMoveIpa(newName, outputPath);
+      } else if (target == 'appbundle' || target == 'aab') {
+        _renameAndMoveAab(newName, outputPath);
+      }
+    } catch (e) {
+      // Xatolik bo'lsa davom ettirish
+    }
+  }
+
+  // Environment bo'lmaganda fayllarni rename qilib output_path ga ko'chirish
+  void _renameAndMoveOutputFileNoEnv(
+      String target, Map<String, dynamic> config) {
+    try {
+      final versionInfo = _getVersionInfo();
+      final version = versionInfo['version']!;
+      final buildNumber = versionInfo['build']!;
+
+      // Format: target_version_buildNumber (no environment)
+      final newName = '${target}_${version}_$buildNumber';
 
       // Config dan output_path olish
       String? outputPath = config['output_path'] as String?;

@@ -210,7 +210,17 @@ For split APKs:
 * `apk_production_1.2.3_46_armeabi-v7a.apk`
 * `apk_production_1.2.3_46_x86_64.apk`
 
-**For plain builds** (without environment), files remain in their default Flutter build location with original names.
+**For plain builds** (without environment), files are renamed using the format:
+```
+{target}_{version}_{buildNumber}.{extension}
+```
+
+**Examples:**
+* `apk_1.2.3_46.apk`
+* `ipa_2.0.0_12.ipa`
+* `appbundle_1.5.0_78.aab`
+
+Note: Plain builds don't increment version, but still get renamed and moved to output_path.
 
 ### 📁 Output Path Management
 
