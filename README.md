@@ -9,7 +9,7 @@ dartdosh build <target> --<environment> [extra flags]
 **Examples:**
 
 ```bash
-# Full environment flags
+# With environment (flavor builds) - automatic version management
 dartdosh build ipa --production --split
 dartdosh build apk --development --other-flag
 dartdosh build appbundle --staging
@@ -20,6 +20,11 @@ dartdosh build apk -prod           # production
 dartdosh build apk -d              # development
 dartdosh build apk -dev            # development
 dartdosh build apk -s              # staging
+
+# Without environment - plain Flutter build (no version management)
+dartdosh build apk                 # flutter build apk
+dartdosh build apk --release       # flutter build apk --release
+dartdosh build ipa --split         # flutter build ipa --split-per-abi
 ```
 
 ---
@@ -106,7 +111,7 @@ The `build_config.json` file is automatically created with default settings when
 ## Usage
 
 ```bash
-dartdosh build <target> --<environment> [extra flags]
+dartdosh build <target> [--<environment>] [extra flags]
 ```
 
 **Parameters:**
@@ -116,10 +121,11 @@ dartdosh build <target> --<environment> [extra flags]
   - `ipa` - iOS IPA
   - `appbundle` (or `aab`) - Android App Bundle
 
-* `<environment>`: Build environment (multiple flag variants supported!)
+* `<environment>`: Build environment (OPTIONAL - multiple flag variants supported!)
   - **Production**: `--production`, `-p`, `-prod`
   - **Staging**: `--staging`, `-s`
   - **Development**: `--development`, `-d`, `-dev`
+  - **Note**: If no environment specified, runs plain Flutter build without version management
 
 * `[extra flags]`: Additional Flutter build flags
   - `--split` - For APK builds, automatically adds `--split-per-abi`
@@ -171,36 +177,40 @@ If `build_config.json` doesn't exist in your Flutter project, DartDosh will auto
 
 ### 🔢 Automatic Version Management
 
-Before every build, DartDosh automatically:
+**When using environment flags** (flavor builds), DartDosh automatically:
 1. Reads the current version from `pubspec.yaml`
 2. Increments the build number by 1
 3. Updates `pubspec.yaml` with the new build number
 
 **Example:**
 ```yaml
-# Before build
+# Before build (with environment flag)
 version: 1.2.3+45
 
 # After build
 version: 1.2.3+46
 ```
 
+**Note**: Version management only happens when environment flag is specified. Plain builds (`dartdosh build apk`) don't modify version numbers.
+
 ### 📦 Smart File Naming
 
-Built files are automatically renamed using the format:
+**For flavor builds** (with environment flags), built files are automatically renamed using the format:
 ```
-{environment}_{version}_{buildNumber}.{extension}
+{target}_{environment}_{version}_{buildNumber}.{extension}
 ```
 
 **Examples:**
-* `production_1.2.3_46.apk`
-* `staging_2.0.0_12.ipa`
-* `development_1.5.0_78.aab`
+* `apk_production_1.2.3_46.apk`
+* `ipa_staging_2.0.0_12.ipa`
+* `appbundle_development_1.5.0_78.aab`
 
 For split APKs:
-* `production_1.2.3_46_arm64-v8a.apk`
-* `production_1.2.3_46_armeabi-v7a.apk`
-* `production_1.2.3_46_x86_64.apk`
+* `apk_production_1.2.3_46_arm64-v8a.apk`
+* `apk_production_1.2.3_46_armeabi-v7a.apk`
+* `apk_production_1.2.3_46_x86_64.apk`
+
+**For plain builds** (without environment), files remain in their default Flutter build location with original names.
 
 ### 📁 Output Path Management
 

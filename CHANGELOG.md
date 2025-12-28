@@ -1,3 +1,28 @@
+## 0.2.4
+
+### Features
+- 🎯 **Optional Environment**: Environment flags are now optional - run plain Flutter commands without flavors
+- 🔧 **Flexible Builds**: Use `dartdosh build apk` for simple builds without version management
+- 📦 **Smart Behavior**: Version increment and file renaming only happen when environment is specified
+
+### Changes
+- Environment parameter is now nullable in CLI and BuildManager
+- When no environment specified, runs plain `flutter build <target>` command
+- Build number increment only happens for flavor builds (when environment is specified)
+- File renaming/moving only occurs for flavor builds
+- Default environment display shows "default" in logs when no environment provided
+
+### Examples
+```bash
+# With environment (flavor build) - increments version, renames files
+dartdosh build apk --production
+dartdosh build apk -p
+
+# Without environment (plain Flutter build) - no version management
+dartdosh build apk
+dartdosh build ipa --release
+```
+
 ## 0.2.3
 
 ### Features

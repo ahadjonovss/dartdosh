@@ -7,8 +7,9 @@ import 'build_manager.dart';
 class CLI {
   /// Runs the CLI with the provided [arguments].
   ///
-  /// Expects arguments in the format: `build <target> --<environment> [flags]`
+  /// Expects arguments in the format: `build <target> [--<environment>] [flags]`
   /// where target can be `apk`, `ipa`, or `appbundle`.
+  /// Environment is optional - if not provided, runs plain Flutter build command.
   ///
   /// Throws an [Exception] if the command format is invalid.
   Future<void> run(List<String> arguments) async {
@@ -44,21 +45,21 @@ class CLI {
   /// Recognizes staging flags: `--staging`, `-s`
   /// Recognizes development flags: `--development`, `-d`, `-dev`
   ///
-  /// Returns the environment name or 'unknown' if not recognized.
-  static String parseEnv(List<String> args) {
+  /// Returns the environment name or null if not specified.
+  static String? parseEnv(List<String> args) {
     if (args.contains('--production') ||
         args.contains('-p') ||
         args.contains('-prod')) {
-      return 'Production';
+      return 'production';
     }
     if (args.contains('--staging') || args.contains('-s')) {
-      return 'Staging';
+      return 'staging';
     }
     if (args.contains('--development') ||
         args.contains('-d') ||
         args.contains('-dev')) {
-      return 'Development';
+      return 'development';
     }
-    return 'unknown';
+    return null; // No environment specified - use plain Flutter command
   }
 }

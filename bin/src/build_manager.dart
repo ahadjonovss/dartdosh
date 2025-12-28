@@ -13,14 +13,15 @@ class BuildManager {
   ///
   /// The [target] can be 'apk', 'ipa', or 'appbundle'.
   /// The [env] specifies the build environment (production, staging, development).
+  /// If [env] is null, runs plain Flutter build command without flavor.
   /// Optional [extraFlags] are appended to the build command.
   ///
   /// This method automatically:
   /// - Creates build_config.json if it doesn't exist
-  /// - Increments the build number in pubspec.yaml
+  /// - Increments the build number in pubspec.yaml (only if env is specified)
   /// - Renames and moves output files according to configuration
   Future<void> execute(
-      String target, String env, List<String> extraFlags) async {
+      String target, String? env, List<String> extraFlags) async {
     final configFile = File('${Directory.current.path}/build_config.json');
 
     if (!configFile.existsSync()) {
@@ -33,11 +34,18 @@ class BuildManager {
     final language = config['language'] as String? ?? 'uz';
     Logger.setLanguage(language);
 
-    String cmdString = config[target]?[env.toLowerCase()] ?? '';
+    String cmdString = '';
 
-    if (cmdString.isEmpty) {
-      Logger.log(LogType.error, target: target, env: env);
-      return;
+    // If no environment specified, use plain Flutter build command
+    if (env == null) {
+      cmdString = 'flutter build $target';
+    } else {
+      cmdString = config[target]?[env.toLowerCase()] ?? '';
+
+      if (cmdString.isEmpty) {
+        Logger.log(LogType.error, target: target, env: env);
+        return;
+      }
     }
 
     // Handle --split flag based on target
@@ -56,10 +64,15 @@ class BuildManager {
     }
 
     // Build boshlashdan oldin pubspec.yaml da build number oshirish
-    _incrementBuildNumber();
+    // Only increment if environment is specified (flavor builds)
+    if (env != null) {
+      _incrementBuildNumber();
+    }
 
-    Logger.log(LogType.step, target: target, env: env);
-    Logger.log(LogType.running, target: target, env: env, command: cmdString);
+    final envDisplay = env ?? 'default';
+    Logger.log(LogType.step, target: target, env: envDisplay);
+    Logger.log(LogType.running,
+        target: target, env: envDisplay, command: cmdString);
 
     try {
       final parts = cmdString.split(' ');
@@ -70,17 +83,20 @@ class BuildManager {
         workingDirectory: Directory.current.path,
       );
 
-      final exitCode = await _handleProcessOutput(process, target, env);
+      final exitCode = await _handleProcessOutput(process, target, envDisplay);
 
       if (exitCode == 0) {
-        Logger.log(LogType.success, target: target, env: env);
-        _renameAndMoveOutputFile(target, env, config);
+        Logger.log(LogType.success, target: target, env: envDisplay);
+        // Only rename/move files if environment is specified
+        if (env != null) {
+          _renameAndMoveOutputFile(target, env, config);
+        }
         Logger.log(LogType.donation);
       } else {
-        Logger.log(LogType.error, target: target, env: env);
+        Logger.log(LogType.error, target: target, env: envDisplay);
       }
     } catch (e) {
-      Logger.log(LogType.error, target: target, env: env);
+      Logger.log(LogType.error, target: target, env: envDisplay);
     }
   }
 
