@@ -1,3 +1,16 @@
+## 0.3.2
+
+### Bug Fixes
+- 🐛 **Fixed Empty Config File Issue**: Added async/await with delay to ensure file is fully written before opening
+- ✅ **Enhanced File Write Verification**: Now verifies both file existence and file size before opening
+- 🔧 **Improved Write Reliability**: Added 100ms delay after write to ensure file system flush completes
+
+### Changes
+- Made `_createDefaultConfig()` async with proper await
+- Added `Future.delayed` after write to ensure file system flush
+- Added file size verification (`lengthSync() > 0`) before opening
+- Single write with `flush: true` parameter instead of double write
+
 ## 0.3.1
 
 ### Bug Fixes

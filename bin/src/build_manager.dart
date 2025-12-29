@@ -25,9 +25,9 @@ class BuildManager {
     final configFile = File('${Directory.current.path}/build_config.json');
 
     if (!configFile.existsSync()) {
-      _createDefaultConfig(configFile);
-      // Ensure file is written before opening
-      if (configFile.existsSync()) {
+      await _createDefaultConfig(configFile);
+      // Verify file was written with content before opening
+      if (configFile.existsSync() && configFile.lengthSync() > 0) {
         _openConfigFile(configFile.path);
         Logger.log(LogType.buildConfigCreated);
       }
@@ -111,7 +111,7 @@ class BuildManager {
   }
 
   // Default config yaratish
-  void _createDefaultConfig(File configFile) {
+  Future<void> _createDefaultConfig(File configFile) async {
     // Get Desktop path cross-platform
     final home = Platform.environment['HOME'] ??
         Platform.environment['USERPROFILE'] ??
@@ -144,10 +144,24 @@ class BuildManager {
 
     const encoder = JsonEncoder.withIndent('  ');
     final prettyJson = encoder.convert(defaultConfig);
-    configFile.writeAsStringSync(prettyJson);
 
-    Logger.log(LogType.fileSaved, path: configFile.path);
-    Logger.log(LogType.outputDirCreated, path: desktopPath);
+    try {
+      // Write file with flush to ensure data is written to disk
+      configFile.writeAsStringSync(prettyJson, flush: true);
+
+      // Wait a bit to ensure file system has fully written the file
+      await Future.delayed(Duration(milliseconds: 100));
+
+      // Verify file was written correctly
+      if (configFile.existsSync() && configFile.lengthSync() > 0) {
+        Logger.log(LogType.fileSaved, path: configFile.path);
+        Logger.log(LogType.outputDirCreated, path: desktopPath);
+      } else {
+        print('Error: Config file was not written correctly');
+      }
+    } catch (e) {
+      print('Error writing config file: $e');
+    }
   }
 
   // Open config file in default editor
