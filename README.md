@@ -116,11 +116,18 @@ The `build_config.json` file is automatically created with default settings when
     ```
     ~/Desktop/dartdosh-builds/
     ├── my_app/
-    │   ├── prod_1.0.0_100.apk
-    │   └── dev_1.0.0_101.apk
+    │   ├── apk/
+    │   │   ├── prod_1.0.0_100.apk
+    │   │   └── dev_1.0.0_101.apk
+    │   ├── ipa/
+    │   │   └── prod_1.0.0_100.ipa
+    │   └── aab/
+    │       └── prod_1.0.0_100.aab
     └── ecommerce_app/
-        ├── prod_2.0.0_50.apk
-        └── stg_2.0.0_51.ipa
+        ├── apk/
+        │   └── prod_2.0.0_50.apk
+        └── ipa/
+            └── stg_2.0.0_51.ipa
     ```
 
 * `auto_increment_build_number` (optional): Control automatic build number increment
@@ -154,7 +161,7 @@ dartdosh build <target> [--<environment>] [extra flags]
 * `<target>`: Build target
   - `apk` - Android APK
   - `ipa` - iOS IPA
-  - `appbundle` (or `aab`) - Android App Bundle
+  - `appbundle` or `aab` - Android App Bundle (both commands supported)
 
 * `<environment>`: Build environment (OPTIONAL - multiple flag variants supported!)
   - **Production**: `--production`, `-p`, `-prod`
@@ -285,9 +292,24 @@ Note: Plain builds don't increment version, but still get renamed and moved to o
 ### 📁 Output Path Management
 
 If `output_path` is specified in `build_config.json`:
-* Built files are **copied** to the specified directory
+* Built files are **copied** to the specified directory with organized structure
+* Files are organized by: `output_path/project_name/{apk|ipa|aab}/`
+* Each build type gets its own subfolder for better organization
 * Original files remain in the build directory
 * Directory structure is created automatically
+
+**Example structure:**
+```
+~/Desktop/dartdosh-builds/
+└── my_app/
+    ├── apk/
+    │   ├── prod_1.0.0_100.apk
+    │   └── dev_1.0.0_101.apk
+    ├── ipa/
+    │   └── prod_1.0.0_100.ipa
+    └── aab/
+        └── prod_1.0.0_100.aab
+```
 
 Without `output_path`:
 * Files are only **renamed** in the build directory

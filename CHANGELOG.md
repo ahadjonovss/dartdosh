@@ -1,3 +1,28 @@
+## 0.3.3
+
+### Features
+- 📂 **Type-Based Subfolders**: Build files now organized by type (apk/ipa/aab) within project folder
+- 🔧 **AAB Command Support**: Added support for `aab` as alternative to `appbundle` command
+- 🔒 **Git Push Confirmation**: Added pre-push hook to confirm before pushing to remote
+
+### Changes
+- Output structure now: `output_path/project_name/{apk|ipa|aab}/file.ext`
+- CLI now accepts `dartdosh build aab` (normalized to `appbundle`)
+- Git hook prompts for confirmation before every push
+
+### File Structure
+```
+~/Desktop/dartdosh-builds/
+└── my_app/
+    ├── apk/
+    │   ├── prod_1.0.0_100.apk
+    │   └── dev_1.0.0_101.apk
+    ├── ipa/
+    │   └── prod_1.0.0_100.ipa
+    └── aab/
+        └── prod_1.0.0_100.aab
+```
+
 ## 0.3.2
 
 ### Changes

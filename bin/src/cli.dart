@@ -8,7 +8,7 @@ class CLI {
   /// Runs the CLI with the provided [arguments].
   ///
   /// Expects arguments in the format: `build <target> [--<environment>] [flags]`
-  /// where target can be `apk`, `ipa`, or `appbundle`.
+  /// where target can be `apk`, `ipa`, `appbundle`, or `aab`.
   /// Environment is optional - if not provided, runs plain Flutter build command.
   ///
   /// Throws an [Exception] if the command format is invalid.
@@ -17,7 +17,12 @@ class CLI {
       throw Exception('Invalid command');
     }
 
-    final target = arguments[1];
+    // Normalize target: 'aab' -> 'appbundle'
+    var target = arguments[1];
+    if (target == 'aab') {
+      target = 'appbundle';
+    }
+
     final env = parseEnv(arguments);
 
     // Extract extra flags, excluding environment flags

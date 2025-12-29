@@ -334,6 +334,12 @@ class BuildManager {
     return envLower; // fallback to original if unknown
   }
 
+  // Get target type folder name
+  String _getTargetFolderName(String target) {
+    if (target == 'appbundle') return 'aab';
+    return target; // apk, ipa return as-is
+  }
+
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
   void _renameAndMoveOutputFile(
       String target, String env, Map<String, dynamic> config) {
@@ -357,8 +363,9 @@ class BuildManager {
           outputPath = '${Directory.current.path}/$outputPath';
         }
 
-        // Add project name subfolder
-        outputPath = '$outputPath/$projectName';
+        // Add project name subfolder and target type subfolder
+        final targetFolder = _getTargetFolderName(target);
+        outputPath = '$outputPath/$projectName/$targetFolder';
 
         // Output directory ni yaratish (agar mavjud bo'lmasa)
         final outputDir = Directory(outputPath);
@@ -402,8 +409,9 @@ class BuildManager {
           outputPath = '${Directory.current.path}/$outputPath';
         }
 
-        // Add project name subfolder
-        outputPath = '$outputPath/$projectName';
+        // Add project name subfolder and target type subfolder
+        final targetFolder = _getTargetFolderName(target);
+        outputPath = '$outputPath/$projectName/$targetFolder';
 
         // Output directory ni yaratish (agar mavjud bo'lmasa)
         final outputDir = Directory(outputPath);
