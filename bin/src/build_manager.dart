@@ -26,8 +26,11 @@ class BuildManager {
 
     if (!configFile.existsSync()) {
       _createDefaultConfig(configFile);
-      _openConfigFile(configFile.path);
-      Logger.log(LogType.buildConfigCreated);
+      // Ensure file is written before opening
+      if (configFile.existsSync()) {
+        _openConfigFile(configFile.path);
+        Logger.log(LogType.buildConfigCreated);
+      }
       return; // Stop execution, wait for user to review config
     }
 

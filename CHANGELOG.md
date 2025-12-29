@@ -1,3 +1,15 @@
+## 0.3.1
+
+### Bug Fixes
+- 🐛 **Fixed Config File Creation**: Ensure build_config.json is fully written before opening in IDE
+- ✅ **Improved File Write Order**: File is now verified to exist before attempting to open
+- 🔧 **Prevent Empty Config Files**: Added file existence check to prevent race conditions
+
+### Changes
+- Added file existence verification after config creation
+- Config file is only opened if successfully written
+- Prevents empty or incomplete config files from being opened
+
 ## 0.3.0
 
 ### Features
