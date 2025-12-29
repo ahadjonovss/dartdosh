@@ -1,4 +1,6 @@
 {
+  "language": "uz",
+  "auto_increment_build_number": false,
   "output_path": "releases",
   "apk": {
     "production": "flutter build apk --release --flavor production",

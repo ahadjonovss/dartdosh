@@ -1,3 +1,17 @@
+## 0.2.9
+
+### Documentation
+- 📚 **Updated All Documentation**: All docs, examples, and configs updated to reflect latest features
+- 📝 **Updated build_config.example.json**: Added language and auto_increment_build_number fields
+- 📖 **Updated example/README.md**: Updated all examples with new file naming format and features
+- 🎯 **Consistent Examples**: All examples now show correct output format (prod_1.2.3_46.apk)
+
+### Changes
+- Updated example outputs to show new short environment naming
+- Updated feature descriptions to reflect current behavior
+- Added multi-language support and auto-increment info to examples
+- Removed outdated version increment references from examples
+
 ## 0.2.8
 
 ### Features
