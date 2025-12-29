@@ -117,8 +117,10 @@ class BuildManager {
 
     Logger.log(LogType.buildConfigIsNotExist);
 
+    final projectName = _getProjectName();
     final defaultConfig = {
       "language": "uz",
+      "project_name": projectName,
       "auto_increment_build_number": false,
       "output_path": desktopPath,
       "apk": {
@@ -255,6 +257,22 @@ class BuildManager {
         '\r\x1B[K\x1B[36m[$bar] $percentStr%\x1B[0m - \x1B[35m[$target - ${env.toLowerCase()}]\x1B[0m - \x1B[33m$task\x1B[0m');
   }
 
+  // Pubspec.yaml dan project name o'qish
+  String _getProjectName() {
+    try {
+      final pubspecFile = File('${Directory.current.path}/pubspec.yaml');
+      if (!pubspecFile.existsSync()) {
+        return 'my_project';
+      }
+
+      final pubspecContent = loadYaml(pubspecFile.readAsStringSync());
+      final name = pubspecContent['name']?.toString() ?? 'my_project';
+      return name;
+    } catch (e) {
+      return 'my_project';
+    }
+  }
+
   // Pubspec.yaml dan version va build number o'qish
   Map<String, String> _getVersionInfo() {
     try {
@@ -330,14 +348,19 @@ class BuildManager {
       final shortEnv = _getShortEnvName(env);
       final newName = '${shortEnv}_${version}_$buildNumber';
 
-      // Config dan output_path olish
+      // Config dan output_path va project_name olish
       String? outputPath = config['output_path'] as String?;
+      final projectName =
+          config['project_name'] as String? ?? _getProjectName();
 
       if (outputPath != null && outputPath.isNotEmpty) {
         // Output path ni to'liq path ga aylantirish
         if (!outputPath.startsWith('/')) {
           outputPath = '${Directory.current.path}/$outputPath';
         }
+
+        // Add project name subfolder
+        outputPath = '$outputPath/$projectName';
 
         // Output directory ni yaratish (agar mavjud bo'lmasa)
         final outputDir = Directory(outputPath);
@@ -370,14 +393,19 @@ class BuildManager {
       // Format: target_version_buildNumber (no environment)
       final newName = '${target}_${version}_$buildNumber';
 
-      // Config dan output_path olish
+      // Config dan output_path va project_name olish
       String? outputPath = config['output_path'] as String?;
+      final projectName =
+          config['project_name'] as String? ?? _getProjectName();
 
       if (outputPath != null && outputPath.isNotEmpty) {
         // Output path ni to'liq path ga aylantirish
         if (!outputPath.startsWith('/')) {
           outputPath = '${Directory.current.path}/$outputPath';
         }
+
+        // Add project name subfolder
+        outputPath = '$outputPath/$projectName';
 
         // Output directory ni yaratish (agar mavjud bo'lmasa)
         final outputDir = Directory(outputPath);

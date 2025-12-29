@@ -1,3 +1,37 @@
+## 0.3.0
+
+### Features
+- 🗂️ **Multi-Project Support**: Added `project_name` field for organizing builds by project
+- 📁 **Project-Based Folders**: Each project gets its own subfolder in output directory
+- 🎯 **Auto Project Detection**: Reads project name from `pubspec.yaml` by default
+- 🏢 **Multi-Project Workflow**: Use same output directory for multiple projects
+
+### Changes
+- Added `project_name` field to build config (defaults to pubspec.yaml name)
+- Output path now includes project subfolder: `output_path/project_name/`
+- All builds are organized: `~/Desktop/dartdosh-builds/my_app/prod_1.0.0_100.apk`
+- Updated all documentation with multi-project examples
+
+### File Structure
+```
+~/Desktop/dartdosh-builds/
+├── my_app/
+│   ├── prod_1.0.0_100.apk
+│   └── dev_1.0.0_101.apk
+└── ecommerce_app/
+    ├── prod_2.0.0_50.apk
+    └── stg_2.0.0_51.ipa
+```
+
+### Configuration
+```json
+{
+  "project_name": "my_app",  // New field
+  "output_path": "~/Desktop/dartdosh-builds",
+  ...
+}
+```
+
 ## 0.2.9
 
 ### Documentation

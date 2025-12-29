@@ -69,6 +69,7 @@ The `build_config.json` file is automatically created with default settings when
 ```json
 {
   "language": "uz",
+  "project_name": "my_app",
   "auto_increment_build_number": false,
   "output_path": "~/Desktop/dartdosh-builds",
   "apk": {
@@ -99,6 +100,27 @@ The `build_config.json` file is automatically created with default settings when
     "language": "en"  // English interface
     "language": "ru"  // Russian interface
     "language": "uz"  // Uzbek interface (default)
+    ```
+
+* `project_name` (optional): Project name used for organizing builds in output directory
+  - **Type**: `string`
+  - **Default**: Reads from `pubspec.yaml` `name` field
+  - **Purpose**: Creates a subfolder in `output_path` for this project's builds
+  - **Multi-project support**: Each project gets its own folder in the output directory
+  - Examples:
+    ```json
+    "project_name": "my_app"        // Builds go to output_path/my_app/
+    "project_name": "ecommerce_app" // Builds go to output_path/ecommerce_app/
+    ```
+  - **File structure**:
+    ```
+    ~/Desktop/dartdosh-builds/
+    ├── my_app/
+    │   ├── prod_1.0.0_100.apk
+    │   └── dev_1.0.0_101.apk
+    └── ecommerce_app/
+        ├── prod_2.0.0_50.apk
+        └── stg_2.0.0_51.ipa
     ```
 
 * `auto_increment_build_number` (optional): Control automatic build number increment

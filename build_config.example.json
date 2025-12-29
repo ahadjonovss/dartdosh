@@ -1,5 +1,6 @@
 {
   "language": "uz",
+  "project_name": "my_app",
   "auto_increment_build_number": false,
   "output_path": "releases",
   "apk": {
