@@ -1,21 +1,33 @@
+## 0.2.7
+
+### Changes
+- 🔧 **Default Behavior Update**: `auto_increment_build_number` now defaults to `false`
+- 📝 **Documentation Update**: All docs updated to reflect new default behavior
+- ⚙️ **Opt-in Version Management**: Users must explicitly enable auto increment by setting config to `true`
+
+### Rationale
+- Prevents unexpected version changes
+- Gives users explicit control over version management
+- More predictable default behavior
+
 ## 0.2.6
 
 ### Features
 - 🎯 **Better Config Creation UX**: When build_config.json doesn't exist, it's created and opened in IDE
 - 🛑 **Smart Config Workflow**: Execution stops after config creation, prompting user to review and re-run
-- ⚙️ **Optional Build Number Increment**: Added `auto_increment_build_number` boolean field in config (default: true)
+- ⚙️ **Optional Build Number Increment**: Added `auto_increment_build_number` boolean field in config (default: false)
 
 ### Changes
 - Config file now automatically opens in default IDE when created
 - Added `buildConfigCreated` LogType with instructions to review config and re-run
-- Build number increment can be disabled by setting `auto_increment_build_number: false` in build_config.json
+- Build number increment is now disabled by default, can be enabled by setting `auto_increment_build_number: true`
 - Execution stops after config creation instead of continuing with build
 
 ### Configuration
 ```json
 {
   "language": "uz",
-  "auto_increment_build_number": true,  // New field
+  "auto_increment_build_number": false,  // New field (default: false)
   "output_path": "~/Desktop/dartdosh-builds",
   ...
 }
@@ -29,11 +41,11 @@ dartdosh build apk --production
 
 # Second run - proceeds with build
 dartdosh build apk --production
-# Output: Normal build process
+# Output: Normal build process (version not incremented by default)
 
-# Disable auto increment in config
-"auto_increment_build_number": false
-# Build runs without incrementing version
+# Enable auto increment in config
+"auto_increment_build_number": true
+# Build runs with version increment
 ```
 
 ## 0.2.5

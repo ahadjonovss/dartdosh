@@ -69,7 +69,7 @@ The `build_config.json` file is automatically created with default settings when
 ```json
 {
   "language": "uz",
-  "auto_increment_build_number": true,
+  "auto_increment_build_number": false,
   "output_path": "~/Desktop/dartdosh-builds",
   "apk": {
     "production": "flutter build apk --release --flavor production",
@@ -103,14 +103,14 @@ The `build_config.json` file is automatically created with default settings when
 
 * `auto_increment_build_number` (optional): Control automatic build number increment
   - **Type**: `boolean`
-  - **Default**: `true`
+  - **Default**: `false`
   - **When true**: Build number in `pubspec.yaml` increments before each flavor build
-  - **When false**: Build number stays unchanged
+  - **When false**: Build number stays unchanged (default behavior)
   - **Note**: Only applies to flavor builds (with environment flags). Plain builds never increment.
   - Examples:
     ```json
-    "auto_increment_build_number": true   // Auto increment (default)
-    "auto_increment_build_number": false  // Disable increment
+    "auto_increment_build_number": true   // Enable auto increment
+    "auto_increment_build_number": false  // Disable increment (default)
     ```
 
 * `output_path` (optional): Path where built files will be copied after build
@@ -204,9 +204,9 @@ dartdosh build apk --production
 # Output: Normal build proceeds
 ```
 
-### 🔢 Automatic Version Management
+### 🔢 Automatic Version Management (Optional)
 
-**When using environment flags** (flavor builds) and `auto_increment_build_number: true` (default), DartDosh automatically:
+**When using environment flags** (flavor builds) and `auto_increment_build_number: true`, DartDosh automatically:
 1. Reads the current version from `pubspec.yaml`
 2. Increments the build number by 1
 3. Updates `pubspec.yaml` with the new build number
@@ -221,8 +221,9 @@ version: 1.2.3+46
 ```
 
 **Notes**:
+- **Default**: `false` (auto increment is disabled by default)
 - Version increment only happens for flavor builds (with environment flag)
-- Can be disabled by setting `auto_increment_build_number: false` in config
+- Enable by setting `auto_increment_build_number: true` in config
 - Plain builds (`dartdosh build apk`) never modify version numbers
 
 ### 📦 Smart File Naming

@@ -69,7 +69,7 @@ class BuildManager {
     // Build boshlashdan oldin pubspec.yaml da build number oshirish
     // Only increment if environment is specified (flavor builds) and auto_increment is enabled
     final autoIncrement =
-        config['auto_increment_build_number'] as bool? ?? true;
+        config['auto_increment_build_number'] as bool? ?? false;
     if (env != null && autoIncrement) {
       _incrementBuildNumber();
     }
@@ -119,7 +119,7 @@ class BuildManager {
 
     final defaultConfig = {
       "language": "uz",
-      "auto_increment_build_number": true,
+      "auto_increment_build_number": false,
       "output_path": desktopPath,
       "apk": {
         "production": "flutter build apk --release --flavor production",
