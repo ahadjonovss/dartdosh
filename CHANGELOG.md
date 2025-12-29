@@ -1,3 +1,34 @@
+## 0.2.8
+
+### Features
+- 📝 **Shorter File Names**: Build files now use short environment names instead of full names
+- 🎯 **Clean Naming**: Files are named as `{shortEnv}_{version}_{buildNumber}.{ext}` (e.g., `prod_1.0.9_2155.apk`)
+- ✨ **Consistent Format**: All flavor builds follow the same compact naming pattern
+
+### Changes
+- Environment name mapping: `production` → `prod`, `development` → `dev`, `staging` → `stg`
+- Removed target name from flavor build file names for cleaner output
+- File extension indicates the type (`.apk`, `.ipa`, `.aab`)
+
+### Examples
+**Before:**
+```
+apk_production_1.0.9_2155.apk
+ipa_staging_2.0.0_12.ipa
+```
+
+**After:**
+```
+prod_1.0.9_2155.apk
+stg_2.0.0_12.ipa
+```
+
+**Split APKs:**
+```
+prod_1.0.9_2155_arm64-v8a.apk
+prod_1.0.9_2155_armeabi-v7a.apk
+```
+
 ## 0.2.7
 
 ### Changes

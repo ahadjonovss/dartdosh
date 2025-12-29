@@ -309,6 +309,15 @@ class BuildManager {
     }
   }
 
+  // Get short environment name
+  String _getShortEnvName(String env) {
+    final envLower = env.toLowerCase();
+    if (envLower == 'production') return 'prod';
+    if (envLower == 'development') return 'dev';
+    if (envLower == 'staging') return 'stg';
+    return envLower; // fallback to original if unknown
+  }
+
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
   void _renameAndMoveOutputFile(
       String target, String env, Map<String, dynamic> config) {
@@ -317,8 +326,9 @@ class BuildManager {
       final version = versionInfo['version']!;
       final buildNumber = versionInfo['build']!;
 
-      // Format: target_env_version_buildNumber
-      final newName = '${target}_${env.toLowerCase()}_${version}_$buildNumber';
+      // Format: shortEnv_version_buildNumber (e.g., prod_1.0.9_2155)
+      final shortEnv = _getShortEnvName(env);
+      final newName = '${shortEnv}_${version}_$buildNumber';
 
       // Config dan output_path olish
       String? outputPath = config['output_path'] as String?;

@@ -230,18 +230,23 @@ version: 1.2.3+46
 
 **For flavor builds** (with environment flags), built files are automatically renamed using the format:
 ```
-{target}_{environment}_{version}_{buildNumber}.{extension}
+{shortEnv}_{version}_{buildNumber}.{extension}
 ```
 
+**Environment short names:**
+- `production` → `prod`
+- `development` → `dev`
+- `staging` → `stg`
+
 **Examples:**
-* `apk_production_1.2.3_46.apk`
-* `ipa_staging_2.0.0_12.ipa`
-* `appbundle_development_1.5.0_78.aab`
+* `prod_1.2.3_46.apk`
+* `stg_2.0.0_12.ipa`
+* `dev_1.5.0_78.aab`
 
 For split APKs:
-* `apk_production_1.2.3_46_arm64-v8a.apk`
-* `apk_production_1.2.3_46_armeabi-v7a.apk`
-* `apk_production_1.2.3_46_x86_64.apk`
+* `prod_1.2.3_46_arm64-v8a.apk`
+* `prod_1.2.3_46_armeabi-v7a.apk`
+* `prod_1.2.3_46_x86_64.apk`
 
 **For plain builds** (without environment), files are renamed using the format:
 ```
