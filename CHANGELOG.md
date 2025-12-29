@@ -1,15 +1,14 @@
 ## 0.3.2
 
-### Bug Fixes
-- 🐛 **Fixed Empty Config File Issue**: Added async/await with delay to ensure file is fully written before opening
-- ✅ **Enhanced File Write Verification**: Now verifies both file existence and file size before opening
-- 🔧 **Improved Write Reliability**: Added 100ms delay after write to ensure file system flush completes
-
 ### Changes
-- Made `_createDefaultConfig()` async with proper await
-- Added `Future.delayed` after write to ensure file system flush
-- Added file size verification (`lengthSync() > 0`) before opening
-- Single write with `flush: true` parameter instead of double write
+- 🔧 **Removed Auto-Open Config**: Config file no longer opens automatically in IDE after creation
+- ✅ **Improved Config Creation**: Added async write with flush to ensure file is properly written
+- 📝 **Better User Experience**: User manually opens and reviews config file instead of auto-open
+
+### Technical
+- Removed `_openConfigFile()` method
+- Made `_createDefaultConfig()` async with `flush: true` parameter
+- Added 100ms delay after write to ensure file system flush
 
 ## 0.3.1
 

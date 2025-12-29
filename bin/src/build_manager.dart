@@ -26,11 +26,7 @@ class BuildManager {
 
     if (!configFile.existsSync()) {
       await _createDefaultConfig(configFile);
-      // Verify file was written with content before opening
-      if (configFile.existsSync() && configFile.lengthSync() > 0) {
-        _openConfigFile(configFile.path);
-        Logger.log(LogType.buildConfigCreated);
-      }
+      Logger.log(LogType.buildConfigCreated);
       return; // Stop execution, wait for user to review config
     }
 
@@ -161,21 +157,6 @@ class BuildManager {
       }
     } catch (e) {
       print('Error writing config file: $e');
-    }
-  }
-
-  // Open config file in default editor
-  void _openConfigFile(String filePath) {
-    try {
-      if (Platform.isMacOS) {
-        Process.run('open', [filePath]);
-      } else if (Platform.isLinux) {
-        Process.run('xdg-open', [filePath]);
-      } else if (Platform.isWindows) {
-        Process.run('start', [filePath], runInShell: true);
-      }
-    } catch (e) {
-      // Ignore errors - file opening is optional
     }
   }
 
