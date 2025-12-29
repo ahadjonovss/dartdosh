@@ -26,6 +26,9 @@ class BuildManager {
 
     if (!configFile.existsSync()) {
       _createDefaultConfig(configFile);
+      _openConfigFile(configFile.path);
+      Logger.log(LogType.buildConfigCreated);
+      return; // Stop execution, wait for user to review config
     }
 
     final config = jsonDecode(configFile.readAsStringSync());
@@ -64,8 +67,10 @@ class BuildManager {
     }
 
     // Build boshlashdan oldin pubspec.yaml da build number oshirish
-    // Only increment if environment is specified (flavor builds)
-    if (env != null) {
+    // Only increment if environment is specified (flavor builds) and auto_increment is enabled
+    final autoIncrement =
+        config['auto_increment_build_number'] as bool? ?? true;
+    if (env != null && autoIncrement) {
       _incrementBuildNumber();
     }
 
@@ -114,6 +119,7 @@ class BuildManager {
 
     final defaultConfig = {
       "language": "uz",
+      "auto_increment_build_number": true,
       "output_path": desktopPath,
       "apk": {
         "production": "flutter build apk --release --flavor production",
@@ -137,6 +143,21 @@ class BuildManager {
 
     Logger.log(LogType.fileSaved, path: configFile.path);
     Logger.log(LogType.outputDirCreated, path: desktopPath);
+  }
+
+  // Open config file in default editor
+  void _openConfigFile(String filePath) {
+    try {
+      if (Platform.isMacOS) {
+        Process.run('open', [filePath]);
+      } else if (Platform.isLinux) {
+        Process.run('xdg-open', [filePath]);
+      } else if (Platform.isWindows) {
+        Process.run('start', [filePath], runInShell: true);
+      }
+    } catch (e) {
+      // Ignore errors - file opening is optional
+    }
   }
 
   /// Handles process output with progress bar

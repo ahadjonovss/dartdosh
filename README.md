@@ -69,6 +69,7 @@ The `build_config.json` file is automatically created with default settings when
 ```json
 {
   "language": "uz",
+  "auto_increment_build_number": true,
   "output_path": "~/Desktop/dartdosh-builds",
   "apk": {
     "production": "flutter build apk --release --flavor production",
@@ -98,6 +99,18 @@ The `build_config.json` file is automatically created with default settings when
     "language": "en"  // English interface
     "language": "ru"  // Russian interface
     "language": "uz"  // Uzbek interface (default)
+    ```
+
+* `auto_increment_build_number` (optional): Control automatic build number increment
+  - **Type**: `boolean`
+  - **Default**: `true`
+  - **When true**: Build number in `pubspec.yaml` increments before each flavor build
+  - **When false**: Build number stays unchanged
+  - **Note**: Only applies to flavor builds (with environment flags). Plain builds never increment.
+  - Examples:
+    ```json
+    "auto_increment_build_number": true   // Auto increment (default)
+    "auto_increment_build_number": false  // Disable increment
     ```
 
 * `output_path` (optional): Path where built files will be copied after build
@@ -173,25 +186,44 @@ DartDosh supports three languages for all interface messages and progress indica
 ```
 
 ### 🤖 Auto Configuration
-If `build_config.json` doesn't exist in your Flutter project, DartDosh will automatically create it with sensible defaults on first run.
+When `build_config.json` doesn't exist in your Flutter project, DartDosh will:
+1. **Create the config** with sensible defaults
+2. **Open it in your IDE** automatically for review
+3. **Stop execution** and prompt you to re-run the command
+
+This ensures you can review and adjust the configuration before your first build.
+
+**Example workflow:**
+```bash
+# First run (no config exists)
+dartdosh build apk --production
+# Output: Config created and opened in IDE, please review and run again
+
+# Second run (config reviewed)
+dartdosh build apk --production
+# Output: Normal build proceeds
+```
 
 ### 🔢 Automatic Version Management
 
-**When using environment flags** (flavor builds), DartDosh automatically:
+**When using environment flags** (flavor builds) and `auto_increment_build_number: true` (default), DartDosh automatically:
 1. Reads the current version from `pubspec.yaml`
 2. Increments the build number by 1
 3. Updates `pubspec.yaml` with the new build number
 
 **Example:**
 ```yaml
-# Before build (with environment flag)
+# Before build (with environment flag and auto_increment enabled)
 version: 1.2.3+45
 
 # After build
 version: 1.2.3+46
 ```
 
-**Note**: Version management only happens when environment flag is specified. Plain builds (`dartdosh build apk`) don't modify version numbers.
+**Notes**:
+- Version increment only happens for flavor builds (with environment flag)
+- Can be disabled by setting `auto_increment_build_number: false` in config
+- Plain builds (`dartdosh build apk`) never modify version numbers
 
 ### 📦 Smart File Naming
 

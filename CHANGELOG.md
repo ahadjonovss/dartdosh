@@ -1,3 +1,41 @@
+## 0.2.6
+
+### Features
+- 🎯 **Better Config Creation UX**: When build_config.json doesn't exist, it's created and opened in IDE
+- 🛑 **Smart Config Workflow**: Execution stops after config creation, prompting user to review and re-run
+- ⚙️ **Optional Build Number Increment**: Added `auto_increment_build_number` boolean field in config (default: true)
+
+### Changes
+- Config file now automatically opens in default IDE when created
+- Added `buildConfigCreated` LogType with instructions to review config and re-run
+- Build number increment can be disabled by setting `auto_increment_build_number: false` in build_config.json
+- Execution stops after config creation instead of continuing with build
+
+### Configuration
+```json
+{
+  "language": "uz",
+  "auto_increment_build_number": true,  // New field
+  "output_path": "~/Desktop/dartdosh-builds",
+  ...
+}
+```
+
+### Examples
+```bash
+# First run - creates config and stops
+dartdosh build apk --production
+# Output: Config created, opened in IDE, asks to re-run
+
+# Second run - proceeds with build
+dartdosh build apk --production
+# Output: Normal build process
+
+# Disable auto increment in config
+"auto_increment_build_number": false
+# Build runs without incrementing version
+```
+
 ## 0.2.5
 
 ### Features

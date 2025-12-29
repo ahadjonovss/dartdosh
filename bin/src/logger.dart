@@ -8,6 +8,7 @@ enum LogType {
   error,
   finished,
   buildConfigIsNotExist,
+  buildConfigCreated,
   running,
   donation,
   buildNumberIncremented,
@@ -105,6 +106,11 @@ class Logger {
         '📝 build_config.json yo\'q, default config yaratdim, Xo\'jayiin!',
         'ℹ️ Konfiguratsiya yaratilmoqda, Xo\'jayiin!'
       ],
+      LogType.buildConfigCreated: [
+        '\n📋 Xo\'jayiin, build_config.json yaratib qo\'ydim!\n✅ Iltimos, tekshirib ko\'ring va to\'g\'ri bo\'lsa commandni qayta run qiling.\n💼 Xizmatizga tayyorman, Xo\'jayiin!',
+        '\n📝 Build config tayyor, Xo\'jayiin!\n🔍 Configni tekshirib, keyin qayta ishga tushiring.\n🚀 Buyruq kutmoqdaman, Xo\'jayiin!',
+        '\n✨ Default config yaratdim, Xo\'jayiin!\n📖 Ko\'rib chiqing va mos bo\'lsa, commandni qaytadan bajaring.\n⚡ Tayyor turaman, Xo\'jayiin!'
+      ],
       LogType.running: [
         '🔄 Ishga tushirilmoqda: {command}, Xo\'jayiin!',
         '⏳ Komanda bajarilmoqda: {command}, Xo\'jayiin!',
@@ -164,6 +170,11 @@ class Logger {
         '📝 build_config.json missing, created default config, Boss!',
         'ℹ️ Creating configuration, Boss!'
       ],
+      LogType.buildConfigCreated: [
+        '\n📋 Boss, I created build_config.json for you!\n✅ Please review it and if correct, run the command again.\n💼 Ready to serve, Boss!',
+        '\n📝 Build config ready, Boss!\n🔍 Check the config, then run again.\n🚀 Awaiting your command, Boss!',
+        '\n✨ Default config created, Boss!\n📖 Review it and if suitable, execute the command again.\n⚡ Standing by, Boss!'
+      ],
       LogType.running: [
         '🔄 Running: {command}, Boss!',
         '⏳ Executing command: {command}, Boss!',
@@ -222,6 +233,11 @@ class Logger {
         '⚠️ Конфиг сборки не найден, создаю стандартный, Босс!',
         '📝 build_config.json отсутствует, создал стандартный конфиг, Босс!',
         'ℹ️ Создаю конфигурацию, Босс!'
+      ],
+      LogType.buildConfigCreated: [
+        '\n📋 Босс, создал build_config.json для тебя!\n✅ Пожалуйста, проверь и если всё верно, запусти команду снова.\n💼 Готов служить, Босс!',
+        '\n📝 Build config готов, Босс!\n🔍 Проверь конфиг, затем запусти снова.\n🚀 Жду твоей команды, Босс!',
+        '\n✨ Стандартный конфиг создан, Босс!\n📖 Просмотри и если подходит, выполни команду снова.\n⚡ На готове, Босс!'
       ],
       LogType.running: [
         '🔄 Запуск: {command}, Босс!',
@@ -308,6 +324,7 @@ class Logger {
       case LogType.info:
       case LogType.finished:
       case LogType.buildConfigIsNotExist:
+      case LogType.buildConfigCreated:
       case LogType.running:
         coloredMessage = _color(message, '33'); // Yellow
         break;
