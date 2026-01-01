@@ -1,3 +1,15 @@
+## 0.4.1
+
+### Improvements
+- 📺 **Video Tutorial**: Added YouTube tutorial link at the top of README.md
+- 🧹 **Simplified Config**: Removed `upload_after_build` field - IPA upload now controlled only by `enabled` flag
+- 📝 **Enhanced Logging**: All upload process messages now use Logger system for multilingual output
+- 🎨 **Consistent Output**: Replaced all `print()` statements with `Logger.log()` calls throughout codebase
+
+### Breaking Changes
+- The `upload_after_build` field has been removed from `ipa_upload` configuration
+- If you have this field in your config, simply remove it - upload is now controlled only by the `enabled` flag
+
 ## 0.4.0
 
 ### Features
