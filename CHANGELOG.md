@@ -1,3 +1,35 @@
+## 0.4.0
+
+### Features
+- 🚀 **IPA Auto Upload to App Store**: Automatically upload IPA files to App Store Connect after build
+- 📤 **Transporter Integration**: Uses `xcrun iTMSTransporter` for reliable uploads
+- ⚙️ **Configurable Upload**: Control upload behavior via `ipa_upload` config object
+- 🔐 **Secure Credentials**: Store Apple ID and App-Specific Password in config
+
+### Configuration
+New `ipa_upload` section in build_config.json:
+```json
+{
+  "ipa_upload": {
+    "enabled": false,              // Enable/disable IPA upload
+    "apple_id": "your@apple.id",   // Your Apple ID
+    "app_specific_password": "xxxx-xxxx-xxxx-xxxx",  // App-specific password
+    "upload_after_build": true     // Upload immediately after build
+  }
+}
+```
+
+### How It Works
+1. Build IPA with dartdosh
+2. If `ipa_upload.enabled` is true and credentials are set
+3. Automatically uploads to App Store Connect using Apple's Transporter
+4. Shows upload progress and results
+
+### Requirements
+- macOS with Xcode installed (for `xcrun iTMSTransporter`)
+- Apple ID with app-specific password
+- Valid iOS distribution certificate and provisioning profile
+
 ## 0.3.3
 
 ### Features

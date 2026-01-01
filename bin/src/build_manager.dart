@@ -122,6 +122,12 @@ class BuildManager {
       "project_name": projectName,
       "auto_increment_build_number": false,
       "output_path": desktopPath,
+      "ipa_upload": {
+        "enabled": false,
+        "apple_id": "",
+        "app_specific_password": "",
+        "upload_after_build": true
+      },
       "apk": {
         "production": "flutter build apk --release --flavor production",
         "staging": "flutter build apk --release --flavor staging",
@@ -378,7 +384,11 @@ class BuildManager {
       if (target == 'apk') {
         _renameAndMoveApk(newName, outputPath);
       } else if (target == 'ipa' || target == 'ios') {
-        _renameAndMoveIpa(newName, outputPath);
+        final ipaPath = _renameAndMoveIpa(newName, outputPath);
+        // Upload IPA to App Store if enabled
+        if (ipaPath != null) {
+          _uploadIpaIfEnabled(ipaPath, config);
+        }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
       }
@@ -505,7 +515,7 @@ class BuildManager {
     }
   }
 
-  void _renameAndMoveIpa(String newName, String? outputPath) {
+  String? _renameAndMoveIpa(String newName, String? outputPath) {
     final dir = Directory('${Directory.current.path}/build/ios/ipa');
 
     if (dir.existsSync()) {
@@ -513,22 +523,26 @@ class BuildManager {
       for (final file in ipaFiles) {
         if (file is File) {
           final fileName = '$newName.ipa';
+          String finalPath;
 
           if (outputPath != null && outputPath.isNotEmpty) {
             // Output path ga ko'chirish
             final destinationPath = '$outputPath/$fileName';
             file.copySync(destinationPath);
             Logger.log(LogType.fileSaved, path: destinationPath);
+            finalPath = destinationPath;
           } else {
             // Faqat rename qilish
             final newPath = '${file.parent.path}/$fileName';
             file.renameSync(newPath);
             Logger.log(LogType.fileSaved, path: fileName);
+            finalPath = newPath;
           }
-          return;
+          return finalPath; // Return path for upload
         }
       }
     }
+    return null;
   }
 
   void _renameAndMoveAab(String newName, String? outputPath) {
@@ -557,6 +571,78 @@ class BuildManager {
         }
         return;
       }
+    }
+  }
+
+  // IPA faylni App Store Connect ga yuklash
+  Future<void> _uploadIpaIfEnabled(
+      String ipaPath, Map<String, dynamic> config) async {
+    try {
+      // Config dan ipa_upload sozlamalarini olish
+      final ipaUploadConfig = config['ipa_upload'] as Map<String, dynamic>?;
+
+      if (ipaUploadConfig == null) {
+        return; // Config yo'q - skip
+      }
+
+      final enabled = ipaUploadConfig['enabled'] as bool? ?? false;
+      final uploadAfterBuild =
+          ipaUploadConfig['upload_after_build'] as bool? ?? true;
+
+      if (!enabled || !uploadAfterBuild) {
+        return; // Upload o'chirilgan
+      }
+
+      final appleId = ipaUploadConfig['apple_id'] as String? ?? '';
+      final appPassword =
+          ipaUploadConfig['app_specific_password'] as String? ?? '';
+
+      // Credentials tekshirish
+      if (appleId.isEmpty || appPassword.isEmpty) {
+        print('\n⚠️  IPA upload enabled but credentials not set!');
+        print(
+            'Please add your Apple ID and App-Specific Password to build_config.json');
+        print('ipa_upload: {');
+        print('  "enabled": true,');
+        print('  "apple_id": "your@apple.id",');
+        print('  "app_specific_password": "xxxx-xxxx-xxxx-xxxx"');
+        print('}');
+        return;
+      }
+
+      print('\n📤 Uploading IPA to App Store Connect...');
+      print('File: $ipaPath');
+      print('Apple ID: $appleId');
+
+      // xcrun iTMSTransporter command
+      final result = await Process.run(
+        'xcrun',
+        [
+          'iTMSTransporter',
+          '-m',
+          'upload',
+          '-f',
+          ipaPath,
+          '-u',
+          appleId,
+          '-p',
+          appPassword,
+          '-t',
+          'ios',
+        ],
+        runInShell: true,
+      );
+
+      if (result.exitCode == 0) {
+        print('✅ IPA successfully uploaded to App Store Connect!');
+        print(result.stdout);
+      } else {
+        print('❌ Failed to upload IPA');
+        print('Error: ${result.stderr}');
+        print('Output: ${result.stdout}');
+      }
+    } catch (e) {
+      print('❌ Upload error: $e');
     }
   }
 }

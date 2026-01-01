@@ -72,6 +72,12 @@ The `build_config.json` file is automatically created with default settings when
   "project_name": "my_app",
   "auto_increment_build_number": false,
   "output_path": "~/Desktop/dartdosh-builds",
+  "ipa_upload": {
+    "enabled": false,
+    "apple_id": "",
+    "app_specific_password": "",
+    "upload_after_build": true
+  },
   "apk": {
     "production": "flutter build apk --release --flavor production",
     "staging": "flutter build apk --release --flavor staging",
@@ -147,6 +153,30 @@ The `build_config.json` file is automatically created with default settings when
   - Can be absolute path (`/Users/you/releases`) or relative to project (`releases`)
   - Directory will be created automatically if it doesn't exist
   - Default: `~/Desktop/dartdosh-builds`
+
+* `ipa_upload` (optional): Configuration for automatic IPA upload to App Store Connect
+  - **Type**: `object`
+  - **Default**: `{ "enabled": false, ... }`
+  - **Fields**:
+    - `enabled` (boolean): Enable/disable automatic upload
+    - `apple_id` (string): Your Apple ID email
+    - `app_specific_password` (string): App-specific password from Apple ID settings
+    - `upload_after_build` (boolean): Upload immediately after successful build
+  - **Requirements**: macOS with Xcode installed
+  - **Example**:
+    ```json
+    "ipa_upload": {
+      "enabled": true,
+      "apple_id": "developer@example.com",
+      "app_specific_password": "abcd-efgh-ijkl-mnop",
+      "upload_after_build": true
+    }
+    ```
+  - **How to get App-Specific Password**:
+    1. Go to https://appleid.apple.com
+    2. Sign in with your Apple ID
+    3. In Security section, click "Generate Password" under App-Specific Passwords
+    4. Give it a name (e.g., "DartDosh") and copy the generated password
 
 ---
 
