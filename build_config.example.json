@@ -6,8 +6,7 @@
   "ipa_upload": {
     "enabled": false,
     "apple_id": "your@apple.id",
-    "app_specific_password": "xxxx-xxxx-xxxx-xxxx",
-    "upload_after_build": true
+    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
   },
   "apk": {
     "production": "flutter build apk --release --flavor production",

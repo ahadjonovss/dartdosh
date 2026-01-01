@@ -2,6 +2,14 @@
 
 `DartDosh` is a powerful CLI tool for simplifying Flutter builds with automatic version management, multi-language support, and smart output handling.
 
+## 📺 Video Tutorial
+
+[![DartDosh Tutorial](https://img.youtube.com/vi/QpNVwk4SVZA/maxresdefault.jpg)](https://youtu.be/QpNVwk4SVZA?si=kV7kTtHcnZLfv1ZP)
+
+Watch the full tutorial on YouTube: [DartDosh - Flutter Build Automation](https://youtu.be/QpNVwk4SVZA?si=kV7kTtHcnZLfv1ZP)
+
+---
+
 ```bash
 dartdosh build <target> --<environment> [extra flags]
 ```
@@ -75,8 +83,7 @@ The `build_config.json` file is automatically created with default settings when
   "ipa_upload": {
     "enabled": false,
     "apple_id": "",
-    "app_specific_password": "",
-    "upload_after_build": true
+    "app_specific_password": ""
   },
   "apk": {
     "production": "flutter build apk --release --flavor production",
@@ -161,15 +168,13 @@ The `build_config.json` file is automatically created with default settings when
     - `enabled` (boolean): Enable/disable automatic upload
     - `apple_id` (string): Your Apple ID email
     - `app_specific_password` (string): App-specific password from Apple ID settings
-    - `upload_after_build` (boolean): Upload immediately after successful build
   - **Requirements**: macOS with Xcode installed
   - **Example**:
     ```json
     "ipa_upload": {
       "enabled": true,
       "apple_id": "developer@example.com",
-      "app_specific_password": "abcd-efgh-ijkl-mnop",
-      "upload_after_build": true
+      "app_specific_password": "abcd-efgh-ijkl-mnop"
     }
     ```
   - **How to get App-Specific Password**:
@@ -381,8 +386,7 @@ Open your `build_config.json` and add/update the `ipa_upload` section:
   "ipa_upload": {
     "enabled": true,                                    // ← Set to true
     "apple_id": "developer@example.com",                // ← Your Apple ID
-    "app_specific_password": "abcd-efgh-ijkl-mnop",    // ← Paste generated password
-    "upload_after_build": true                          // ← Upload immediately after build
+    "app_specific_password": "abcd-efgh-ijkl-mnop"     // ← Paste generated password
   }
 }
 ```
@@ -419,7 +423,6 @@ Apple ID: developer@example.com
 | `enabled` | boolean | `false` | Enable/disable automatic upload |
 | `apple_id` | string | `""` | Your Apple ID email address |
 | `app_specific_password` | string | `""` | App-specific password from Apple ID |
-| `upload_after_build` | boolean | `true` | Upload immediately after successful build |
 
 ### Troubleshooting
 
@@ -472,8 +475,7 @@ To disable automatic upload while keeping your credentials:
 "ipa_upload": {
   "enabled": false,  // ← Just set to false
   "apple_id": "developer@example.com",
-  "app_specific_password": "abcd-efgh-ijkl-mnop",
-  "upload_after_build": true
+  "app_specific_password": "abcd-efgh-ijkl-mnop"
 }
 ```
 

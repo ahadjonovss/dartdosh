@@ -13,7 +13,11 @@ enum LogType {
   donation,
   buildNumberIncremented,
   fileSaved,
-  outputDirCreated
+  outputDirCreated,
+  uploadStarting,
+  uploadSuccess,
+  uploadFailed,
+  uploadCredentialsMissing
 }
 
 class Logger {
@@ -143,6 +147,26 @@ class Logger {
         '🗂️ Yangi papka tuzildi: {path}, Xo\'jayiin!',
         '✨ Output papka tayyor: {path}, Xo\'jayiin!'
       ],
+      LogType.uploadStarting: [
+        '📤 IPA fayl App Store Connect ga yuklanmoqda, Xo\'jayiin...',
+        '🚀 Transporter ishga tushdi, IPA yuklanmoqda, Xo\'jayiin...',
+        '⬆️ Upload jarayoni boshlandi, Xo\'jayiin...'
+      ],
+      LogType.uploadSuccess: [
+        '✅ IPA muvaffaqiyatli App Store Connect ga yuklandi, Xo\'jayiin!',
+        '🎉 Upload tayyor! IPA App Store da, Xo\'jayiin!',
+        '🏆 Fayl muvaffaqiyatli yuklandi, Xo\'jayiin!'
+      ],
+      LogType.uploadFailed: [
+        '❌ IPA upload xatolik bilan yakunlandi, Xo\'jayiin!',
+        '💥 Upload muvaffaqiyatsiz, Xo\'jayiin!',
+        '⚠️ Faylni yuklashda muammo, Xo\'jayiin!'
+      ],
+      LogType.uploadCredentialsMissing: [
+        '⚠️ Upload yoqilgan, lekin Apple ID yoki parol kiritilmagan, Xo\'jayiin!',
+        '🔐 Credentials topilmadi! build_config.json ga Apple ID va parol qo\'shing, Xo\'jayiin!',
+        '⚡ Yuklash uchun Apple ID kerak, Xo\'jayiin!'
+      ],
     },
     'en': {
       LogType.start: [
@@ -206,6 +230,26 @@ class Logger {
         '📁 Output directory created: {path}, Boss!',
         '🗂️ New folder created: {path}, Boss!',
         '✨ Output folder ready: {path}, Boss!'
+      ],
+      LogType.uploadStarting: [
+        '📤 Uploading IPA to App Store Connect, Boss...',
+        '🚀 Transporter started, uploading IPA, Boss...',
+        '⬆️ Upload process initiated, Boss...'
+      ],
+      LogType.uploadSuccess: [
+        '✅ IPA successfully uploaded to App Store Connect, Boss!',
+        '🎉 Upload complete! IPA is on App Store, Boss!',
+        '🏆 File uploaded successfully, Boss!'
+      ],
+      LogType.uploadFailed: [
+        '❌ IPA upload failed, Boss!',
+        '💥 Upload unsuccessful, Boss!',
+        '⚠️ Problem uploading file, Boss!'
+      ],
+      LogType.uploadCredentialsMissing: [
+        '⚠️ Upload enabled but Apple ID or password missing, Boss!',
+        '🔐 Credentials not found! Add Apple ID and password to build_config.json, Boss!',
+        '⚡ Apple ID required for upload, Boss!'
       ],
     },
     'ru': {
@@ -271,6 +315,26 @@ class Logger {
         '🗂️ Новая папка создана: {path}, Босс!',
         '✨ Выходная папка готова: {path}, Босс!'
       ],
+      LogType.uploadStarting: [
+        '📤 Загрузка IPA в App Store Connect, Босс...',
+        '🚀 Transporter запущен, загружается IPA, Босс...',
+        '⬆️ Процесс загрузки начат, Босс...'
+      ],
+      LogType.uploadSuccess: [
+        '✅ IPA успешно загружен в App Store Connect, Босс!',
+        '🎉 Загрузка завершена! IPA в App Store, Босс!',
+        '🏆 Файл успешно загружен, Босс!'
+      ],
+      LogType.uploadFailed: [
+        '❌ Загрузка IPA не удалась, Босс!',
+        '💥 Загрузка неудачна, Босс!',
+        '⚠️ Проблема с загрузкой файла, Босс!'
+      ],
+      LogType.uploadCredentialsMissing: [
+        '⚠️ Загрузка включена, но Apple ID или пароль отсутствуют, Босс!',
+        '🔐 Учётные данные не найдены! Добавьте Apple ID и пароль в build_config.json, Босс!',
+        '⚡ Для загрузки требуется Apple ID, Босс!'
+      ],
     },
   };
 
@@ -313,9 +377,11 @@ class Logger {
       case LogType.buildNumberIncremented:
       case LogType.fileSaved:
       case LogType.outputDirCreated:
+      case LogType.uploadSuccess:
         coloredMessage = _color(message, '32'); // Green
         break;
       case LogType.error:
+      case LogType.uploadFailed:
         coloredMessage = _color(message, '31'); // Red
         break;
       case LogType.donation:
@@ -326,6 +392,8 @@ class Logger {
       case LogType.buildConfigIsNotExist:
       case LogType.buildConfigCreated:
       case LogType.running:
+      case LogType.uploadStarting:
+      case LogType.uploadCredentialsMissing:
         coloredMessage = _color(message, '33'); // Yellow
         break;
     }

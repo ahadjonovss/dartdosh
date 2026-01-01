@@ -125,8 +125,7 @@ class BuildManager {
       "ipa_upload": {
         "enabled": false,
         "apple_id": "",
-        "app_specific_password": "",
-        "upload_after_build": true
+        "app_specific_password": ""
       },
       "apk": {
         "production": "flutter build apk --release --flavor production",
@@ -158,11 +157,9 @@ class BuildManager {
       if (configFile.existsSync() && configFile.lengthSync() > 0) {
         Logger.log(LogType.fileSaved, path: configFile.path);
         Logger.log(LogType.outputDirCreated, path: desktopPath);
-      } else {
-        print('Error: Config file was not written correctly');
       }
     } catch (e) {
-      print('Error writing config file: $e');
+      // Silent error - config will be created on next run
     }
   }
 
@@ -586,10 +583,8 @@ class BuildManager {
       }
 
       final enabled = ipaUploadConfig['enabled'] as bool? ?? false;
-      final uploadAfterBuild =
-          ipaUploadConfig['upload_after_build'] as bool? ?? true;
 
-      if (!enabled || !uploadAfterBuild) {
+      if (!enabled) {
         return; // Upload o'chirilgan
       }
 
@@ -599,20 +594,11 @@ class BuildManager {
 
       // Credentials tekshirish
       if (appleId.isEmpty || appPassword.isEmpty) {
-        print('\n⚠️  IPA upload enabled but credentials not set!');
-        print(
-            'Please add your Apple ID and App-Specific Password to build_config.json');
-        print('ipa_upload: {');
-        print('  "enabled": true,');
-        print('  "apple_id": "your@apple.id",');
-        print('  "app_specific_password": "xxxx-xxxx-xxxx-xxxx"');
-        print('}');
+        Logger.log(LogType.uploadCredentialsMissing);
         return;
       }
 
-      print('\n📤 Uploading IPA to App Store Connect...');
-      print('File: $ipaPath');
-      print('Apple ID: $appleId');
+      Logger.log(LogType.uploadStarting, path: ipaPath);
 
       // xcrun iTMSTransporter command
       final result = await Process.run(
@@ -634,15 +620,12 @@ class BuildManager {
       );
 
       if (result.exitCode == 0) {
-        print('✅ IPA successfully uploaded to App Store Connect!');
-        print(result.stdout);
+        Logger.log(LogType.uploadSuccess);
       } else {
-        print('❌ Failed to upload IPA');
-        print('Error: ${result.stderr}');
-        print('Output: ${result.stdout}');
+        Logger.log(LogType.uploadFailed);
       }
     } catch (e) {
-      print('❌ Upload error: $e');
+      Logger.log(LogType.uploadFailed);
     }
   }
 }

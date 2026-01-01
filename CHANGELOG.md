@@ -3,8 +3,10 @@
 ### Features
 - 🚀 **IPA Auto Upload to App Store**: Automatically upload IPA files to App Store Connect after build
 - 📤 **Transporter Integration**: Uses `xcrun iTMSTransporter` for reliable uploads
-- ⚙️ **Configurable Upload**: Control upload behavior via `ipa_upload` config object
+- ⚙️ **Configurable Upload**: Control upload behavior via `ipa_upload.enabled` flag
 - 🔐 **Secure Credentials**: Store Apple ID and App-Specific Password in config
+- 🎨 **Localized Upload Logs**: Upload process messages in Uzbek, English, and Russian
+- 📝 **Clean Logging**: All messages use Logger system for consistent multilingual output
 
 ### Configuration
 New `ipa_upload` section in build_config.json:
@@ -13,8 +15,7 @@ New `ipa_upload` section in build_config.json:
   "ipa_upload": {
     "enabled": false,              // Enable/disable IPA upload
     "apple_id": "your@apple.id",   // Your Apple ID
-    "app_specific_password": "xxxx-xxxx-xxxx-xxxx",  // App-specific password
-    "upload_after_build": true     // Upload immediately after build
+    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"  // App-specific password
   }
 }
 ```
@@ -23,12 +24,18 @@ New `ipa_upload` section in build_config.json:
 1. Build IPA with dartdosh
 2. If `ipa_upload.enabled` is true and credentials are set
 3. Automatically uploads to App Store Connect using Apple's Transporter
-4. Shows upload progress and results
+4. Shows localized upload progress and results
 
 ### Requirements
 - macOS with Xcode installed (for `xcrun iTMSTransporter`)
 - Apple ID with app-specific password
 - Valid iOS distribution certificate and provisioning profile
+
+### Technical Changes
+- Removed `upload_after_build` field (simplified to just `enabled`)
+- Added 4 new LogTypes: `uploadStarting`, `uploadSuccess`, `uploadFailed`, `uploadCredentialsMissing`
+- All upload messages now support uz/en/ru languages
+- Replaced all `print()` calls with `Logger.log()` for consistency
 
 ## 0.3.3
 
