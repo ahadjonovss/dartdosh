@@ -346,6 +346,139 @@ Without `output_path`:
 
 ---
 
+## 🚀 IPA Auto Upload to App Store Connect
+
+DartDosh can automatically upload your IPA files to App Store Connect after a successful build using Apple's official Transporter tool.
+
+### Prerequisites
+
+1. **macOS with Xcode installed** - Required for `xcrun iTMSTransporter`
+2. **Valid Apple Developer Account** - With app created in App Store Connect
+3. **Valid Certificates & Provisioning Profiles** - iOS Distribution certificate and provisioning profile
+4. **App-Specific Password** - Generated from Apple ID settings
+
+### Step 1: Generate App-Specific Password
+
+1. Go to https://appleid.apple.com
+2. Sign in with your Apple ID (the one used for App Store Connect)
+3. Navigate to **Security** section
+4. Under **App-Specific Passwords**, click **Generate Password**
+5. Enter a label (e.g., "DartDosh CLI Tool")
+6. Click **Create**
+7. **Copy the generated password** (format: `xxxx-xxxx-xxxx-xxxx`)
+   - ⚠️ Save this password - you can't view it again!
+
+### Step 2: Configure build_config.json
+
+Open your `build_config.json` and add/update the `ipa_upload` section:
+
+```json
+{
+  "language": "uz",
+  "project_name": "my_app",
+  "auto_increment_build_number": false,
+  "output_path": "~/Desktop/dartdosh-builds",
+  "ipa_upload": {
+    "enabled": true,                                    // ← Set to true
+    "apple_id": "developer@example.com",                // ← Your Apple ID
+    "app_specific_password": "abcd-efgh-ijkl-mnop",    // ← Paste generated password
+    "upload_after_build": true                          // ← Upload immediately after build
+  }
+}
+```
+
+### Step 3: Build and Upload
+
+Simply build your IPA as usual:
+
+```bash
+dartdosh build ipa --production
+```
+
+**What happens:**
+1. ✅ Flutter builds the IPA
+2. ✅ DartDosh renames and moves the file
+3. ✅ Automatically uploads to App Store Connect
+4. ✅ Shows upload progress and result
+
+**Example output:**
+```
+✅ ipa build completed successfully, Boss!
+📂 File saved: ~/Desktop/dartdosh-builds/my_app/ipa/prod_1.0.0_100.ipa
+
+📤 Uploading IPA to App Store Connect...
+File: ~/Desktop/dartdosh-builds/my_app/ipa/prod_1.0.0_100.ipa
+Apple ID: developer@example.com
+✅ IPA successfully uploaded to App Store Connect!
+```
+
+### Configuration Options
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `enabled` | boolean | `false` | Enable/disable automatic upload |
+| `apple_id` | string | `""` | Your Apple ID email address |
+| `app_specific_password` | string | `""` | App-specific password from Apple ID |
+| `upload_after_build` | boolean | `true` | Upload immediately after successful build |
+
+### Troubleshooting
+
+**Error: "IPA upload enabled but credentials not set!"**
+- Make sure you've filled in both `apple_id` and `app_specific_password` in config
+
+**Error: "xcrun: error: unable to find utility"**
+- Xcode is not installed or command-line tools are not configured
+- Install Xcode from Mac App Store
+- Run: `xcode-select --install`
+
+**Error: "Authentication failed"**
+- App-specific password might be incorrect or expired
+- Generate a new app-specific password and update config
+- Make sure you're using the correct Apple ID
+
+**Error: "Package upload failed"**
+- Check that your app exists in App Store Connect
+- Verify iOS distribution certificate is valid
+- Ensure provisioning profile matches the build
+
+**Upload is slow or hanging**
+- This is normal for large IPA files (can take several minutes)
+- Check your internet connection
+- The tool will show progress and wait for completion
+
+### Security Notes
+
+⚠️ **Important Security Considerations:**
+
+1. **Don't commit credentials to git**
+   - Add `build_config.json` to `.gitignore`
+   - Never push files containing your app-specific password
+
+2. **App-specific passwords are safer**
+   - They can be revoked individually
+   - Don't give access to your main Apple ID password
+   - Can be regenerated if compromised
+
+3. **Team workflows**
+   - Each developer should use their own Apple ID and password
+   - Or use shared credentials stored in secure password manager
+   - Consider using CI/CD secrets for automated builds
+
+### Disabling Auto Upload
+
+To disable automatic upload while keeping your credentials:
+
+```json
+"ipa_upload": {
+  "enabled": false,  // ← Just set to false
+  "apple_id": "developer@example.com",
+  "app_specific_password": "abcd-efgh-ijkl-mnop",
+  "upload_after_build": true
+}
+```
+
+---
+
 ## Notes
 
 ### Environment Flags
