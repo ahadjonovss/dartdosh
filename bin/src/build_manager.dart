@@ -431,7 +431,11 @@ class BuildManager {
       if (target == 'apk') {
         _renameAndMoveApk(newName, outputPath);
       } else if (target == 'ipa' || target == 'ios') {
-        _renameAndMoveIpa(newName, outputPath);
+        final ipaPath = _renameAndMoveIpa(newName, outputPath);
+        // Upload IPA to App Store if enabled (same for non-env builds)
+        if (ipaPath != null) {
+          _uploadIpaIfEnabled(ipaPath, config);
+        }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
       }

@@ -5,6 +5,7 @@
 - 🧹 **Simplified Config**: Removed `upload_after_build` field - IPA upload now controlled only by `enabled` flag
 - 📝 **Enhanced Logging**: All upload process messages now use Logger system for multilingual output
 - 🎨 **Consistent Output**: Replaced all `print()` statements with `Logger.log()` calls throughout codebase
+- 🚀 **Universal IPA Upload**: IPA upload now works for both flavor and non-flavor builds (with or without environment flags)
 
 ### Breaking Changes
 - The `upload_after_build` field has been removed from `ipa_upload` configuration
