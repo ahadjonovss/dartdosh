@@ -1,3 +1,11 @@
+## 0.5.3
+
+### Bug Fixes
+- 🔧 **IPA Upload Fix**: Switched from iTMSTransporter to altool for IPA uploads
+  - altool accepts `.ipa` files directly (iTMSTransporter expected directories)
+  - Simpler and more reliable upload process
+  - Fixes "is NOT a directory" error from iTMSTransporter
+
 ## 0.5.2
 
 ### Bug Fixes

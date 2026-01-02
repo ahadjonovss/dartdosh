@@ -604,18 +604,19 @@ class BuildManager {
 
       Logger.log(LogType.uploadStarting, path: ipaPath);
 
-      // xcrun iTMSTransporter command
+      // xcrun altool command (newer, simpler method)
       final result = await Process.run(
         'xcrun',
         [
-          'iTMSTransporter',
-          '-m',
-          'upload',
-          '-f',
+          'altool',
+          '--upload-app',
+          '--type',
+          'ios',
+          '--file',
           ipaPath,
-          '-u',
+          '--username',
           appleId,
-          '-p',
+          '--password',
           appPassword,
         ],
         runInShell: true,
