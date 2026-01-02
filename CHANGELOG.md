@@ -1,3 +1,26 @@
+## 0.5.4
+
+### Improvements
+- ⏱️ **Execution Time Tracking**: Now tracks and displays total time for each build command
+  - Shows total execution time at the end with positive motivational messages
+  - Displays time in seconds with one decimal precision
+  - Multilingual support (uz/en/ru) for time messages
+- 📊 **Enhanced Upload Logging**: Improved IPA upload progress visibility
+  - All upload output now uses the Logger system
+  - Removed hardcoded print statements
+  - Shows altool stdout/stderr as structured progress logs
+  - Better error messages during upload failures
+- 🎨 **Clean Logging Architecture**: Converted all print statements to Logger
+  - Consistent multilingual logging throughout the codebase
+  - Added `uploadProgress` and `totalTime` LogType enums
+  - Structured and organized log messages
+
+### Technical Changes
+- Added `Stopwatch` to track build execution time
+- Added `progress` and `time` parameters to Logger.log()
+- Updated switch statement to handle new LogType cases
+- Upload output parsing and line-by-line progress logging
+
 ## 0.5.3
 
 ### Bug Fixes

@@ -22,6 +22,9 @@ class BuildManager {
   /// - Renames and moves output files according to configuration
   Future<void> execute(
       String target, String? env, List<String> extraFlags) async {
+    // Start time tracking
+    final stopwatch = Stopwatch()..start();
+
     final configFile = File('${Directory.current.path}/build_config.json');
 
     if (!configFile.existsSync()) {
@@ -46,6 +49,7 @@ class BuildManager {
 
       if (cmdString.isEmpty) {
         Logger.log(LogType.error, target: target, env: env);
+        stopwatch.stop();
         return;
       }
     }
@@ -98,11 +102,19 @@ class BuildManager {
           _renameAndMoveOutputFileNoEnv(target, config);
         }
         Logger.log(LogType.donation);
+
+        // Stop stopwatch and show total time
+        stopwatch.stop();
+        final totalSeconds =
+            (stopwatch.elapsedMilliseconds / 1000).toStringAsFixed(1);
+        Logger.log(LogType.totalTime, time: totalSeconds);
       } else {
         Logger.log(LogType.error, target: target, env: envDisplay);
+        stopwatch.stop();
       }
     } catch (e) {
       Logger.log(LogType.error, target: target, env: envDisplay);
+      stopwatch.stop();
     }
   }
 
@@ -622,13 +634,28 @@ class BuildManager {
         runInShell: true,
       );
 
-      // Always show stdout and stderr for complete visibility
-      print('\x1B[36m📋 Upload jarayoni detallari:\x1B[0m');
-      print('\x1B[36m[STDOUT]:\x1B[0m');
-      print(result.stdout.toString().isEmpty ? '  (bo\'sh)' : result.stdout);
-      print('\x1B[33m[STDERR]:\x1B[0m');
-      print(result.stderr.toString().isEmpty ? '  (bo\'sh)' : result.stderr);
-      print('\x1B[36m[EXIT CODE]: ${result.exitCode}\x1B[0m');
+      // Show upload output using Logger
+      final stdout = result.stdout.toString();
+      final stderr = result.stderr.toString();
+
+      // Log stdout if not empty
+      if (stdout.isNotEmpty) {
+        // Split by lines and log each line
+        for (final line in stdout.split('\n')) {
+          if (line.trim().isNotEmpty) {
+            Logger.log(LogType.uploadProgress, progress: line.trim());
+          }
+        }
+      }
+
+      // Log stderr if not empty
+      if (stderr.isNotEmpty) {
+        for (final line in stderr.split('\n')) {
+          if (line.trim().isNotEmpty) {
+            Logger.log(LogType.uploadProgress, progress: line.trim());
+          }
+        }
+      }
 
       if (result.exitCode == 0) {
         Logger.log(LogType.uploadSuccess);
@@ -637,7 +664,7 @@ class BuildManager {
       }
     } catch (e) {
       Logger.log(LogType.uploadFailed);
-      print('\x1B[31m   Xato: $e\x1B[0m');
+      Logger.log(LogType.uploadProgress, progress: 'Xato: $e');
     }
   }
 }

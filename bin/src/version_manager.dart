@@ -6,7 +6,7 @@ import 'dart:math';
 ///
 /// Handles version checking, upgrades, and downgrades with fun, localized messages
 class VersionManager {
-  static const String currentVersion = '0.5.3';
+  static const String currentVersion = '0.5.4';
   static const String packageName = 'dartdosh';
 
   static final _random = Random();
@@ -231,7 +231,13 @@ class VersionManager {
     try {
       final args = version != null
           ? ['pub', 'global', 'activate', packageName, version]
-          : ['pub', 'global', 'activate', packageName, '0.4.1']; // Previous version
+          : [
+              'pub',
+              'global',
+              'activate',
+              packageName,
+              '0.4.1'
+            ]; // Previous version
 
       final result = await Process.run('dart', args, runInShell: true);
 

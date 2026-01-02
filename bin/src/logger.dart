@@ -15,9 +15,11 @@ enum LogType {
   fileSaved,
   outputDirCreated,
   uploadStarting,
+  uploadProgress,
   uploadSuccess,
   uploadFailed,
-  uploadCredentialsMissing
+  uploadCredentialsMissing,
+  totalTime
 }
 
 class Logger {
@@ -152,6 +154,9 @@ class Logger {
         '🚀 Transporter ishga tushdi, IPA yuklanmoqda, Xo\'jayiin...',
         '⬆️ Upload jarayoni boshlandi, Xo\'jayiin...'
       ],
+      LogType.uploadProgress: [
+        '⏳ {progress}',
+      ],
       LogType.uploadSuccess: [
         '✅ IPA muvaffaqiyatli App Store Connect ga yuklandi, Xo\'jayiin!',
         '🎉 Upload tayyor! IPA App Store da, Xo\'jayiin!',
@@ -166,6 +171,11 @@ class Logger {
         '⚠️ Upload yoqilgan, lekin Apple ID yoki parol kiritilmagan, Xo\'jayiin!',
         '🔐 Credentials topilmadi! build_config.json ga Apple ID va parol qo\'shing, Xo\'jayiin!',
         '⚡ Yuklash uchun Apple ID kerak, Xo\'jayiin!'
+      ],
+      LogType.totalTime: [
+        '⏱️  Umumiy vaqt: {time} soniya. Siz uchun {time} soniya mehnat qildim, Xo\'jayiin! 💪',
+        '🎯 Jarayon {time} soniyada tugadi. Vaqtingizni tejadim, Xo\'jayiin! ⚡',
+        '✨ {time} soniyada hammasi tayyor! Sizga xizmat qilish baxt, Xo\'jayiin! 🚀'
       ],
     },
     'en': {
@@ -236,6 +246,9 @@ class Logger {
         '🚀 Transporter started, uploading IPA, Boss...',
         '⬆️ Upload process initiated, Boss...'
       ],
+      LogType.uploadProgress: [
+        '⏳ {progress}',
+      ],
       LogType.uploadSuccess: [
         '✅ IPA successfully uploaded to App Store Connect, Boss!',
         '🎉 Upload complete! IPA is on App Store, Boss!',
@@ -250,6 +263,11 @@ class Logger {
         '⚠️ Upload enabled but Apple ID or password missing, Boss!',
         '🔐 Credentials not found! Add Apple ID and password to build_config.json, Boss!',
         '⚡ Apple ID required for upload, Boss!'
+      ],
+      LogType.totalTime: [
+        '⏱️  Total time: {time} seconds. I worked {time} seconds for you, Boss! 💪',
+        '🎯 Process completed in {time} seconds. Saved your time, Boss! ⚡',
+        '✨ Everything ready in {time} seconds! Happy to serve you, Boss! 🚀'
       ],
     },
     'ru': {
@@ -320,6 +338,9 @@ class Logger {
         '🚀 Transporter запущен, загружается IPA, Босс...',
         '⬆️ Процесс загрузки начат, Босс...'
       ],
+      LogType.uploadProgress: [
+        '⏳ {progress}',
+      ],
       LogType.uploadSuccess: [
         '✅ IPA успешно загружен в App Store Connect, Босс!',
         '🎉 Загрузка завершена! IPA в App Store, Босс!',
@@ -335,6 +356,11 @@ class Logger {
         '🔐 Учётные данные не найдены! Добавьте Apple ID и пароль в build_config.json, Босс!',
         '⚡ Для загрузки требуется Apple ID, Босс!'
       ],
+      LogType.totalTime: [
+        '⏱️  Общее время: {time} секунд. Я работал {time} секунд для вас, Босс! 💪',
+        '🎯 Процесс завершён за {time} секунд. Сэкономил ваше время, Босс! ⚡',
+        '✨ Всё готово за {time} секунд! Рад служить вам, Босс! 🚀'
+      ],
     },
   };
 
@@ -348,7 +374,9 @@ class Logger {
       String command = '',
       String oldBuild = '',
       String newBuild = '',
-      String path = ''}) {
+      String path = '',
+      String progress = '',
+      String time = ''}) {
     final messages = _translations[_currentLanguage];
     if (messages == null) return;
 
@@ -363,7 +391,9 @@ class Logger {
         .replaceAll('{command}', command)
         .replaceAll('{oldBuild}', oldBuild)
         .replaceAll('{newBuild}', newBuild)
-        .replaceAll('{path}', path);
+        .replaceAll('{path}', path)
+        .replaceAll('{progress}', progress)
+        .replaceAll('{time}', time);
 
     String coloredMessage;
     switch (type) {
@@ -378,6 +408,7 @@ class Logger {
       case LogType.fileSaved:
       case LogType.outputDirCreated:
       case LogType.uploadSuccess:
+      case LogType.totalTime:
         coloredMessage = _color(message, '32'); // Green
         break;
       case LogType.error:
@@ -393,6 +424,7 @@ class Logger {
       case LogType.buildConfigCreated:
       case LogType.running:
       case LogType.uploadStarting:
+      case LogType.uploadProgress:
       case LogType.uploadCredentialsMissing:
         coloredMessage = _color(message, '33'); // Yellow
         break;
