@@ -1,3 +1,22 @@
+## 0.5.5
+
+### Improvements
+- 🔧 **Complete Default Config**: Added development flavor to IPA builds in default config
+  - Now all build types (APK, IPA, AAB) have production, staging, and development flavors
+  - Consistent configuration across all platforms
+- 📋 **Better Log Ordering**: Donation message now appears at the very end after total time
+  - More logical flow: success → time → donation
+
+### Configuration
+Default config now includes:
+```json
+"ipa": {
+  "production": "flutter build ipa --release --flavor production",
+  "staging": "flutter build ipa --release --flavor staging",
+  "development": "flutter build ipa --debug --flavor development"
+}
+```
+
 ## 0.5.4
 
 ### Improvements

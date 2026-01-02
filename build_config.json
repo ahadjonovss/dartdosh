@@ -1,12 +1,12 @@
 {
   "language": "uz",
-  "project_name": "my_app",
+  "project_name": "dartdosh",
   "auto_increment_build_number": false,
-  "output_path": "releases",
+  "output_path": "/Users/ahadjonovss/Desktop/dartdosh-builds",
   "ipa_upload": {
     "enabled": false,
-    "apple_id": "your@apple.id",
-    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
+    "apple_id": "",
+    "app_specific_password": ""
   },
   "apk": {
     "production": "flutter build apk --release --flavor production",
@@ -15,8 +15,7 @@
   },
   "ipa": {
     "production": "flutter build ipa --release --flavor production",
-    "staging": "flutter build ipa --release --flavor staging",
-    "development": "flutter build ipa --debug --flavor development"
+    "staging": "flutter build ipa --release --flavor staging"
   },
   "appbundle": {
     "production": "flutter build appbundle --release --flavor production",

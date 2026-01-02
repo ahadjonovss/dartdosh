@@ -101,13 +101,15 @@ class BuildManager {
         } else {
           _renameAndMoveOutputFileNoEnv(target, config);
         }
-        Logger.log(LogType.donation);
 
         // Stop stopwatch and show total time
         stopwatch.stop();
         final totalSeconds =
             (stopwatch.elapsedMilliseconds / 1000).toStringAsFixed(1);
         Logger.log(LogType.totalTime, time: totalSeconds);
+
+        // Show donation message at the very end
+        Logger.log(LogType.donation);
       } else {
         Logger.log(LogType.error, target: target, env: envDisplay);
         stopwatch.stop();
@@ -146,7 +148,8 @@ class BuildManager {
       },
       "ipa": {
         "production": "flutter build ipa --release --flavor production",
-        "staging": "flutter build ipa --release --flavor staging"
+        "staging": "flutter build ipa --release --flavor staging",
+        "development": "flutter build ipa --debug --flavor development"
       },
       "appbundle": {
         "production": "flutter build appbundle --release --flavor production",
