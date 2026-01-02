@@ -1,19 +1,50 @@
 import 'build_manager.dart';
+import 'version_manager.dart';
 
-/// Command-line interface handler for DartDosh build commands.
+/// Command-line interface handler for DartDosh commands.
 ///
-/// This class processes command-line arguments and delegates build operations
-/// to the [BuildManager].
+/// This class processes command-line arguments and delegates operations
+/// to the appropriate managers.
 class CLI {
   /// Runs the CLI with the provided [arguments].
   ///
-  /// Expects arguments in the format: `build <target> [--<environment>] [flags]`
-  /// where target can be `apk`, `ipa`, `appbundle`, or `aab`.
-  /// Environment is optional - if not provided, runs plain Flutter build command.
+  /// Supports commands:
+  /// - `build <target> [--<environment>] [flags]` - Build Flutter app
+  /// - `--version` or `-v` - Show current version
+  /// - `--check-version` - Check for updates
+  /// - `upgrade` - Upgrade to latest version
+  /// - `downgrade [version]` - Downgrade to specific or previous version
   ///
   /// Throws an [Exception] if the command format is invalid.
   Future<void> run(List<String> arguments) async {
-    if (arguments.isEmpty || arguments[0] != 'build') {
+    if (arguments.isEmpty) {
+      throw Exception('Invalid command');
+    }
+
+    // Handle version commands
+    if (arguments[0] == '--version' || arguments[0] == '-v') {
+      VersionManager.showVersion();
+      return;
+    }
+
+    if (arguments[0] == '--check-version') {
+      await VersionManager.checkVersion();
+      return;
+    }
+
+    if (arguments[0] == 'upgrade') {
+      await VersionManager.upgrade();
+      return;
+    }
+
+    if (arguments[0] == 'downgrade') {
+      final version = arguments.length > 1 ? arguments[1] : null;
+      await VersionManager.downgrade(version);
+      return;
+    }
+
+    // Handle build command
+    if (arguments[0] != 'build') {
       throw Exception('Invalid command');
     }
 

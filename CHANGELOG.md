@@ -1,3 +1,32 @@
+## 0.5.0
+
+### Features
+- 🎯 **Version Commands**: New version management commands with fun, localized messages
+  - `dartdosh --version` or `dartdosh -v` - Show current version
+  - `dartdosh --check-version` - Check for updates on pub.dev
+  - `dartdosh upgrade` - Upgrade to latest version
+  - `dartdosh downgrade` - Downgrade to previous version (0.4.1)
+  - `dartdosh downgrade <version>` - Downgrade to specific version
+- 🌍 **Multilingual Support**: All version commands support Uzbek, English, and Russian
+- 😎 **Fun Messages**: Random cheerful messages for each operation (Boss/Xo'jayiin/Босс style)
+
+### Commands
+```bash
+# Check version
+dartdosh --version
+dartdosh -v
+
+# Check for updates
+dartdosh --check-version
+
+# Upgrade to latest
+dartdosh upgrade
+
+# Downgrade
+dartdosh downgrade          # to previous version
+dartdosh downgrade 0.4.1    # to specific version
+```
+
 ## 0.4.2
 
 ### Bug Fixes
