@@ -38,19 +38,19 @@ class VersionManager {
 
     final messages = {
       'uz': [
-        '🎯 Sizda DartDosh $currentVersion versiya bor ekan, Xo\'jayiin!',
-        '✨ Hozir $currentVersion versiyada ishlamoqdasiz, Xo\'jayiin!',
-        '🚀 Versiyangiz: $currentVersion - zo\'r versiya, Xo\'jayiin!',
+        '🎯 Sizdahoz DartDosh $currentVersion versiya ekan, Xo\'jayiin!',
+        '✨ $currentVersion versiya ishlamoqda, Xo\'jayiin!',
+        '🚀 DartDosh $currentVersion - ajoyib versiya, Xo\'jayiin!',
       ],
       'en': [
         '🎯 You have DartDosh version $currentVersion, Boss!',
-        '✨ Currently running version $currentVersion, Boss!',
-        '🚀 Your version: $currentVersion - great version, Boss!',
+        '✨ Version $currentVersion is running, Boss!',
+        '🚀 DartDosh $currentVersion - awesome version, Boss!',
       ],
       'ru': [
         '🎯 У вас DartDosh версия $currentVersion, Босс!',
-        '✨ Сейчас работает версия $currentVersion, Босс!',
-        '🚀 Ваша версия: $currentVersion - отличная версия, Босс!',
+        '✨ Версия $currentVersion работает, Босс!',
+        '🚀 DartDosh $currentVersion - отличная версия, Босс!',
       ],
     };
 
@@ -129,9 +129,9 @@ class VersionManager {
             };
 
             final upgradeHint = {
-              'uz': '💡 Yangilash uchun: dartdosh upgrade deb yozing, Xo\'jayiin!',
-              'en': '💡 To upgrade: type dartdosh upgrade, Boss!',
-              'ru': '💡 Для обновления: напишите dartdosh upgrade, Босс!',
+              'uz': '💡 Yangilash uchun mana bu commandni yozing: dartdosh upgrade',
+              'en': '💡 To upgrade, write this command: dartdosh upgrade',
+              'ru': '💡 Для обновления напишите эту команду: dartdosh upgrade',
             };
 
             print(_color(
@@ -143,19 +143,19 @@ class VersionManager {
           } else {
             final upToDate = {
               'uz': [
-                '✅ Siz eng so\'nggi versiyada turibsiz, Xo\'jayiin!',
-                '🎯 Hammasi yangi, update kerak emas, Xo\'jayiin!',
-                '👌 Zo\'r! Eng yangi versiya ishlamoqda, Xo\'jayiin!',
+                '✅ Update yo\'q ekan, sizda eng oxirgi versiya, Xo\'jayiin!',
+                '🎯 Yangilanish kerak emas, eng yangi versiya ishlamoqda, Xo\'jayiin!',
+                '👌 Hammasi zo\'r! Sizda eng so\'nggi versiya bor, Xo\'jayiin!',
               ],
               'en': [
-                '✅ You\'re on the latest version, Boss!',
-                '🎯 All fresh, no update needed, Boss!',
-                '👌 Great! Latest version running, Boss!',
+                '✅ No update, you have the latest version, Boss!',
+                '🎯 No update needed, latest version running, Boss!',
+                '👌 All good! You have the latest version, Boss!',
               ],
               'ru': [
-                '✅ У вас последняя версия, Босс!',
-                '🎯 Всё свежее, обновление не нужно, Босс!',
-                '👌 Отлично! Последняя версия работает, Босс!',
+                '✅ Нет обновлений, у вас последняя версия, Босс!',
+                '🎯 Обновление не нужно, последняя версия работает, Босс!',
+                '👌 Всё отлично! У вас последняя версия, Босс!',
               ],
             };
 
@@ -215,19 +215,22 @@ class VersionManager {
 
         final success = {
           'uz': [
-            '✅ Versiyangiz $oldVersion dan $newVersion ga yangilandi, Xo\'jayiin!',
-            '🎉 Tayyor! $oldVersion → $newVersion. Endi bemalol maqtanib yursangiz bo\'ladi, Xo\'jayiin!',
-            '🏆 Zo\'r! Yangi $newVersion versiya o\'rnatildi. Maqtaning kerak, Xo\'jayiin!',
+            '🎉 $oldVersion → $newVersion. Endi bemalol maqtanib yursangiz bo\'ladi, Xo\'jayiin!',
+            '✅ Zo\'r! $oldVersion dan $newVersion ga yangilandi. Maqtaning mumkin endi, Xo\'jayiin!',
+            '🏆 Ajoyib! Versiya $newVersion ga o\'tdi. Do\'stlaringizga aytib yurasiz, Xo\'jayiin!',
+            '🚀 Tayyor! $oldVersion → $newVersion. Endi hammasidan oldinda turibsiz, Xo\'jayiin!',
           ],
           'en': [
-            '✅ Your version upgraded from $oldVersion to $newVersion, Boss!',
-            '🎉 Done! $oldVersion → $newVersion. Now you can brag about it, Boss!',
-            '🏆 Great! New version $newVersion installed. Show off now, Boss!',
+            '🎉 $oldVersion → $newVersion. Now you can brag about it, Boss!',
+            '✅ Great! Upgraded from $oldVersion to $newVersion. You can show off now, Boss!',
+            '🏆 Awesome! Version is now $newVersion. Tell your friends, Boss!',
+            '🚀 Done! $oldVersion → $newVersion. Now you\'re ahead of everyone, Boss!',
           ],
           'ru': [
-            '✅ Версия обновлена с $oldVersion на $newVersion, Босс!',
-            '🎉 Готово! $oldVersion → $newVersion. Теперь можете хвастаться, Босс!',
-            '🏆 Отлично! Новая версия $newVersion установлена. Пора похвастаться, Босс!',
+            '🎉 $oldVersion → $newVersion. Теперь можете хвастаться, Босс!',
+            '✅ Отлично! Обновлено с $oldVersion на $newVersion. Можете показать, Босс!',
+            '🏆 Супер! Версия теперь $newVersion. Расскажите друзьям, Босс!',
+            '🚀 Готово! $oldVersion → $newVersion. Теперь вы впереди всех, Босс!',
           ],
         };
 

@@ -1,3 +1,12 @@
+## 0.5.7
+
+### Improvements
+- 💬 **Even More Fun Messages**: Enhanced version-related messages with more personality
+  - `--version`: "Sizdahoz DartDosh X.X.X versiya ekan, Xo'jayiin!"
+  - `--check-version`: "Update yo'q ekan, sizda eng oxirgi versiya, Xo'jayiin!" or "Yangilash uchun mana bu commandni yozing: dartdosh upgrade"
+  - `upgrade`: 4 random cheerful variants including "Endi bemalol maqtanib yursangiz bo'ladi!" and "Do'stlaringizga aytib yurasiz!"
+  - More encouraging and personalized messages throughout
+
 ## 0.5.6
 
 ### Major Improvements
