@@ -1,3 +1,13 @@
+## 0.5.2
+
+### Bug Fixes
+- 🐛 **IPA Upload Fix**: Fixed iTMSTransporter "Unknown transport specified: ios" error
+  - Removed invalid `-t ios` parameter from iTMSTransporter command
+  - Upload to App Store Connect should now work correctly
+- 📊 **Upload Visibility**: Added stdout output display for upload process
+  - Shows complete iTMSTransporter output for better visibility
+  - Helps users understand what's happening during upload
+
 ## 0.5.1
 
 ### Bug Fixes

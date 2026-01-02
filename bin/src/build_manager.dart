@@ -617,20 +617,22 @@ class BuildManager {
           appleId,
           '-p',
           appPassword,
-          '-t',
-          'ios',
         ],
         runInShell: true,
       );
+
+      // Always show stdout and stderr for complete visibility
+      print('\x1B[36m📋 Upload jarayoni detallari:\x1B[0m');
+      print('\x1B[36m[STDOUT]:\x1B[0m');
+      print(result.stdout.toString().isEmpty ? '  (bo\'sh)' : result.stdout);
+      print('\x1B[33m[STDERR]:\x1B[0m');
+      print(result.stderr.toString().isEmpty ? '  (bo\'sh)' : result.stderr);
+      print('\x1B[36m[EXIT CODE]: ${result.exitCode}\x1B[0m');
 
       if (result.exitCode == 0) {
         Logger.log(LogType.uploadSuccess);
       } else {
         Logger.log(LogType.uploadFailed);
-        // Show error details for debugging
-        if (result.stderr.toString().isNotEmpty) {
-          print('\x1B[31m   Xato sababi: ${result.stderr}\x1B[0m');
-        }
       }
     } catch (e) {
       Logger.log(LogType.uploadFailed);
