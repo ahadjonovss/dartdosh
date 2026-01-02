@@ -6,7 +6,7 @@ import 'dart:math';
 ///
 /// Handles version checking, upgrades, and downgrades with fun, localized messages
 class VersionManager {
-  static const String currentVersion = '0.5.0';
+  static const String currentVersion = '0.5.1';
   static const String packageName = 'dartdosh';
 
   static final _random = Random();

@@ -1,3 +1,10 @@
+## 0.5.1
+
+### Bug Fixes
+- 🐛 **Upload Error Details**: Added detailed error messages for IPA upload failures
+  - Shows stderr output when upload fails
+  - Helps debug Xcode/Transporter issues
+
 ## 0.5.0
 
 ### Features

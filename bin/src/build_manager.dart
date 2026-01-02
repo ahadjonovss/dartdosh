@@ -627,9 +627,14 @@ class BuildManager {
         Logger.log(LogType.uploadSuccess);
       } else {
         Logger.log(LogType.uploadFailed);
+        // Show error details for debugging
+        if (result.stderr.toString().isNotEmpty) {
+          print('\x1B[31m   Xato sababi: ${result.stderr}\x1B[0m');
+        }
       }
     } catch (e) {
       Logger.log(LogType.uploadFailed);
+      print('\x1B[31m   Xato: $e\x1B[0m');
     }
   }
 }
