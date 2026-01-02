@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:yaml/yaml.dart';
 
 /// Version manager for DartDosh CLI tool
 ///
 /// Handles version checking, upgrades, and downgrades with fun, localized messages
 class VersionManager {
-  static const String currentVersion = '0.5.5';
   static const String packageName = 'dartdosh';
 
   static final _random = Random();
@@ -18,23 +18,39 @@ class VersionManager {
     }
   }
 
+  /// Get current version from pubspec.yaml
+  static String _getCurrentVersion() {
+    try {
+      final pubspecFile = File('pubspec.yaml');
+      if (pubspecFile.existsSync()) {
+        final content = loadYaml(pubspecFile.readAsStringSync());
+        return content['version']?.toString() ?? '0.0.0';
+      }
+    } catch (e) {
+      // Fallback
+    }
+    return '0.0.0';
+  }
+
   /// Show current version with fun message
   static void showVersion() {
+    final currentVersion = _getCurrentVersion();
+
     final messages = {
       'uz': [
-        '🎯 DartDosh versiyasi: $currentVersion, Xo\'jayiin!',
-        '✨ Hozirgi versiya: $currentVersion, ishlaymiz Xo\'jayiin!',
-        '🚀 DartDosh $currentVersion - zo\'r versiya, Xo\'jayiin!',
+        '🎯 Sizda DartDosh $currentVersion versiya bor ekan, Xo\'jayiin!',
+        '✨ Hozir $currentVersion versiyada ishlamoqdasiz, Xo\'jayiin!',
+        '🚀 Versiyangiz: $currentVersion - zo\'r versiya, Xo\'jayiin!',
       ],
       'en': [
-        '🎯 DartDosh version: $currentVersion, Boss!',
-        '✨ Current version: $currentVersion, running smooth Boss!',
-        '🚀 DartDosh $currentVersion - great version, Boss!',
+        '🎯 You have DartDosh version $currentVersion, Boss!',
+        '✨ Currently running version $currentVersion, Boss!',
+        '🚀 Your version: $currentVersion - great version, Boss!',
       ],
       'ru': [
-        '🎯 Версия DartDosh: $currentVersion, Босс!',
-        '✨ Текущая версия: $currentVersion, работаем Босс!',
-        '🚀 DartDosh $currentVersion - отличная версия, Босс!',
+        '🎯 У вас DartDosh версия $currentVersion, Босс!',
+        '✨ Сейчас работает версия $currentVersion, Босс!',
+        '🚀 Ваша версия: $currentVersion - отличная версия, Босс!',
       ],
     };
 
@@ -44,6 +60,8 @@ class VersionManager {
 
   /// Check for updates
   static Future<void> checkVersion() async {
+    final currentVersion = _getCurrentVersion();
+
     final checking = {
       'uz': [
         '🔍 Yangilanishlar tekshirilmoqda, Xo\'jayiin...',
@@ -88,33 +106,40 @@ class VersionManager {
           if (latest != null && latest != currentVersion) {
             final updateAvailable = {
               'uz': [
-                '🎉 Yangi versiya topildi: $latest, Xo\'jayiin!',
-                '✨ Yangilanish mavjud: $latest, Xo\'jayiin!',
-                '🚀 Yangi $latest versiya chiqdi, Xo\'jayiin!',
+                '🎉 Xo\'jayiin, hozir $latest versiya chiqibti!',
+                '✨ Yangi $latest versiya bor ekan, Xo\'jayiin!',
+                '🚀 Ajoyib! $latest versiya tayyor, Xo\'jayiin!',
               ],
               'en': [
-                '🎉 New version found: $latest, Boss!',
-                '✨ Update available: $latest, Boss!',
-                '🚀 New version $latest is out, Boss!',
+                '🎉 Boss, version $latest is out now!',
+                '✨ New version $latest available, Boss!',
+                '🚀 Great! Version $latest is ready, Boss!',
               ],
               'ru': [
-                '🎉 Новая версия найдена: $latest, Босс!',
-                '✨ Доступно обновление: $latest, Босс!',
-                '🚀 Вышла новая версия $latest, Босс!',
+                '🎉 Босс, вышла версия $latest!',
+                '✨ Новая версия $latest доступна, Босс!',
+                '🚀 Отлично! Версия $latest готова, Босс!',
               ],
             };
 
+            final currentInfo = {
+              'uz': '📦 Sizda hozir $currentVersion versiya bor',
+              'en': '📦 You currently have version $currentVersion',
+              'ru': '📦 Сейчас у вас версия $currentVersion',
+            };
+
             final upgradeHint = {
-              'uz': '💡 Yangilash: dartdosh upgrade',
-              'en': '💡 Upgrade: dartdosh upgrade',
-              'ru': '💡 Обновить: dartdosh upgrade',
+              'uz': '💡 Yangilash uchun: dartdosh upgrade deb yozing, Xo\'jayiin!',
+              'en': '💡 To upgrade: type dartdosh upgrade, Boss!',
+              'ru': '💡 Для обновления: напишите dartdosh upgrade, Босс!',
             };
 
             print(_color(
                 updateAvailable[_language]![
                     _random.nextInt(updateAvailable[_language]!.length)],
                 '32'));
-            print(_color(upgradeHint[_language]!, '36'));
+            print(_color(currentInfo[_language]!, '36'));
+            print(_color(upgradeHint[_language]!, '33'));
           } else {
             final upToDate = {
               'uz': [
@@ -153,20 +178,22 @@ class VersionManager {
 
   /// Upgrade to latest version
   static Future<void> upgrade() async {
+    final oldVersion = _getCurrentVersion();
+
     final upgrading = {
       'uz': [
-        '🚀 Yangilanmoqda, bir oz kuting Xo\'jayiin...',
-        '⬆️ Upgrade qilinmoqda, Xo\'jayiin...',
+        '🚀 Upgrade boshlandi, Xo\'jayiin...',
+        '⬆️ Yangilanmoqda, biroz sabr qiling Xo\'jayiin...',
         '✨ Eng yangi versiyaga o\'tilmoqda, Xo\'jayiin...',
       ],
       'en': [
-        '🚀 Upgrading, wait a moment Boss...',
-        '⬆️ Upgrading now, Boss...',
+        '🚀 Upgrade started, Boss...',
+        '⬆️ Upgrading, please wait Boss...',
         '✨ Moving to latest version, Boss...',
       ],
       'ru': [
-        '🚀 Обновление, подождите Босс...',
-        '⬆️ Обновляем сейчас, Босс...',
+        '🚀 Обновление начато, Босс...',
+        '⬆️ Обновляем, подождите Босс...',
         '✨ Переход на последнюю версию, Босс...',
       ],
     };
@@ -183,21 +210,24 @@ class VersionManager {
       );
 
       if (result.exitCode == 0) {
+        // Get new version after upgrade
+        final newVersion = _getCurrentVersion();
+
         final success = {
           'uz': [
-            '✅ Muvaffaqiyatli yangilandi, Xo\'jayiin!',
-            '🎉 Upgrade tugadi! Endi eng yangi versiya bor, Xo\'jayiin!',
-            '🏆 Tayyor! Yangi versiya o\'rnatildi, Xo\'jayiin!',
+            '✅ Versiyangiz $oldVersion dan $newVersion ga yangilandi, Xo\'jayiin!',
+            '🎉 Tayyor! $oldVersion → $newVersion. Endi bemalol maqtanib yursangiz bo\'ladi, Xo\'jayiin!',
+            '🏆 Zo\'r! Yangi $newVersion versiya o\'rnatildi. Maqtaning kerak, Xo\'jayiin!',
           ],
           'en': [
-            '✅ Successfully upgraded, Boss!',
-            '🎉 Upgrade complete! Now on latest version, Boss!',
-            '🏆 Done! New version installed, Boss!',
+            '✅ Your version upgraded from $oldVersion to $newVersion, Boss!',
+            '🎉 Done! $oldVersion → $newVersion. Now you can brag about it, Boss!',
+            '🏆 Great! New version $newVersion installed. Show off now, Boss!',
           ],
           'ru': [
-            '✅ Успешно обновлено, Босс!',
-            '🎉 Обновление завершено! Теперь последняя версия, Босс!',
-            '🏆 Готово! Новая версия установлена, Босс!',
+            '✅ Версия обновлена с $oldVersion на $newVersion, Босс!',
+            '🎉 Готово! $oldVersion → $newVersion. Теперь можете хвастаться, Босс!',
+            '🏆 Отлично! Новая версия $newVersion установлена. Пора похвастаться, Босс!',
           ],
         };
 
@@ -214,6 +244,8 @@ class VersionManager {
 
   /// Downgrade to specific version or previous version
   static Future<void> downgrade([String? version]) async {
+    final oldVersion = _getCurrentVersion();
+
     final downgrading = {
       'uz': version != null
           ? '⬇️ $version versiyaga qaytilmoqda, Xo\'jayiin...'
@@ -242,21 +274,23 @@ class VersionManager {
       final result = await Process.run('dart', args, runInShell: true);
 
       if (result.exitCode == 0) {
+        final newVersion = _getCurrentVersion();
+
         final success = {
           'uz': [
-            '✅ Muvaffaqiyatli orqaga qaytarildi, Xo\'jayiin!',
-            '🎯 Downgrade tugadi, Xo\'jayiin!',
-            '👌 Tayyor! Kerakli versiya o\'rnatildi, Xo\'jayiin!',
+            '✅ $oldVersion dan $newVersion ga qaytarildi, Xo\'jayiin!',
+            '🎯 Tayyor! Versiya $newVersion ga o\'rnatildi, Xo\'jayiin!',
+            '👌 Downgrade tugadi! Endi $newVersion versiyada, Xo\'jayiin!',
           ],
           'en': [
-            '✅ Successfully downgraded, Boss!',
-            '🎯 Downgrade complete, Boss!',
-            '👌 Done! Required version installed, Boss!',
+            '✅ Downgraded from $oldVersion to $newVersion, Boss!',
+            '🎯 Done! Version set to $newVersion, Boss!',
+            '👌 Downgrade complete! Now on version $newVersion, Boss!',
           ],
           'ru': [
-            '✅ Успешно откачено, Босс!',
-            '🎯 Откат завершён, Босс!',
-            '👌 Готово! Нужная версия установлена, Босс!',
+            '✅ Откат с $oldVersion на $newVersion, Босс!',
+            '🎯 Готово! Версия установлена на $newVersion, Босс!',
+            '👌 Откат завершён! Теперь версия $newVersion, Босс!',
           ],
         };
 

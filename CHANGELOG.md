@@ -1,3 +1,22 @@
+## 0.5.6
+
+### Major Improvements
+- 🎯 **Dynamic Version Management**: Version now read from pubspec.yaml instead of hardcoded
+  - No more duplicate version maintenance
+  - `dartdosh --version` shows actual installed version
+  - Automatic version sync across all commands
+- 💬 **Enhanced Version Messages**: More personalized and fun version-related logs
+  - `--version`: "Sizda DartDosh X.X.X versiya bor ekan, Xo'jayiin!"
+  - `--check-version`: Shows current vs latest with upgrade hint
+  - `upgrade`: "Versiyangiz X.X.X dan Y.Y.Y ga yangilandi. Endi bemalol maqtanib yursangiz bo'ladi, Xo'jayiin!"
+  - All messages support uz/en/ru languages
+
+### Technical Changes
+- Removed hardcoded `currentVersion` constant from VersionManager
+- Added `_getCurrentVersion()` getter that reads from pubspec.yaml
+- Upgraded logs show version transition (old → new)
+- Downgrade logs show version rollback with confirmation
+
 ## 0.5.5
 
 ### Improvements
