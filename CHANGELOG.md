@@ -1,3 +1,11 @@
+## 0.6.3
+
+### Changes
+- 🔧 **Simplified IPA Upload**: Removed "What to Test" notes prompt for IPA builds
+  - Apple's altool doesn't support sending notes to TestFlight automatically
+  - Notes need to be added manually in App Store Connect
+  - Simplified upload process for better user experience
+
 ## 0.6.2
 
 ### New Features
