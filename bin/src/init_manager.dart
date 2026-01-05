@@ -59,6 +59,11 @@ class InitManager {
           "enabled": false,
           "apple_id": "",
           "app_specific_password": ""
+        },
+        "firebase_distribution": oldConfig['firebase_distribution'] ?? {
+          "enabled": false,
+          "app_id": "",
+          "tester_groups": ""
         }
       };
 
@@ -113,6 +118,11 @@ class InitManager {
           "enabled": false,
           "apple_id": "",
           "app_specific_password": ""
+        },
+        'firebase_distribution': {
+          "enabled": false,
+          "app_id": "",
+          "tester_groups": ""
         }
       };
 
@@ -179,6 +189,11 @@ class InitManager {
           "enabled": false,
           "apple_id": "",
           "app_specific_password": ""
+        },
+        "firebase_distribution": {
+          "enabled": false,
+          "app_id": "",
+          "tester_groups": ""
         }
       };
 

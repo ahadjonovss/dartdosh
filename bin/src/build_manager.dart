@@ -43,14 +43,25 @@ class BuildManager {
     Logger.setLanguage(language);
 
     // For IPA builds with upload enabled, ask for "What to Test" notes
-    String? whatToTestNotes;
+    String? releaseNotes;
     if (target == 'ipa') {
       final ipaUploadConfig = settings['ipa_upload'] as Map<String, dynamic>?;
       final uploadEnabled = ipaUploadConfig?['enabled'] as bool? ?? false;
 
       if (uploadEnabled) {
         stdout.write('📝 What to Test notes (press Enter to skip): ');
-        whatToTestNotes = stdin.readLineSync()?.trim();
+        releaseNotes = stdin.readLineSync()?.trim();
+      }
+    }
+
+    // For APK builds with Firebase Distribution enabled, ask for release notes
+    if (target == 'apk') {
+      final firebaseConfig = settings['firebase_distribution'] as Map<String, dynamic>?;
+      final uploadEnabled = firebaseConfig?['enabled'] as bool? ?? false;
+
+      if (uploadEnabled) {
+        stdout.write('📝 Release notes for Firebase Distribution (press Enter to skip): ');
+        releaseNotes = stdin.readLineSync()?.trim();
       }
     }
 
@@ -112,9 +123,9 @@ class BuildManager {
         Logger.log(LogType.success, target: target, env: envDisplay);
         // Always rename/move files, regardless of environment
         if (env != null) {
-          _renameAndMoveOutputFile(target, env, settings, whatToTestNotes);
+          _renameAndMoveOutputFile(target, env, settings, releaseNotes);
         } else {
-          _renameAndMoveOutputFileNoEnv(target, settings, whatToTestNotes);
+          _renameAndMoveOutputFileNoEnv(target, settings, releaseNotes);
         }
 
         // Stop stopwatch and show total time
@@ -318,7 +329,7 @@ class BuildManager {
 
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
   void _renameAndMoveOutputFile(
-      String target, String env, Map<String, dynamic> config, String? whatToTestNotes) {
+      String target, String env, Map<String, dynamic> config, String? releaseNotes) {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -352,12 +363,16 @@ class BuildManager {
       }
 
       if (target == 'apk') {
-        _renameAndMoveApk(newName, outputPath);
+        final apkPath = _renameAndMoveApk(newName, outputPath);
+        // Upload APK to Firebase Distribution if enabled
+        if (apkPath != null) {
+          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes);
+        }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
         // Upload IPA to App Store if enabled
         if (ipaPath != null) {
-          _uploadIpaIfEnabled(ipaPath, config, whatToTestNotes);
+          _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
@@ -369,7 +384,7 @@ class BuildManager {
 
   // Environment bo'lmaganda fayllarni rename qilib output_path ga ko'chirish
   void _renameAndMoveOutputFileNoEnv(
-      String target, Map<String, dynamic> config, String? whatToTestNotes) {
+      String target, Map<String, dynamic> config, String? releaseNotes) {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -402,12 +417,16 @@ class BuildManager {
       }
 
       if (target == 'apk') {
-        _renameAndMoveApk(newName, outputPath);
+        final apkPath = _renameAndMoveApk(newName, outputPath);
+        // Upload APK to Firebase Distribution if enabled (same for non-env builds)
+        if (apkPath != null) {
+          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes);
+        }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
         // Upload IPA to App Store if enabled (same for non-env builds)
         if (ipaPath != null) {
-          _uploadIpaIfEnabled(ipaPath, config, whatToTestNotes);
+          _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
@@ -417,7 +436,7 @@ class BuildManager {
     }
   }
 
-  void _renameAndMoveApk(String newName, String? outputPath) {
+  String? _renameAndMoveApk(String newName, String? outputPath) {
     final apkPaths = [
       'build/app/outputs/flutter-apk/app-production-release.apk',
       'build/app/outputs/flutter-apk/app-staging-release.apk',
@@ -433,19 +452,22 @@ class BuildManager {
       final file = File('${Directory.current.path}/$path');
       if (file.existsSync()) {
         final fileName = '$newName.apk';
+        String finalPath;
 
         if (outputPath != null && outputPath.isNotEmpty) {
           // Output path ga ko'chirish
           final destinationPath = '$outputPath/$fileName';
           file.copySync(destinationPath);
           Logger.log(LogType.fileSaved, path: destinationPath);
+          finalPath = destinationPath;
         } else {
           // Faqat rename qilish (build papkasida)
           final newPath = '${file.parent.path}/$fileName';
           file.renameSync(newPath);
           Logger.log(LogType.fileSaved, path: fileName);
+          finalPath = newPath;
         }
-        return;
+        return finalPath; // Return path for Firebase upload
       }
     }
 
@@ -487,6 +509,7 @@ class BuildManager {
         }
       }
     }
+    return null; // No APK found
   }
 
   String? _renameAndMoveIpa(String newName, String? outputPath) {
@@ -550,7 +573,7 @@ class BuildManager {
 
   // IPA faylni App Store Connect ga yuklash
   Future<void> _uploadIpaIfEnabled(
-      String ipaPath, Map<String, dynamic> config, String? whatToTestNotes) async {
+      String ipaPath, Map<String, dynamic> config, String? releaseNotes) async {
     try {
       // Config dan ipa_upload sozlamalarini olish
       final ipaUploadConfig = config['ipa_upload'] as Map<String, dynamic>?;
@@ -578,8 +601,8 @@ class BuildManager {
       Logger.log(LogType.uploadStarting, path: ipaPath);
 
       // Show what to test notes if provided
-      if (whatToTestNotes != null && whatToTestNotes.isNotEmpty) {
-        Logger.log(LogType.uploadProgress, progress: '📝 What to Test: $whatToTestNotes');
+      if (releaseNotes != null && releaseNotes.isNotEmpty) {
+        Logger.log(LogType.uploadProgress, progress: '📝 What to Test: $releaseNotes');
       }
 
       // xcrun altool command
@@ -635,6 +658,96 @@ class BuildManager {
     } catch (e) {
       Logger.log(LogType.uploadFailed);
       Logger.log(LogType.uploadProgress, progress: 'Xato: $e');
+    }
+  }
+
+  // APK faylni Firebase App Distribution ga yuklash
+  Future<void> _uploadApkToFirebaseIfEnabled(
+      String apkPath, Map<String, dynamic> config, String? releaseNotes) async {
+    try {
+      // Config dan firebase_distribution sozlamalarini olish
+      final firebaseConfig = config['firebase_distribution'] as Map<String, dynamic>?;
+
+      if (firebaseConfig == null) {
+        return; // Config yo'q - skip
+      }
+
+      final enabled = firebaseConfig['enabled'] as bool? ?? false;
+
+      if (!enabled) {
+        return; // Upload o'chirilgan
+      }
+
+      final appId = firebaseConfig['app_id'] as String? ?? '';
+      final testerGroups = firebaseConfig['tester_groups'] as String? ?? '';
+
+      // App ID tekshirish
+      if (appId.isEmpty) {
+        Logger.log(LogType.uploadProgress, progress: '⚠️ Firebase App ID missing, Boss!');
+        return;
+      }
+
+      Logger.log(LogType.uploadProgress, progress: '📤 Uploading APK to Firebase App Distribution, Boss...');
+
+      // Show release notes if provided
+      if (releaseNotes != null && releaseNotes.isNotEmpty) {
+        Logger.log(LogType.uploadProgress, progress: '📝 Release Notes: $releaseNotes');
+      }
+
+      // firebase appdistribution:distribute command
+      final args = [
+        'appdistribution:distribute',
+        apkPath,
+        '--app',
+        appId,
+      ];
+
+      // Add tester groups if provided
+      if (testerGroups.isNotEmpty) {
+        args.addAll(['--groups', testerGroups]);
+      }
+
+      // Add release notes if provided
+      if (releaseNotes != null && releaseNotes.isNotEmpty) {
+        args.addAll(['--release-notes', releaseNotes]);
+      }
+
+      final result = await Process.run(
+        'firebase',
+        args,
+        runInShell: true,
+      );
+
+      // Show upload output using Logger
+      final stdout = result.stdout.toString();
+      final stderr = result.stderr.toString();
+
+      // Log stdout if not empty
+      if (stdout.isNotEmpty) {
+        for (final line in stdout.split('\n')) {
+          if (line.trim().isNotEmpty) {
+            Logger.log(LogType.uploadProgress, progress: line.trim());
+          }
+        }
+      }
+
+      // Log stderr if not empty
+      if (stderr.isNotEmpty) {
+        for (final line in stderr.split('\n')) {
+          if (line.trim().isNotEmpty) {
+            Logger.log(LogType.uploadProgress, progress: line.trim());
+          }
+        }
+      }
+
+      if (result.exitCode == 0) {
+        Logger.log(LogType.uploadProgress, progress: '✅ APK successfully uploaded to Firebase, Boss!');
+      } else {
+        Logger.log(LogType.uploadProgress, progress: '❌ Firebase upload failed, Boss!');
+      }
+    } catch (e) {
+      Logger.log(LogType.uploadProgress, progress: '❌ Firebase upload failed, Boss!');
+      Logger.log(LogType.uploadProgress, progress: 'Error: $e');
     }
   }
 }
