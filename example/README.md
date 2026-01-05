@@ -28,11 +28,13 @@ dart pub global activate dartdosh
   },
   "ipa": {
     "production": "flutter build ipa --release --flavor production",
-    "staging": "flutter build ipa --release --flavor staging"
+    "staging": "flutter build ipa --release --flavor staging",
+    "development": "flutter build ipa --debug --flavor development"
   },
   "appbundle": {
     "production": "flutter build appbundle --release --flavor production",
-    "staging": "flutter build appbundle --release --flavor staging"
+    "staging": "flutter build appbundle --release --flavor staging",
+    "development": "flutter build appbundle --debug --flavor development"
   }
 }
 ```

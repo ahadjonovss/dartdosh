@@ -1,3 +1,16 @@
+## 0.5.10
+
+### Bug Fixes
+- 🐛 **Fixed Incomplete Config Examples**: All build_config.json examples now complete
+  - Added missing `development` flavor for `ipa` section in README.md
+  - Added missing `development` flavor for `ipa` and `appbundle` sections in example/README.md
+  - All three build targets (apk, ipa, appbundle) now have all three flavors (production, staging, development)
+
+### Changes
+- README.md configuration example now includes complete IPA section
+- example/README.md configuration example now fully matches build_config.example.json
+- Consistency across all documentation files
+
 ## 0.5.9
 
 ### Documentation Updates
