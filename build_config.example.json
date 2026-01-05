@@ -4,9 +4,9 @@
   "auto_increment_build_number": false,
   "output_path": "releases",
   "ipa_upload": {
-    "enabled": false,
-    "apple_id": "your@apple.id",
-    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
+    "enabled": true,
+    "apple_id": "developer@example.com",
+    "app_specific_password": "abcd-efgh-ijkl-mnop"
   },
   "apk": {
     "production": "flutter build apk --release --flavor production",

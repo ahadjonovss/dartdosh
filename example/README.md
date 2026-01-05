@@ -17,9 +17,9 @@ dart pub global activate dartdosh
   "auto_increment_build_number": false,
   "output_path": "releases",
   "ipa_upload": {
-    "enabled": false,
-    "apple_id": "",
-    "app_specific_password": ""
+    "enabled": true,
+    "apple_id": "developer@example.com",
+    "app_specific_password": "abcd-efgh-ijkl-mnop"
   },
   "apk": {
     "production": "flutter build apk --release --flavor production",

@@ -1,3 +1,17 @@
+## 0.5.11
+
+### Changes
+- 📝 **Updated Config Examples**: All ipa_upload examples now show enabled state with example credentials
+  - Changed `enabled: false` to `enabled: true` in all config examples
+  - Updated empty credentials to example values (`developer@example.com`, `abcd-efgh-ijkl-mnop`)
+  - Users can see complete working example instead of empty template
+  - Affects: README.md, example/README.md, build_config.example.json
+
+### Documentation
+- Configuration examples now demonstrate active IPA upload setup
+- Makes it clearer how to configure IPA auto-upload feature
+- Users can simply replace example values with their own credentials
+
 ## 0.5.10
 
 ### Bug Fixes
