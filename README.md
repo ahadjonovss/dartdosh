@@ -120,6 +120,11 @@ Your personal settings. Each developer has their own:
     "enabled": true,
     "apple_id": "developer@example.com",
     "app_specific_password": "abcd-efgh-ijkl-mnop"
+  },
+  "firebase_distribution": {
+    "enabled": true,
+    "app_id": "1:123456789:android:abc123def456",
+    "tester_groups": "qa-team,developers"
   }
 }
 ```
@@ -153,11 +158,24 @@ Your personal settings. Each developer has their own:
   - `app_specific_password`: Get from appleid.apple.com
   - macOS only
 
+* `firebase_distribution`: Auto upload APK to Firebase App Distribution
+  - `enabled`: true/false
+  - `app_id`: Firebase App ID (e.g., `1:123456789:android:abc123`)
+  - `tester_groups`: Comma-separated groups (e.g., `qa-team,developers`)
+  - Requires Firebase CLI installed
+
 **How to get App-Specific Password:**
 1. Go to https://appleid.apple.com
 2. Security → Generate Password
 3. Name it "DartDosh"
 4. Copy and paste in settings.json
+
+**How to setup Firebase App Distribution:**
+1. Install Firebase CLI: `npm install -g firebase-tools`
+2. Login: `firebase login`
+3. Get App ID from Firebase Console → Project Settings
+4. Add tester groups in Firebase Console → App Distribution
+5. Enable and configure in `settings.json`
 
 ---
 

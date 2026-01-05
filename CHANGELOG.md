@@ -8,6 +8,14 @@
   - Helps document changes for testers
   - Note: Notes shown in terminal (manual entry in App Store Connect still needed)
 
+- 🔥 **Firebase App Distribution Integration**: APK builds can now auto-upload to Firebase
+  - Automatic upload to Firebase App Distribution after APK build
+  - Interactive release notes prompt before build starts
+  - Configure via `firebase_distribution` in settings.json
+  - Support for tester groups
+  - Real-time upload progress
+  - Requires Firebase CLI installed (`npm install -g firebase-tools`)
+
 ## 0.6.1
 
 ### Improvements

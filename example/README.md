@@ -80,6 +80,37 @@ Output:
 ✅ IPA successfully uploaded to App Store Connect, Boss!
 ```
 
+### Build with Auto-Upload to Firebase Distribution
+```bash
+# First, configure in dartdosh_config/settings.json:
+{
+  "firebase_distribution": {
+    "enabled": true,
+    "app_id": "1:123456789:android:abc123",
+    "tester_groups": "qa-team,developers"
+  }
+}
+
+# Install Firebase CLI:
+npm install -g firebase-tools
+firebase login
+
+# Then build:
+dartdosh build apk -p
+```
+
+Output:
+```
+📝 Release notes for Firebase Distribution (press Enter to skip): Fixed login bug
+🔧 apk build step: Running Flutter commands, Boss...
+✅ apk build completed successfully, Boss!
+✅ Build saved: ~/Desktop/dartdosh-builds/my_app/apk/prod_1.2.3_46.apk
+
+📤 Uploading APK to Firebase App Distribution, Boss...
+📝 Release Notes: Fixed login bug
+✅ APK successfully uploaded to Firebase, Boss!
+```
+
 ### Build Staging
 ```bash
 dartdosh build apk --staging
@@ -138,6 +169,11 @@ dartdosh build apk -p --obfuscate --split-debug-info=/symbols
     "enabled": true,
     "apple_id": "developer@example.com",
     "app_specific_password": "abcd-efgh-ijkl-mnop"
+  },
+  "firebase_distribution": {
+    "enabled": true,
+    "app_id": "1:123456789:android:abc123def456",
+    "tester_groups": "qa-team,developers"
   }
 }
 ```
@@ -149,9 +185,11 @@ dartdosh build apk -p --obfuscate --split-debug-info=/symbols
 3. **Multi-Language**: uz, en, ru
 4. **Smart Naming**: `prod_1.2.3_46.apk`, `stg_2.0.0_12.ipa`
 5. **Progress Bar**: Real-time build progress
-6. **Auto Upload**: IPA to App Store Connect
-7. **Auto Version**: Optional build number increment
-8. **Multi-Project**: Each project in own folder
+6. **Auto Upload IPA**: Automatic upload to App Store Connect
+7. **Auto Upload APK**: Automatic upload to Firebase App Distribution
+8. **Interactive Notes**: Release notes prompt before upload
+9. **Auto Version**: Optional build number increment
+10. **Multi-Project**: Each project in own folder
 
 ## First Time Setup
 
