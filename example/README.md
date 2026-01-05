@@ -16,6 +16,11 @@ dart pub global activate dartdosh
   "project_name": "my_app",
   "auto_increment_build_number": false,
   "output_path": "releases",
+  "ipa_upload": {
+    "enabled": false,
+    "apple_id": "",
+    "app_specific_password": ""
+  },
   "apk": {
     "production": "flutter build apk --release --flavor production",
     "staging": "flutter build apk --release --flavor staging",
@@ -63,6 +68,39 @@ This automatically converts `--split` to `--split-per-abi` and creates separate 
 dartdosh build ipa --production
 ```
 
+Output:
+```
+[████████████████████████████████] 100% - [ipa - production] - Ready!
+✅ ipa build muvaffaqiyatli yakunlandi, Xo'jayiin!
+✅ Build saqlandi: /path/to/releases/my_app/ipa/prod_1.2.3_46.ipa
+```
+
+### Build IPA with Auto-Upload to App Store Connect
+```bash
+# First, enable upload in build_config.json:
+{
+  "ipa_upload": {
+    "enabled": true,
+    "apple_id": "developer@example.com",
+    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
+  }
+}
+
+# Then build:
+dartdosh build ipa --production
+```
+
+Output:
+```
+[████████████████████████████████] 100% - [ipa - production] - Ready!
+✅ ipa build muvaffaqiyatli yakunlandi, Xo'jayiin!
+✅ Build saqlandi: /path/to/releases/my_app/ipa/prod_1.2.3_46.ipa
+
+📤 Uploading IPA to App Store Connect...
+📊 Upload in progress...
+✅ IPA successfully uploaded to App Store Connect, Xo'jayiin!
+```
+
 ### Build App Bundle
 ```bash
 dartdosh build appbundle --staging
@@ -79,10 +117,11 @@ dartdosh build apk --production --obfuscate --split-debug-info=/path/to/symbols
 2. **Multi-Project Support**: Each project gets its own subfolder in output directory
 3. **Optional Auto Version Increment**: Enable with `"auto_increment_build_number": true` to auto-increment build numbers
 4. **Smart File Naming**: Output files use short environment names: `prod_1.2.3_46.apk`, `stg_2.0.0_12.ipa`, `dev_1.5.0_78.aab`
-5. **Output Path Management**: Built files organized by project name in `output_path/project_name/`
-6. **Auto Config Creation**: Config file is created and opened in IDE on first run
+5. **Output Path Management**: Built files organized by project and type in `output_path/project_name/{apk|ipa|aab}/`
+6. **Auto Config Creation**: Config file is created automatically on first run
 7. **Progress Bar**: Real-time build progress with localized stage messages
 8. **Personalized Experience**: All messages include "Xo'jayiin" (Boss) for a friendly touch
+9. **IPA Auto-Upload**: Automatically upload iOS builds to App Store Connect after successful build
 
 ## First Time Usage
 

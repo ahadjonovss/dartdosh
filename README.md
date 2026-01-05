@@ -212,6 +212,114 @@ dartdosh build <target> [--<environment>] [extra flags]
 
 ---
 
+## 📱 iOS (IPA) Build Quick Guide
+
+Building iOS apps with DartDosh is simple and includes automatic upload to App Store Connect.
+
+### Prerequisites
+
+1. **macOS with Xcode** - Required for iOS builds
+2. **Valid Apple Developer Account** - For distribution builds
+3. **Code Signing Setup** - Certificates and provisioning profiles configured in Xcode
+
+### Basic IPA Build
+
+```bash
+# Production build
+dartdosh build ipa --production
+dartdosh build ipa -p
+
+# Staging build
+dartdosh build ipa --staging
+dartdosh build ipa -s
+
+# With obfuscation
+dartdosh build ipa -p --obfuscate
+
+# With dart-define variables
+dartdosh build ipa -p --dart-define=API_URL=https://api.production.com
+```
+
+### Automatic Upload to App Store Connect
+
+DartDosh can automatically upload your IPA to App Store Connect after a successful build.
+
+**1. Get App-Specific Password**
+
+1. Go to [appleid.apple.com](https://appleid.apple.com)
+2. Sign in with your Apple ID
+3. In **Security** section → **App-Specific Passwords** → **Generate Password**
+4. Name it "DartDosh" and copy the password (format: `xxxx-xxxx-xxxx-xxxx`)
+
+**2. Configure in `build_config.json`**
+
+```json
+{
+  "ipa_upload": {
+    "enabled": true,
+    "apple_id": "your-email@example.com",
+    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
+  }
+}
+```
+
+**3. Build and Upload**
+
+```bash
+dartdosh build ipa -p
+```
+
+**Output:**
+```
+[████████████████████████████████] 100% - [ipa - production] - Ready!
+✅ ipa build completed successfully, Boss!
+✅ Build saved: ~/Desktop/dartdosh-builds/my_app/ipa/prod_1.0.0_100.ipa, Boss!
+
+📤 Uploading IPA to App Store Connect...
+📊 Upload in progress...
+✅ IPA successfully uploaded to App Store Connect, Boss!
+
+⏱️ Total time: 180.5 seconds
+```
+
+### Output Files
+
+IPA files are automatically organized:
+
+```
+~/Desktop/dartdosh-builds/
+└── my_app/
+    └── ipa/
+        ├── prod_1.0.0_100.ipa
+        ├── prod_1.0.0_101.ipa
+        └── stg_1.0.0_50.ipa
+```
+
+**File naming format:** `{env}_{version}_{buildNumber}.ipa`
+
+### Important Notes
+
+- **Upload requires macOS** - Uses `xcrun altool` (built into Xcode)
+- **Upload is optional** - Set `"enabled": false` to disable
+- **Security** - Add `build_config.json` to `.gitignore` to protect credentials
+- **App must exist in App Store Connect** - Create your app first at [appstoreconnect.apple.com](https://appstoreconnect.apple.com)
+- **Upload doesn't submit** - It only uploads the build; you still need to submit through App Store Connect
+
+### Troubleshooting
+
+**Upload fails?**
+- Verify your Apple ID and app-specific password
+- Ensure app exists in App Store Connect
+- Check internet connection
+- Make sure Xcode command line tools are installed: `xcode-select --install`
+
+**Build fails?**
+- Check code signing in Xcode
+- Verify provisioning profiles are valid
+- Run `flutter doctor` to check iOS setup
+
+---
+
 ## Features
 
 ### 🌍 Multi-Language Support

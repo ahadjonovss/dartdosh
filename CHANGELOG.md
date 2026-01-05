@@ -1,3 +1,25 @@
+## 0.5.9
+
+### Documentation Updates
+- 📱 **Added iOS (IPA) Build Quick Guide**: Comprehensive guide for building and uploading iOS apps
+  - Prerequisites and setup instructions
+  - Basic IPA build commands with examples
+  - Step-by-step guide for automatic upload to App Store Connect
+  - How to get App-Specific Password from Apple
+  - Output file organization and naming format
+  - Important notes and troubleshooting tips
+- 📚 **Updated All Documentation**: README.md, example/README.md, and build_config.example.json
+  - Added `ipa_upload` configuration in all examples
+  - Updated feature lists to include IPA auto-upload
+  - Enhanced example outputs showing upload process
+  - Improved file structure documentation
+
+### Changes
+- Updated README.md with detailed iOS build section
+- Updated example/README.md with IPA upload examples
+- All config examples now include complete `ipa_upload` section
+- Documentation now reflects all current features (v0.5.x)
+
 ## 0.5.8
 
 ### Bug Fixes
