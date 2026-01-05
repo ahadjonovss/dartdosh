@@ -72,19 +72,22 @@ $env:PATH += ";$env:USERPROFILE\.pub-cache\bin"
 
 ## Configuration
 
-The `build_config.json` file is automatically created with default settings when you first run DartDosh. You can also create it manually in your Flutter project root:
+### Initialize DartDosh
+
+Run this command first in your Flutter project:
+
+```bash
+dartdosh init
+```
+
+This creates `dartdosh_config` folder with 2 files:
+
+### 1. `build_config.json` (Team Shared - Git Tracked)
+
+Build commands for your team. Everyone uses the same commands:
 
 ```json
 {
-  "language": "uz",
-  "project_name": "my_app",
-  "auto_increment_build_number": false,
-  "output_path": "~/Desktop/dartdosh-builds",
-  "ipa_upload": {
-    "enabled": true,
-    "apple_id": "developer@example.com",
-    "app_specific_password": "abcd-efgh-ijkl-mnop"
-  },
   "apk": {
     "production": "flutter build apk --release --flavor production",
     "staging": "flutter build apk --release --flavor staging",
@@ -103,86 +106,58 @@ The `build_config.json` file is automatically created with default settings when
 }
 ```
 
-**Config Parameters:**
+### 2. `settings.json` (Personal - Git Ignored)
 
-* `language` (optional): Interface language for all log messages and progress indicators
-  - **Supported languages**: `uz` (Uzbek), `en` (English), `ru` (Russian)
-  - **Default**: `uz`
-  - **Fallback**: If unsupported language is set, defaults to English with a warning
-  - Examples:
-    ```json
-    "language": "en"  // English interface
-    "language": "ru"  // Russian interface
-    "language": "uz"  // Uzbek interface (default)
-    ```
+Your personal settings. Each developer has their own:
 
-* `project_name` (optional): Project name used for organizing builds in output directory
-  - **Type**: `string`
-  - **Default**: Reads from `pubspec.yaml` `name` field
-  - **Purpose**: Creates a subfolder in `output_path` for this project's builds
-  - **Multi-project support**: Each project gets its own folder in the output directory
-  - Examples:
-    ```json
-    "project_name": "my_app"        // Builds go to output_path/my_app/
-    "project_name": "ecommerce_app" // Builds go to output_path/ecommerce_app/
-    ```
-  - **File structure**:
-    ```
-    ~/Desktop/dartdosh-builds/
-    ├── my_app/
-    │   ├── apk/
-    │   │   ├── prod_1.0.0_100.apk
-    │   │   └── dev_1.0.0_101.apk
-    │   ├── ipa/
-    │   │   └── prod_1.0.0_100.ipa
-    │   └── aab/
-    │       └── prod_1.0.0_100.aab
-    └── ecommerce_app/
-        ├── apk/
-        │   └── prod_2.0.0_50.apk
-        └── ipa/
-            └── stg_2.0.0_51.ipa
-    ```
+```json
+{
+  "language": "uz",
+  "project_name": "my_app",
+  "auto_increment_build_number": false,
+  "output_path": "~/Desktop/dartdosh-builds",
+  "ipa_upload": {
+    "enabled": true,
+    "apple_id": "developer@example.com",
+    "app_specific_password": "abcd-efgh-ijkl-mnop"
+  }
+}
+```
 
-* `auto_increment_build_number` (optional): Control automatic build number increment
-  - **Type**: `boolean`
-  - **Default**: `false`
-  - **When true**: Build number in `pubspec.yaml` increments before each flavor build
-  - **When false**: Build number stays unchanged (default behavior)
-  - **Note**: Only applies to flavor builds (with environment flags). Plain builds never increment.
-  - Examples:
-    ```json
-    "auto_increment_build_number": true   // Enable auto increment
-    "auto_increment_build_number": false  // Disable increment (default)
-    ```
+**Why 2 files?**
 
-* `output_path` (optional): Path where built files will be copied after build
-  - If not specified, files will only be renamed in the build directory
-  - Can be absolute path (`/Users/you/releases`) or relative to project (`releases`)
-  - Directory will be created automatically if it doesn't exist
+- `build_config.json` → Team shares build commands (Git tracked)
+- `settings.json` → Your personal settings like Apple ID (Git ignored)
+- No more credential conflicts in team!
+
+**Settings Parameters:**
+
+* `language`: Interface language
+  - `uz` (Uzbek), `en` (English), `ru` (Russian)
+  - Default: `uz`
+
+* `project_name`: Project name for organizing builds
+  - Default: Reads from `pubspec.yaml`
+
+* `auto_increment_build_number`: Auto increase version
+  - `true`: Increases build number before each build
+  - `false`: Keeps current version (default)
+
+* `output_path`: Where to save builds
   - Default: `~/Desktop/dartdosh-builds`
+  - Absolute or relative path
 
-* `ipa_upload` (optional): Configuration for automatic IPA upload to App Store Connect
-  - **Type**: `object`
-  - **Default**: `{ "enabled": false, ... }`
-  - **Fields**:
-    - `enabled` (boolean): Enable/disable automatic upload
-    - `apple_id` (string): Your Apple ID email
-    - `app_specific_password` (string): App-specific password from Apple ID settings
-  - **Requirements**: macOS with Xcode installed
-  - **Example**:
-    ```json
-    "ipa_upload": {
-      "enabled": true,
-      "apple_id": "developer@example.com",
-      "app_specific_password": "abcd-efgh-ijkl-mnop"
-    }
-    ```
-  - **How to get App-Specific Password**:
-    1. Go to https://appleid.apple.com
-    2. Sign in with your Apple ID
-    3. In Security section, click "Generate Password" under App-Specific Passwords
-    4. Give it a name (e.g., "DartDosh") and copy the generated password
+* `ipa_upload`: Auto upload IPA to App Store
+  - `enabled`: true/false
+  - `apple_id`: Your Apple ID
+  - `app_specific_password`: Get from appleid.apple.com
+  - macOS only
+
+**How to get App-Specific Password:**
+1. Go to https://appleid.apple.com
+2. Security → Generate Password
+3. Name it "DartDosh"
+4. Copy and paste in settings.json
 
 ---
 

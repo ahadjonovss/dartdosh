@@ -1,3 +1,31 @@
+## 0.6.0
+
+### Major Changes - Breaking
+- 🔧 **New Configuration Structure**: Split config into 2 files for better team collaboration
+  - `dartdosh_config/build_config.json` - Team shared (Git tracked) - Build commands
+  - `dartdosh_config/settings.json` - Personal (Gitignored) - Credentials & preferences
+  - No more credential conflicts in team!
+  - Old `build_config.json` automatically migrated to new structure
+
+### New Features
+- ✨ **`dartdosh init` Command**: Initialize or validate configuration
+  - Creates config files from scratch
+  - Validates existing config and adds missing fields
+  - Migrates old single-file config to new structure
+  - Auto-adds `settings.json` to `.gitignore`
+  - Smart logging for each scenario
+
+### Improvements
+- 📝 **Simplified File Names**: `user_settings.json` → `settings.json`
+- 📚 **Updated Documentation**: README with clear explanation of 2-file structure
+- 🚀 **Better Team Workflow**: Build commands shared, credentials private
+- 🔄 **Auto Migration**: Old config users get seamless upgrade path
+
+### Build Command Changes
+- Build commands now require `dartdosh init` first
+- No auto-config creation - explicit initialization required
+- Clear error message if config not found
+
 ## 0.5.11
 
 ### Changes

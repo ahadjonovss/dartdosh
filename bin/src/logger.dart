@@ -19,7 +19,19 @@ enum LogType {
   uploadSuccess,
   uploadFailed,
   uploadCredentialsMissing,
-  totalTime
+  totalTime,
+  // Init command logs
+  initStarted,
+  configCreated,
+  configValidationFailed,
+  configCreationFailed,
+  migrationStarted,
+  migrationCompleted,
+  migrationFailed,
+  missingFieldAdded,
+  alreadyConfigured,
+  initCompleted,
+  configNotFound
 }
 
 class Logger {
@@ -177,6 +189,61 @@ class Logger {
         '🎯 Jarayon {time} soniyada tugadi. Vaqtingizni tejadim, Xo\'jayiin! ⚡',
         '✨ {time} soniyada hammasi tayyor! Sizga xizmat qilish baxt, Xo\'jayiin! 🚀'
       ],
+      LogType.initStarted: [
+        '🚀 Dartdosh konfiguratsiya qilinmoqda, Xo\'jayiin...',
+        '✨ Init jarayoni boshlandi, Xo\'jayiin...',
+        '🔧 Configuratsiya tekshirilmoqda, Xo\'jayiin...'
+      ],
+      LogType.configCreated: [
+        '✅ Yangi config fayllar yaratildi, Xo\'jayiin!',
+        '📝 Konfiguratsiya tayyor, Xo\'jayiin!',
+        '🎉 Config fayllar muvaffaqiyatli yaratildi, Xo\'jayiin!'
+      ],
+      LogType.migrationStarted: [
+        '🔄 Eski build_config.json topildi, yangi strukturaga o\'tkazilmoqda, Xo\'jayiin...',
+        '📦 Migration boshlandi, Xo\'jayiin...',
+        '⚡ Eski configdan ma\'lumotlar ko\'chirilmoqda, Xo\'jayiin...'
+      ],
+      LogType.migrationCompleted: [
+        '✅ Migration muvaffaqiyatli! Barcha ma\'lumotlar yangi faylga ko\'chirildi, Xo\'jayiin!',
+        '🎉 Eski config yangi formatga o\'tkazildi, Xo\'jayiin!',
+        '🏆 Migration tayyor! Hamma data saqlab qoldim, Xo\'jayiin!'
+      ],
+      LogType.migrationFailed: [
+        '❌ Migration xatolik bilan yakunlandi, Xo\'jayiin!',
+        '💥 Eski configni o\'qishda muammo, Xo\'jayiin!',
+        '⚠️ Migration amalga oshmadi, Xo\'jayiin!'
+      ],
+      LogType.missingFieldAdded: [
+        '✅ Yetishmayotgan maydon qo\'shildi: {field}, Xo\'jayiin!',
+        '🔧 Yangilandi: {field} qo\'shib qo\'ydim, Xo\'jayiin!',
+        '📝 {field} - mana bu data yo\'q ekan, qo\'shib qo\'ydim, Xo\'jayiin!'
+      ],
+      LogType.alreadyConfigured: [
+        '✅ Sizda hammasi bor ekan! Konfiguratsiya to\'liq, Xo\'jayiin!',
+        '🎯 Hammasi tayyor, hech narsa etishmayapti, Xo\'jayiin!',
+        '👌 Config to\'liq, qo\'shimcha narsa kerak emas, Xo\'jayiin!'
+      ],
+      LogType.initCompleted: [
+        '\n✅ Hammasi tayyor, endi bemalol ishlatishingiz mumkin, Xo\'jayiin!\n🚀 Endi dartdosh build commandlarini ishlatishingiz mumkin!',
+        '\n🎉 Init tayyor! Dartdosh ishlatishga tayyor, Xo\'jayiin!\n💼 Build qilishni boshlashingiz mumkin!',
+        '\n🏆 Konfiguratsiya to\'liq! Ish boshlashingiz mumkin, Xo\'jayiin!\n⚡ Buyruqlaringizni kutmoqdaman!'
+      ],
+      LogType.configValidationFailed: [
+        '❌ Config faylni tekshirishda xatolik, Xo\'jayiin!',
+        '💥 Validatsiya xatosi, Xo\'jayiin!',
+        '⚠️ Config faylni o\'qib bo\'lmadi, Xo\'jayiin!'
+      ],
+      LogType.configCreationFailed: [
+        '❌ Config yaratishda xatolik, Xo\'jayiin!',
+        '💥 Fayllarni yaratib bo\'lmadi, Xo\'jayiin!',
+        '⚠️ Konfiguratsiya yaratilmadi, Xo\'jayiin!'
+      ],
+      LogType.configNotFound: [
+        '❌ Config fayllar topilmadi! Iltimos avval \'dartdosh init\' ni run qiling, Xo\'jayiin!',
+        '⚠️ Konfiguratsiya yo\'q! \'dartdosh init\' commandini ishga tushiring, Xo\'jayiin!',
+        '📝 Config kerak! Birinchi \'dartdosh init\' qiling, Xo\'jayiin!'
+      ],
     },
     'en': {
       LogType.start: [
@@ -268,6 +335,61 @@ class Logger {
         '⏱️  Total time: {time} seconds. I worked {time} seconds for you, Boss! 💪',
         '🎯 Process completed in {time} seconds. Saved your time, Boss! ⚡',
         '✨ Everything ready in {time} seconds! Happy to serve you, Boss! 🚀'
+      ],
+      LogType.initStarted: [
+        '🚀 Configuring dartdosh, Boss...',
+        '✨ Init process started, Boss...',
+        '🔧 Checking configuration, Boss...'
+      ],
+      LogType.configCreated: [
+        '✅ New config files created, Boss!',
+        '📝 Configuration ready, Boss!',
+        '🎉 Config files successfully created, Boss!'
+      ],
+      LogType.migrationStarted: [
+        '🔄 Old build_config.json found, migrating to new structure, Boss...',
+        '📦 Migration started, Boss...',
+        '⚡ Copying data from old config, Boss...'
+      ],
+      LogType.migrationCompleted: [
+        '✅ Migration successful! All data moved to new file, Boss!',
+        '🎉 Old config migrated to new format, Boss!',
+        '🏆 Migration done! Saved all data, Boss!'
+      ],
+      LogType.migrationFailed: [
+        '❌ Migration failed, Boss!',
+        '💥 Error reading old config, Boss!',
+        '⚠️ Migration unsuccessful, Boss!'
+      ],
+      LogType.missingFieldAdded: [
+        '✅ Missing field added: {field}, Boss!',
+        '🔧 Updated: added {field}, Boss!',
+        '📝 {field} - this data was missing, added it, Boss!'
+      ],
+      LogType.alreadyConfigured: [
+        '✅ You have everything! Configuration complete, Boss!',
+        '🎯 All ready, nothing missing, Boss!',
+        '👌 Config complete, no additional data needed, Boss!'
+      ],
+      LogType.initCompleted: [
+        '\n✅ Everything ready, feel free to use it now, Boss!\n🚀 You can now use dartdosh build commands!',
+        '\n🎉 Init done! Dartdosh is ready to use, Boss!\n💼 You can start building!',
+        '\n🏆 Configuration complete! You can start working, Boss!\n⚡ Awaiting your commands!'
+      ],
+      LogType.configValidationFailed: [
+        '❌ Error validating config file, Boss!',
+        '💥 Validation error, Boss!',
+        '⚠️ Could not read config file, Boss!'
+      ],
+      LogType.configCreationFailed: [
+        '❌ Error creating config, Boss!',
+        '💥 Could not create files, Boss!',
+        '⚠️ Configuration not created, Boss!'
+      ],
+      LogType.configNotFound: [
+        '❌ Config files not found! Please run \'dartdosh init\' first, Boss!',
+        '⚠️ No configuration! Run \'dartdosh init\' command, Boss!',
+        '📝 Config needed! First run \'dartdosh init\', Boss!'
       ],
     },
     'ru': {
@@ -361,6 +483,61 @@ class Logger {
         '🎯 Процесс завершён за {time} секунд. Сэкономил ваше время, Босс! ⚡',
         '✨ Всё готово за {time} секунд! Рад служить вам, Босс! 🚀'
       ],
+      LogType.initStarted: [
+        '🚀 Настройка dartdosh, Босс...',
+        '✨ Процесс init начат, Босс...',
+        '🔧 Проверка конфигурации, Босс...'
+      ],
+      LogType.configCreated: [
+        '✅ Созданы новые файлы конфигурации, Босс!',
+        '📝 Конфигурация готова, Босс!',
+        '🎉 Файлы конфигурации успешно созданы, Босс!'
+      ],
+      LogType.migrationStarted: [
+        '🔄 Найден старый build_config.json, переход на новую структуру, Босс...',
+        '📦 Начата миграция, Босс...',
+        '⚡ Копирование данных из старой конфигурации, Босс...'
+      ],
+      LogType.migrationCompleted: [
+        '✅ Миграция успешна! Все данные перенесены в новый файл, Босс!',
+        '🎉 Старая конфигурация перенесена в новый формат, Босс!',
+        '🏆 Миграция завершена! Сохранил все данные, Босс!'
+      ],
+      LogType.migrationFailed: [
+        '❌ Миграция не удалась, Босс!',
+        '💥 Ошибка чтения старой конфигурации, Босс!',
+        '⚠️ Миграция неуспешна, Босс!'
+      ],
+      LogType.missingFieldAdded: [
+        '✅ Добавлено отсутствующее поле: {field}, Босс!',
+        '🔧 Обновлено: добавлено {field}, Босс!',
+        '📝 {field} - эти данные отсутствовали, добавил, Босс!'
+      ],
+      LogType.alreadyConfigured: [
+        '✅ У вас всё есть! Конфигурация полная, Босс!',
+        '🎯 Всё готово, ничего не отсутствует, Босс!',
+        '👌 Конфигурация полная, дополнительные данные не нужны, Босс!'
+      ],
+      LogType.initCompleted: [
+        '\n✅ Всё готово, можете пользоваться, Босс!\n🚀 Теперь можете использовать команды dartdosh build!',
+        '\n🎉 Init завершён! Dartdosh готов к использованию, Босс!\n💼 Можете начинать сборку!',
+        '\n🏆 Конфигурация завершена! Можете начинать работать, Босс!\n⚡ Жду ваших команд!'
+      ],
+      LogType.configValidationFailed: [
+        '❌ Ошибка проверки файла конфигурации, Босс!',
+        '💥 Ошибка валидации, Босс!',
+        '⚠️ Не удалось прочитать файл конфигурации, Босс!'
+      ],
+      LogType.configCreationFailed: [
+        '❌ Ошибка создания конфигурации, Босс!',
+        '💥 Не удалось создать файлы, Босс!',
+        '⚠️ Конфигурация не создана, Босс!'
+      ],
+      LogType.configNotFound: [
+        '❌ Файлы конфигурации не найдены! Пожалуйста, сначала выполните \'dartdosh init\', Босс!',
+        '⚠️ Нет конфигурации! Запустите команду \'dartdosh init\', Босс!',
+        '📝 Нужна конфигурация! Сначала выполните \'dartdosh init\', Босс!'
+      ],
     },
   };
 
@@ -376,7 +553,8 @@ class Logger {
       String newBuild = '',
       String path = '',
       String progress = '',
-      String time = ''}) {
+      String time = '',
+      String field = ''}) {
     final messages = _translations[_currentLanguage];
     if (messages == null) return;
 
@@ -393,11 +571,14 @@ class Logger {
         .replaceAll('{newBuild}', newBuild)
         .replaceAll('{path}', path)
         .replaceAll('{progress}', progress)
-        .replaceAll('{time}', time);
+        .replaceAll('{time}', time)
+        .replaceAll('{field}', field);
 
     String coloredMessage;
     switch (type) {
       case LogType.start:
+      case LogType.initStarted:
+      case LogType.migrationStarted:
         coloredMessage = _color(message, '34'); // Blue
         break;
       case LogType.step:
@@ -409,10 +590,19 @@ class Logger {
       case LogType.outputDirCreated:
       case LogType.uploadSuccess:
       case LogType.totalTime:
+      case LogType.configCreated:
+      case LogType.migrationCompleted:
+      case LogType.alreadyConfigured:
+      case LogType.initCompleted:
+      case LogType.missingFieldAdded:
         coloredMessage = _color(message, '32'); // Green
         break;
       case LogType.error:
       case LogType.uploadFailed:
+      case LogType.migrationFailed:
+      case LogType.configValidationFailed:
+      case LogType.configCreationFailed:
+      case LogType.configNotFound:
         coloredMessage = _color(message, '31'); // Red
         break;
       case LogType.donation:

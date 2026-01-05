@@ -1,5 +1,6 @@
 import 'build_manager.dart';
 import 'version_manager.dart';
+import 'init_manager.dart';
 
 /// Command-line interface handler for DartDosh commands.
 ///
@@ -9,6 +10,7 @@ class CLI {
   /// Runs the CLI with the provided [arguments].
   ///
   /// Supports commands:
+  /// - `init` - Initialize dartdosh configuration
   /// - `build <target> [--<environment>] [flags]` - Build Flutter app
   /// - `--version` or `-v` - Show current version
   /// - `--check-version` - Check for updates
@@ -19,6 +21,12 @@ class CLI {
   Future<void> run(List<String> arguments) async {
     if (arguments.isEmpty) {
       throw Exception('Invalid command');
+    }
+
+    // Handle init command
+    if (arguments[0] == 'init') {
+      await InitManager().initialize();
+      return;
     }
 
     // Handle version commands

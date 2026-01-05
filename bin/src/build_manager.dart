@@ -25,18 +25,21 @@ class BuildManager {
     // Start time tracking
     final stopwatch = Stopwatch()..start();
 
-    final configFile = File('${Directory.current.path}/build_config.json');
+    final dartdoshDir = Directory('${Directory.current.path}/dartdosh_config');
+    final buildConfigFile = File('${dartdoshDir.path}/build_config.json');
+    final settingsFile = File('${dartdoshDir.path}/settings.json');
 
-    if (!configFile.existsSync()) {
-      await _createDefaultConfig(configFile);
-      Logger.log(LogType.buildConfigCreated);
-      return; // Stop execution, wait for user to review config
+    // Check if Dartdosh directory and files exist
+    if (!dartdoshDir.existsSync() || !buildConfigFile.existsSync() || !settingsFile.existsSync()) {
+      Logger.log(LogType.configNotFound);
+      return; // Stop execution, tell user to run dartdosh init
     }
 
-    final config = jsonDecode(configFile.readAsStringSync());
+    final buildConfig = jsonDecode(buildConfigFile.readAsStringSync());
+    final settings = jsonDecode(settingsFile.readAsStringSync());
 
-    // Set language from config
-    final language = config['language'] as String? ?? 'uz';
+    // Set language from settings
+    final language = settings['language'] as String? ?? 'uz';
     Logger.setLanguage(language);
 
     String cmdString = '';
@@ -45,7 +48,7 @@ class BuildManager {
     if (env == null) {
       cmdString = 'flutter build $target';
     } else {
-      cmdString = config[target]?[env.toLowerCase()] ?? '';
+      cmdString = buildConfig[target]?[env.toLowerCase()] ?? '';
 
       if (cmdString.isEmpty) {
         Logger.log(LogType.error, target: target, env: env);
@@ -72,7 +75,7 @@ class BuildManager {
     // Build boshlashdan oldin pubspec.yaml da build number oshirish
     // Only increment if environment is specified (flavor builds) and auto_increment is enabled
     final autoIncrement =
-        config['auto_increment_build_number'] as bool? ?? false;
+        settings['auto_increment_build_number'] as bool? ?? false;
     if (env != null && autoIncrement) {
       _incrementBuildNumber();
     }
@@ -97,9 +100,9 @@ class BuildManager {
         Logger.log(LogType.success, target: target, env: envDisplay);
         // Always rename/move files, regardless of environment
         if (env != null) {
-          _renameAndMoveOutputFile(target, env, config);
+          _renameAndMoveOutputFile(target, env, settings);
         } else {
-          _renameAndMoveOutputFileNoEnv(target, config);
+          _renameAndMoveOutputFileNoEnv(target, settings);
         }
 
         // Stop stopwatch and show total time
@@ -120,63 +123,6 @@ class BuildManager {
     }
   }
 
-  // Default config yaratish
-  Future<void> _createDefaultConfig(File configFile) async {
-    // Get Desktop path cross-platform
-    final home = Platform.environment['HOME'] ??
-        Platform.environment['USERPROFILE'] ??
-        Directory.current.path;
-    final desktopPath = '$home/Desktop/dartdosh-builds';
-
-    Logger.log(LogType.buildConfigIsNotExist);
-
-    final projectName = _getProjectName();
-    final defaultConfig = {
-      "language": "uz",
-      "project_name": projectName,
-      "auto_increment_build_number": false,
-      "output_path": desktopPath,
-      "ipa_upload": {
-        "enabled": false,
-        "apple_id": "",
-        "app_specific_password": ""
-      },
-      "apk": {
-        "production": "flutter build apk --release --flavor production",
-        "staging": "flutter build apk --release --flavor staging",
-        "development": "flutter build apk --debug --flavor development"
-      },
-      "ipa": {
-        "production": "flutter build ipa --release --flavor production",
-        "staging": "flutter build ipa --release --flavor staging",
-        "development": "flutter build ipa --debug --flavor development"
-      },
-      "appbundle": {
-        "production": "flutter build appbundle --release --flavor production",
-        "staging": "flutter build appbundle --release --flavor staging",
-        "development": "flutter build appbundle --debug --flavor development"
-      }
-    };
-
-    const encoder = JsonEncoder.withIndent('  ');
-    final prettyJson = encoder.convert(defaultConfig);
-
-    try {
-      // Write file with flush to ensure data is written to disk
-      configFile.writeAsStringSync(prettyJson, flush: true);
-
-      // Wait a bit to ensure file system has fully written the file
-      await Future.delayed(Duration(milliseconds: 100));
-
-      // Verify file was written correctly
-      if (configFile.existsSync() && configFile.lengthSync() > 0) {
-        Logger.log(LogType.fileSaved, path: configFile.path);
-        Logger.log(LogType.outputDirCreated, path: desktopPath);
-      }
-    } catch (e) {
-      // Silent error - config will be created on next run
-    }
-  }
 
   /// Handles process output with progress bar
   Future<int> _handleProcessOutput(
