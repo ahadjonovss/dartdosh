@@ -1,3 +1,18 @@
+## 0.5.8
+
+### Bug Fixes
+- 🐛 **Fixed Version Display Bug**: Version commands now correctly show dartdosh package version instead of user's project version
+- ✅ **Smart Version Detection**: Automatically locates and reads dartdosh's own pubspec.yaml from installation directory
+- 🔧 **Accurate Version Info**: `--version`, `upgrade`, and `downgrade` commands now display correct dartdosh version
+
+### Technical Changes
+- Changed `currentVersion` from constant to getter that dynamically reads dartdosh package's pubspec.yaml
+- Uses `Platform.script.toFilePath()` to locate dartdosh installation path
+- Navigates directory tree to find package's pubspec.yaml
+- Validates package name matches 'dartdosh' before returning version
+- Fallback to version 0.5.8 if reading fails
+- Re-added yaml package import for version reading
+
 ## 0.5.7
 
 ### Improvements

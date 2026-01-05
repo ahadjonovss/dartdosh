@@ -18,24 +18,36 @@ class VersionManager {
     }
   }
 
-  /// Get current version from pubspec.yaml
-  static String _getCurrentVersion() {
+  /// Get dartdosh package version from its own pubspec.yaml
+  static String get currentVersion {
     try {
-      final pubspecFile = File('pubspec.yaml');
-      if (pubspecFile.existsSync()) {
-        final content = loadYaml(pubspecFile.readAsStringSync());
-        return content['version']?.toString() ?? '0.0.0';
+      // Get the path where dartdosh executable is located
+      final scriptPath = Platform.script.toFilePath();
+
+      // Navigate up to find pubspec.yaml
+      // Typical structure: /path/to/.pub-cache/global_packages/dartdosh/bin/dartdosh.dart
+      var currentDir = Directory(scriptPath).parent;
+
+      // Go up until we find pubspec.yaml
+      for (var i = 0; i < 5; i++) {
+        final pubspecFile = File('${currentDir.path}/pubspec.yaml');
+        if (pubspecFile.existsSync()) {
+          final content = loadYaml(pubspecFile.readAsStringSync());
+          final version = content['version']?.toString();
+          if (version != null && content['name'] == packageName) {
+            return version;
+          }
+        }
+        currentDir = currentDir.parent;
       }
     } catch (e) {
-      // Fallback
+      // Fallback to hardcoded version if reading fails
     }
-    return '0.0.0';
+    return '0.5.8'; // Fallback version
   }
 
   /// Show current version with fun message
   static void showVersion() {
-    final currentVersion = _getCurrentVersion();
-
     final messages = {
       'uz': [
         '🎯 Sizdahoz DartDosh $currentVersion versiya ekan, Xo\'jayiin!',
@@ -60,8 +72,6 @@ class VersionManager {
 
   /// Check for updates
   static Future<void> checkVersion() async {
-    final currentVersion = _getCurrentVersion();
-
     final checking = {
       'uz': [
         '🔍 Yangilanishlar tekshirilmoqda, Xo\'jayiin...',
@@ -129,7 +139,8 @@ class VersionManager {
             };
 
             final upgradeHint = {
-              'uz': '💡 Yangilash uchun mana bu commandni yozing: dartdosh upgrade',
+              'uz':
+                  '💡 Yangilash uchun mana bu commandni yozing: dartdosh upgrade',
               'en': '💡 To upgrade, write this command: dartdosh upgrade',
               'ru': '💡 Для обновления напишите эту команду: dartdosh upgrade',
             };
@@ -178,7 +189,7 @@ class VersionManager {
 
   /// Upgrade to latest version
   static Future<void> upgrade() async {
-    final oldVersion = _getCurrentVersion();
+    final oldVersion = currentVersion;
 
     final upgrading = {
       'uz': [
@@ -210,8 +221,11 @@ class VersionManager {
       );
 
       if (result.exitCode == 0) {
-        // Get new version after upgrade
-        final newVersion = _getCurrentVersion();
+        // Parse new version from output
+        final output = result.stdout.toString();
+        final versionMatch =
+            RegExp(r'Activated dartdosh (\d+\.\d+\.\d+)').firstMatch(output);
+        final newVersion = versionMatch?.group(1) ?? 'latest';
 
         final success = {
           'uz': [
@@ -247,7 +261,7 @@ class VersionManager {
 
   /// Downgrade to specific version or previous version
   static Future<void> downgrade([String? version]) async {
-    final oldVersion = _getCurrentVersion();
+    final oldVersion = currentVersion;
 
     final downgrading = {
       'uz': version != null
@@ -277,7 +291,11 @@ class VersionManager {
       final result = await Process.run('dart', args, runInShell: true);
 
       if (result.exitCode == 0) {
-        final newVersion = _getCurrentVersion();
+        // Parse new version from output
+        final output = result.stdout.toString();
+        final versionMatch =
+            RegExp(r'Activated dartdosh (\d+\.\d+\.\d+)').firstMatch(output);
+        final newVersion = versionMatch?.group(1) ?? (version ?? 'previous');
 
         final success = {
           'uz': [
