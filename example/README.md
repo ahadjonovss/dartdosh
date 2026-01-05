@@ -1,26 +1,114 @@
 # DartDosh Example
 
-This example demonstrates how to use DartDosh CLI tool in your Flutter project.
+This example shows how to use DartDosh in your Flutter project.
 
 ## Setup
 
-1. Install DartDosh globally:
+1. Install DartDosh:
 ```bash
 dart pub global activate dartdosh
 ```
 
-2. Create a `build_config.json` in your Flutter project root (or let DartDosh create it automatically):
-```json
+2. Initialize configuration:
+```bash
+cd your_flutter_project
+dartdosh init
+```
+
+This creates `dartdosh_config/` folder with 2 files:
+- `build_config.json` - Build commands (team shared)
+- `settings.json` - Your personal settings (gitignored)
+
+## Usage Examples
+
+### Build Production APK
+```bash
+dartdosh build apk --production
+# or short
+dartdosh build apk -p
+```
+
+Output:
+```
+🔧 apk build step: Running Flutter commands, Boss...
+🔄 Running: flutter build apk --release --flavor production, Boss!
+[████████████████████████████░░]  95% - [apk - production] - Finishing...
+✅ apk build completed successfully, Boss!
+✅ Build saved: ~/Desktop/dartdosh-builds/my_app/apk/prod_1.2.3_46.apk
+⏱️  Total time: 45.3 seconds. I worked 45.3 seconds for you, Boss! 💪
+```
+
+### Build Split APK
+```bash
+dartdosh build apk --production --split
+```
+
+Creates separate APKs for each architecture:
+- `prod_1.2.3_46_arm64-v8a.apk`
+- `prod_1.2.3_46_armeabi-v7a.apk`
+- `prod_1.2.3_46_x86_64.apk`
+
+### Build iOS IPA
+```bash
+dartdosh build ipa --production
+# or short
+dartdosh build ipa -p
+```
+
+### Build with Auto-Upload to App Store
+```bash
+# First, configure in dartdosh_config/settings.json:
 {
-  "language": "uz",
-  "project_name": "my_app",
-  "auto_increment_build_number": false,
-  "output_path": "releases",
   "ipa_upload": {
     "enabled": true,
-    "apple_id": "developer@example.com",
-    "app_specific_password": "abcd-efgh-ijkl-mnop"
-  },
+    "apple_id": "your@email.com",
+    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
+  }
+}
+
+# Then build:
+dartdosh build ipa -p
+```
+
+Output:
+```
+✅ ipa build completed successfully, Boss!
+✅ Build saved: ~/Desktop/dartdosh-builds/my_app/ipa/prod_1.2.3_46.ipa
+
+📤 IPA file uploading to App Store Connect, Boss...
+⏳ Upload in progress...
+✅ IPA successfully uploaded to App Store Connect, Boss!
+```
+
+### Build Staging
+```bash
+dartdosh build apk --staging
+dartdosh build apk -s
+```
+
+### Build Development
+```bash
+dartdosh build apk --development
+dartdosh build apk -d
+dartdosh build apk -dev
+```
+
+### Build App Bundle
+```bash
+dartdosh build appbundle --production
+dartdosh build aab -p  # short version
+```
+
+### Add Extra Flags
+```bash
+dartdosh build apk -p --obfuscate --split-debug-info=/symbols
+```
+
+## Configuration Files
+
+### 1. build_config.json (Team Shared)
+```json
+{
   "apk": {
     "production": "flutter build apk --release --flavor production",
     "staging": "flutter build apk --release --flavor staging",
@@ -39,109 +127,96 @@ dart pub global activate dartdosh
 }
 ```
 
-## Usage Examples
-
-### Build Production APK
-```bash
-dartdosh build apk --production
-```
-
-Output:
-```
-🔧 apk build bosqichi: Flutter komandalar bajarilmoqda, Xo'jayiin...
-🔄 Ishga tushirilmoqda: flutter build apk --release --flavor production, Xo'jayiin!
-[████████████████████████████░░]  95% - [apk - production] - Tugallanmoqda...
-✅ apk build muvaffaqiyatli yakunlandi, Xo'jayiin!
-✅ Build saqlandi: /path/to/releases/my_app/prod_1.2.3_46.apk
-```
-
-### Build Split APK
-```bash
-dartdosh build apk --production --split
-```
-
-This automatically converts `--split` to `--split-per-abi` and creates separate APKs for each architecture:
-- `prod_1.2.3_46_arm64-v8a.apk`
-- `prod_1.2.3_46_armeabi-v7a.apk`
-- `prod_1.2.3_46_x86_64.apk`
-
-### Build iOS IPA
-```bash
-dartdosh build ipa --production
-```
-
-Output:
-```
-[████████████████████████████████] 100% - [ipa - production] - Ready!
-✅ ipa build muvaffaqiyatli yakunlandi, Xo'jayiin!
-✅ Build saqlandi: /path/to/releases/my_app/ipa/prod_1.2.3_46.ipa
-```
-
-### Build IPA with Auto-Upload to App Store Connect
-```bash
-# First, enable upload in build_config.json:
+### 2. settings.json (Personal - Gitignored)
+```json
 {
+  "language": "uz",
+  "project_name": "my_app",
+  "auto_increment_build_number": false,
+  "output_path": "~/Desktop/dartdosh-builds",
   "ipa_upload": {
     "enabled": true,
     "apple_id": "developer@example.com",
-    "app_specific_password": "xxxx-xxxx-xxxx-xxxx"
+    "app_specific_password": "abcd-efgh-ijkl-mnop"
   }
 }
+```
 
-# Then build:
-dartdosh build ipa --production
+## Features
+
+1. **Init Command**: Easy setup with `dartdosh init`
+2. **2-File Config**: Team commands + Personal settings
+3. **Multi-Language**: uz, en, ru
+4. **Smart Naming**: `prod_1.2.3_46.apk`, `stg_2.0.0_12.ipa`
+5. **Progress Bar**: Real-time build progress
+6. **Auto Upload**: IPA to App Store Connect
+7. **Auto Version**: Optional build number increment
+8. **Multi-Project**: Each project in own folder
+
+## First Time Setup
+
+```bash
+# Install
+dart pub global activate dartdosh
+
+# Go to your Flutter project
+cd your_project
+
+# Initialize
+dartdosh init
 ```
 
 Output:
 ```
-[████████████████████████████████] 100% - [ipa - production] - Ready!
-✅ ipa build muvaffaqiyatli yakunlandi, Xo'jayiin!
-✅ Build saqlandi: /path/to/releases/my_app/ipa/prod_1.2.3_46.ipa
+🚀 Configuring dartdosh, Boss...
+✅ New config files created, Boss!
 
-📤 Uploading IPA to App Store Connect...
-📊 Upload in progress...
-✅ IPA successfully uploaded to App Store Connect, Xo'jayiin!
+✅ Everything ready, feel free to use it now, Boss!
+🚀 You can now use dartdosh build commands!
 ```
 
-### Build App Bundle
+Now you can build:
 ```bash
-dartdosh build appbundle --staging
+dartdosh build apk -p
 ```
 
-### Add Extra Flags
+## Migration from Old Version
+
+If you have old `build_config.json`, just run:
 ```bash
-dartdosh build apk --production --obfuscate --split-debug-info=/path/to/symbols
-```
-
-## Features Demonstrated
-
-1. **Multi-Language Support**: Interface in Uzbek (uz), English (en), or Russian (ru)
-2. **Multi-Project Support**: Each project gets its own subfolder in output directory
-3. **Optional Auto Version Increment**: Enable with `"auto_increment_build_number": true` to auto-increment build numbers
-4. **Smart File Naming**: Output files use short environment names: `prod_1.2.3_46.apk`, `stg_2.0.0_12.ipa`, `dev_1.5.0_78.aab`
-5. **Output Path Management**: Built files organized by project and type in `output_path/project_name/{apk|ipa|aab}/`
-6. **Auto Config Creation**: Config file is created automatically on first run
-7. **Progress Bar**: Real-time build progress with localized stage messages
-8. **Personalized Experience**: All messages include "Xo'jayiin" (Boss) for a friendly touch
-9. **IPA Auto-Upload**: Automatically upload iOS builds to App Store Connect after successful build
-
-## First Time Usage
-
-If you run DartDosh without `build_config.json`, it will create one for you:
-
-```bash
-dartdosh build apk --production
+dartdosh init
 ```
 
 Output:
 ```
-⚠️ Build config topilmadi, default yaratilmoqda, Xo'jayiin!
-✅ Build saqlandi: /path/to/project/build_config.json, Xo'jayiin!
-📁 Output directory yaratildi: ~/Desktop/dartdosh-builds, Xo'jayiin!
+🔄 Old build_config.json found, migrating to new structure, Boss...
+✅ Migration successful! All data moved to new file, Boss!
 
-📋 Xo'jayiin, build_config.json yaratib qo'ydim!
-✅ Iltimos, tekshirib ko'ring va to'g'ri bo'lsa commandni qayta run qiling.
-💼 Xizmatizga tayyorman, Xo'jayiin!
+✅ Everything ready, feel free to use it now, Boss!
 ```
 
-The config file will automatically open in your IDE. Customize it to match your project's flavor configuration, then run the command again.
+Your old config data is preserved in the new structure!
+
+## Output Structure
+
+```
+~/Desktop/dartdosh-builds/
+└── my_app/
+    ├── apk/
+    │   ├── prod_1.0.0_100.apk
+    │   ├── stg_1.0.0_101.apk
+    │   └── dev_1.0.0_102.apk
+    ├── ipa/
+    │   ├── prod_1.0.0_100.ipa
+    │   └── stg_1.0.0_101.ipa
+    └── aab/
+        └── prod_1.0.0_100.aab
+```
+
+## Tips
+
+- Use short flags: `-p`, `-s`, `-d`
+- `--split` for APK only (auto converts to `--split-per-abi`)
+- Personal settings are gitignored (no credential conflicts!)
+- Team shares build commands via `build_config.json`
+- Each developer has own `settings.json`
