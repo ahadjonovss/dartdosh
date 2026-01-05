@@ -131,6 +131,22 @@ class InitManager {
           userSettings[key] = defaultValue;
           userSettingsModified = true;
           missingFields.add('user_settings.$key');
+        } else if (defaultValue is Map) {
+          // Check nested fields for Map values
+          final currentValue = userSettings[key];
+          if (currentValue is Map) {
+            bool nestedModified = false;
+            defaultValue.forEach((nestedKey, nestedDefaultValue) {
+              if (!currentValue.containsKey(nestedKey)) {
+                currentValue[nestedKey] = nestedDefaultValue;
+                nestedModified = true;
+                missingFields.add('user_settings.$key.$nestedKey');
+              }
+            });
+            if (nestedModified) {
+              userSettingsModified = true;
+            }
+          }
         }
       });
 
