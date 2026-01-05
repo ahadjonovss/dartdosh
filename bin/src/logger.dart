@@ -225,9 +225,9 @@ class Logger {
         '👌 Config to\'liq, qo\'shimcha narsa kerak emas, Xo\'jayiin!'
       ],
       LogType.initCompleted: [
-        '\n✅ Hammasi tayyor, endi bemalol ishlatishingiz mumkin, Xo\'jayiin!\n🚀 Endi dartdosh build commandlarini ishlatishingiz mumkin!',
-        '\n🎉 Init tayyor! Dartdosh ishlatishga tayyor, Xo\'jayiin!\n💼 Build qilishni boshlashingiz mumkin!',
-        '\n🏆 Konfiguratsiya to\'liq! Ish boshlashingiz mumkin, Xo\'jayiin!\n⚡ Buyruqlaringizni kutmoqdaman!'
+        '\n✅ Configlar dartdosh_config/ papkasida yaratildi, Xo\'jayiin!\n📝 Iltimos avval bir tekshiring, keyin bemalol ishlatishingiz mumkin!\n💡 Masalan: dartdosh build apk -p',
+        '\n🎉 dartdosh_config/ papkasida configlar tayyor, Xo\'jayiin!\n🔍 Birinchi fayllarni ko\'zdan kechiring, keyin build boshlashingiz mumkin!\n💡 Misol: dartdosh build ipa -p',
+        '\n🏆 Config fayllar dartdosh_config/ da create qilindi, Xo\'jayiin!\n👀 Tekshirib ko\'ring va ishlatishni boshlang!\n💡 Masalan: dartdosh build aab -s'
       ],
       LogType.configValidationFailed: [
         '❌ Config faylni tekshirishda xatolik, Xo\'jayiin!',
@@ -372,9 +372,9 @@ class Logger {
         '👌 Config complete, no additional data needed, Boss!'
       ],
       LogType.initCompleted: [
-        '\n✅ Everything ready, feel free to use it now, Boss!\n🚀 You can now use dartdosh build commands!',
-        '\n🎉 Init done! Dartdosh is ready to use, Boss!\n💼 You can start building!',
-        '\n🏆 Configuration complete! You can start working, Boss!\n⚡ Awaiting your commands!'
+        '\n✅ Config files created in dartdosh_config/ folder, Boss!\n📝 Please check them first, then feel free to use!\n💡 Example: dartdosh build apk -p',
+        '\n🎉 Configs ready in dartdosh_config/ folder, Boss!\n🔍 First review the files, then start building!\n💡 Example: dartdosh build ipa -p',
+        '\n🏆 Config files created in dartdosh_config/, Boss!\n👀 Check them out and start using!\n💡 Example: dartdosh build aab -s'
       ],
       LogType.configValidationFailed: [
         '❌ Error validating config file, Boss!',
@@ -519,9 +519,9 @@ class Logger {
         '👌 Конфигурация полная, дополнительные данные не нужны, Босс!'
       ],
       LogType.initCompleted: [
-        '\n✅ Всё готово, можете пользоваться, Босс!\n🚀 Теперь можете использовать команды dartdosh build!',
-        '\n🎉 Init завершён! Dartdosh готов к использованию, Босс!\n💼 Можете начинать сборку!',
-        '\n🏆 Конфигурация завершена! Можете начинать работать, Босс!\n⚡ Жду ваших команд!'
+        '\n✅ Файлы конфигурации созданы в папке dartdosh_config/, Босс!\n📝 Пожалуйста, сначала проверьте их, потом используйте!\n💡 Пример: dartdosh build apk -p',
+        '\n🎉 Конфигурации готовы в папке dartdosh_config/, Босс!\n🔍 Сначала просмотрите файлы, затем начинайте сборку!\n💡 Пример: dartdosh build ipa -p',
+        '\n🏆 Файлы конфигурации созданы в dartdosh_config/, Босс!\n👀 Проверьте их и начинайте использовать!\n💡 Пример: dartdosh build aab -s'
       ],
       LogType.configValidationFailed: [
         '❌ Ошибка проверки файла конфигурации, Босс!',
