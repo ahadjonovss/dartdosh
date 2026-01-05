@@ -1,13 +1,6 @@
 ## 0.6.2
 
 ### New Features
-- 📝 **Interactive "What to Test" Notes**: IPA builds with upload enabled now prompt for TestFlight notes
-  - Asks for "What to Test" notes before build starts
-  - User can skip by pressing Enter
-  - Notes are displayed in upload output log
-  - Helps document changes for testers
-  - Note: Notes shown in terminal (manual entry in App Store Connect still needed)
-
 - 🔥 **Firebase App Distribution Integration**: APK builds can now auto-upload to Firebase
   - Automatic upload to Firebase App Distribution after APK build
   - Interactive release notes prompt before build starts

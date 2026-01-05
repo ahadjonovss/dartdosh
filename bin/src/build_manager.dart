@@ -42,19 +42,8 @@ class BuildManager {
     final language = settings['language'] as String? ?? 'uz';
     Logger.setLanguage(language);
 
-    // For IPA builds with upload enabled, ask for "What to Test" notes
-    String? releaseNotes;
-    if (target == 'ipa') {
-      final ipaUploadConfig = settings['ipa_upload'] as Map<String, dynamic>?;
-      final uploadEnabled = ipaUploadConfig?['enabled'] as bool? ?? false;
-
-      if (uploadEnabled) {
-        stdout.write('📝 What to Test notes (press Enter to skip): ');
-        releaseNotes = stdin.readLineSync()?.trim();
-      }
-    }
-
     // For APK builds with Firebase Distribution enabled, ask for release notes
+    String? releaseNotes;
     if (target == 'apk') {
       final firebaseConfig = settings['firebase_distribution'] as Map<String, dynamic>?;
       final uploadEnabled = firebaseConfig?['enabled'] as bool? ?? false;
@@ -599,15 +588,6 @@ class BuildManager {
       }
 
       Logger.log(LogType.uploadStarting, path: ipaPath);
-
-      // Show what to test notes if provided
-      if (releaseNotes != null && releaseNotes.isNotEmpty) {
-        Logger.log(LogType.uploadProgress, progress: '📝 What to Test: $releaseNotes');
-      }
-
-      // xcrun altool command
-      // Note: altool doesn't support sending "What to Test" notes directly
-      // Notes need to be added manually in App Store Connect after upload
       final args = [
         'altool',
         '--upload-app',
