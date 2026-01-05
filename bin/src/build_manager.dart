@@ -42,6 +42,18 @@ class BuildManager {
     final language = settings['language'] as String? ?? 'uz';
     Logger.setLanguage(language);
 
+    // For IPA builds with upload enabled, ask for "What to Test" notes
+    String? whatToTestNotes;
+    if (target == 'ipa') {
+      final ipaUploadConfig = settings['ipa_upload'] as Map<String, dynamic>?;
+      final uploadEnabled = ipaUploadConfig?['enabled'] as bool? ?? false;
+
+      if (uploadEnabled) {
+        stdout.write('📝 What to Test notes (press Enter to skip): ');
+        whatToTestNotes = stdin.readLineSync()?.trim();
+      }
+    }
+
     String cmdString = '';
 
     // If no environment specified, use plain Flutter build command
@@ -100,9 +112,9 @@ class BuildManager {
         Logger.log(LogType.success, target: target, env: envDisplay);
         // Always rename/move files, regardless of environment
         if (env != null) {
-          _renameAndMoveOutputFile(target, env, settings);
+          _renameAndMoveOutputFile(target, env, settings, whatToTestNotes);
         } else {
-          _renameAndMoveOutputFileNoEnv(target, settings);
+          _renameAndMoveOutputFileNoEnv(target, settings, whatToTestNotes);
         }
 
         // Stop stopwatch and show total time
@@ -306,7 +318,7 @@ class BuildManager {
 
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
   void _renameAndMoveOutputFile(
-      String target, String env, Map<String, dynamic> config) {
+      String target, String env, Map<String, dynamic> config, String? whatToTestNotes) {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -345,7 +357,7 @@ class BuildManager {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
         // Upload IPA to App Store if enabled
         if (ipaPath != null) {
-          _uploadIpaIfEnabled(ipaPath, config);
+          _uploadIpaIfEnabled(ipaPath, config, whatToTestNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
@@ -357,7 +369,7 @@ class BuildManager {
 
   // Environment bo'lmaganda fayllarni rename qilib output_path ga ko'chirish
   void _renameAndMoveOutputFileNoEnv(
-      String target, Map<String, dynamic> config) {
+      String target, Map<String, dynamic> config, String? whatToTestNotes) {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -395,7 +407,7 @@ class BuildManager {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
         // Upload IPA to App Store if enabled (same for non-env builds)
         if (ipaPath != null) {
-          _uploadIpaIfEnabled(ipaPath, config);
+          _uploadIpaIfEnabled(ipaPath, config, whatToTestNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
@@ -538,7 +550,7 @@ class BuildManager {
 
   // IPA faylni App Store Connect ga yuklash
   Future<void> _uploadIpaIfEnabled(
-      String ipaPath, Map<String, dynamic> config) async {
+      String ipaPath, Map<String, dynamic> config, String? whatToTestNotes) async {
     try {
       // Config dan ipa_upload sozlamalarini olish
       final ipaUploadConfig = config['ipa_upload'] as Map<String, dynamic>?;
@@ -565,21 +577,30 @@ class BuildManager {
 
       Logger.log(LogType.uploadStarting, path: ipaPath);
 
-      // xcrun altool command (newer, simpler method)
+      // Show what to test notes if provided
+      if (whatToTestNotes != null && whatToTestNotes.isNotEmpty) {
+        Logger.log(LogType.uploadProgress, progress: '📝 What to Test: $whatToTestNotes');
+      }
+
+      // xcrun altool command
+      // Note: altool doesn't support sending "What to Test" notes directly
+      // Notes need to be added manually in App Store Connect after upload
+      final args = [
+        'altool',
+        '--upload-app',
+        '--type',
+        'ios',
+        '--file',
+        ipaPath,
+        '--username',
+        appleId,
+        '--password',
+        appPassword,
+      ];
+
       final result = await Process.run(
         'xcrun',
-        [
-          'altool',
-          '--upload-app',
-          '--type',
-          'ios',
-          '--file',
-          ipaPath,
-          '--username',
-          appleId,
-          '--password',
-          appPassword,
-        ],
+        args,
         runInShell: true,
       );
 
