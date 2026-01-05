@@ -1,3 +1,13 @@
+## 0.6.1
+
+### Improvements
+- 📝 **Better Init Completion Messages**: Init messages now show config location and usage examples
+  - Shows exactly where config files were created (`dartdosh_config/`)
+  - Instructs users to review configs before use
+  - Provides specific example commands (e.g., `dartdosh build apk -p`)
+  - Updated across all languages (uz, en, ru)
+  - Makes initialization process clearer for first-time users
+
 ## 0.6.0
 
 ### Major Changes - Breaking
