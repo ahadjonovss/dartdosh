@@ -1,3 +1,37 @@
+## 0.7.2
+
+### New Features
+- 🔥 **Environment-Specific Firebase Distribution**: Firebase App Distribution now supports separate configurations for production, staging, and development
+  - Team-shared config (app IDs, tester groups) in `build_config.json`
+  - Personal settings (enable/disable per environment) in `settings.json`
+  - Better team collaboration - no credential conflicts
+  - Example:
+    ```json
+    // build_config.json
+    "firebase_distribution": {
+      "production": {
+        "app_id": "1:123456789:android:prodabc123",
+        "tester_groups": "production-testers,management"
+      }
+    }
+
+    // settings.json
+    "firebase_distribution": {
+      "production": { "enabled": false },
+      "staging": { "enabled": true }
+    }
+    ```
+
+### Improvements
+- 🔄 **Automatic Migration**: Existing configs automatically upgraded to new Firebase structure
+- 🎯 **Smart Validation**: `dartdosh init` validates and adds missing Firebase config fields
+- 💝 **Donation Messages**: Added friendly donation prompts after successful Firebase and IPA uploads
+- 📚 **Enhanced Documentation**: Updated README with prominent Turkish language support and new Firebase structure
+
+### Bug Fixes
+- ✅ **Complete Migration Logic**: All new Firebase configuration fields are now properly handled in migrations
+- ✅ **Config Validation**: Missing `firebase_distribution` section is automatically added when upgrading
+
 ## 0.7.1
 
 ### New Features

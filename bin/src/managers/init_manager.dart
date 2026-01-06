@@ -52,6 +52,7 @@ class InitManager {
         "ipa": oldConfig['ipa'] ?? _getDefaultBuildConfig('ipa'),
         "appbundle":
             oldConfig['appbundle'] ?? _getDefaultBuildConfig('appbundle'),
+        "firebase_distribution": _getDefaultFirebaseDistributionBuildConfig(),
       };
 
       // Extract user settings (user specific)
@@ -63,8 +64,7 @@ class InitManager {
         "output_path": oldConfig['output_path'] ?? _getDefaultOutputPath(),
         "ipa_upload": oldConfig['ipa_upload'] ??
             {"enabled": false, "apple_id": "", "app_specific_password": ""},
-        "firebase_distribution": oldConfig['firebase_distribution'] ??
-            {"enabled": false, "app_id": "", "tester_groups": ""}
+        "firebase_distribution": _getDefaultFirebaseDistributionSettings(),
       };
 
       // Set language for logs
@@ -110,6 +110,14 @@ class InitManager {
         }
       }
 
+      // Check firebase_distribution in build_config
+      if (!buildConfig.containsKey('firebase_distribution')) {
+        buildConfig['firebase_distribution'] =
+            _getDefaultFirebaseDistributionBuildConfig();
+        buildConfigModified = true;
+        missingFields.add('build_config.firebase_distribution');
+      }
+
       // Check user settings
       final requiredUserFields = {
         'language': 'uz',
@@ -121,11 +129,7 @@ class InitManager {
           "apple_id": "",
           "app_specific_password": ""
         },
-        'firebase_distribution': {
-          "enabled": false,
-          "app_id": "",
-          "tester_groups": ""
-        }
+        'firebase_distribution': _getDefaultFirebaseDistributionSettings(),
       };
 
       requiredUserFields.forEach((key, defaultValue) {
@@ -197,6 +201,7 @@ class InitManager {
         "apk": _getDefaultBuildConfig('apk'),
         "ipa": _getDefaultBuildConfig('ipa'),
         "appbundle": _getDefaultBuildConfig('appbundle'),
+        "firebase_distribution": _getDefaultFirebaseDistributionBuildConfig(),
       };
 
       // User settings (user specific)
@@ -210,11 +215,7 @@ class InitManager {
           "apple_id": "",
           "app_specific_password": ""
         },
-        "firebase_distribution": {
-          "enabled": false,
-          "app_id": "",
-          "tester_groups": ""
-        }
+        "firebase_distribution": _getDefaultFirebaseDistributionSettings(),
       };
 
       // Write files
@@ -240,6 +241,33 @@ class InitManager {
       "production": "flutter build $target --release --flavor production",
       "staging": "flutter build $target --release --flavor staging",
       "development": "flutter build $target --debug --flavor development"
+    };
+  }
+
+  /// Get default Firebase Distribution build config (team shared)
+  Map<String, dynamic> _getDefaultFirebaseDistributionBuildConfig() {
+    return {
+      "production": {
+        "app_id": "1:123456789:android:prodabc123",
+        "tester_groups": "production-testers,management"
+      },
+      "staging": {
+        "app_id": "1:123456789:android:stagabc123",
+        "tester_groups": "qa-team,staging-testers"
+      },
+      "development": {
+        "app_id": "1:123456789:android:devabc123",
+        "tester_groups": "developers,internal-testers"
+      }
+    };
+  }
+
+  /// Get default Firebase Distribution settings (user specific)
+  Map<String, dynamic> _getDefaultFirebaseDistributionSettings() {
+    return {
+      "production": {"enabled": false},
+      "staging": {"enabled": true},
+      "development": {"enabled": true}
     };
   }
 
