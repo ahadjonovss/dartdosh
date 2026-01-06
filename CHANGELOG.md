@@ -1,3 +1,10 @@
+## 0.6.5
+
+### Bug Fixes
+- 🐛 **Fixed Upgrade Command**: Changed from `dart pub global activate` to `pub global activate`
+  - The upgrade command now uses correct syntax for activating global packages
+  - Resolves upgrade failures when using `dartdosh upgrade`
+
 ## 0.6.4
 
 ### Bug Fixes

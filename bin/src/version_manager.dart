@@ -43,7 +43,7 @@ class VersionManager {
     } catch (e) {
       // Fallback to hardcoded version if reading fails
     }
-    return '0.6.4'; // Fallback version
+    return '0.6.5'; // Fallback version
   }
 
   /// Show current version with fun message
