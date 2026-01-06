@@ -1,3 +1,15 @@
+## 0.7.1
+
+### New Features
+- 🇹🇷 **Turkish Language Support**: Added complete Turkish (tr) translation
+  - All log messages and progress tasks translated to Turkish
+  - "Patron" style messaging for Turkish users
+  - Usage: `dartdosh build apk --language tr` or `-l tr`
+
+### Improvements
+- 🌍 **Expanded Language Support**: Now supporting 4 languages (uz, en, ru, tr)
+- 📝 **Better Localization**: Turkish translation includes embedded fallback
+
 ## 0.7.0
 
 ### Major Changes - Refactoring
