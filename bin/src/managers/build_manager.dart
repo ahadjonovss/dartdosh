@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
 import 'package:yaml/yaml.dart';
-import 'logger.dart';
+import '../translation/logger.dart';
 
 /// Manages Flutter build operations with automatic version management.
 ///

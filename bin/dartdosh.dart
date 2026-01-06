@@ -1,4 +1,4 @@
-import 'src/cli.dart';
+import 'src/cli/cli.dart';
 
 /// Entry point for the DartDosh CLI application.
 Future<void> main(List<String> arguments) async {

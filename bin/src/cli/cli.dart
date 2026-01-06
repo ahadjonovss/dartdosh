@@ -1,6 +1,6 @@
-import 'build_manager.dart';
-import 'version_manager.dart';
-import 'init_manager.dart';
+import '../managers/build_manager.dart';
+import '../managers/version_manager.dart';
+import '../managers/init_manager.dart';
 
 /// Command-line interface handler for DartDosh commands.
 ///

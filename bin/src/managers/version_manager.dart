@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:yaml/yaml.dart';
-import 'logger.dart';
+import '../translation/logger.dart';
 
 /// Version manager for DartDosh CLI tool
 ///

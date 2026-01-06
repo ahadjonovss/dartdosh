@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:yaml/yaml.dart';
-import 'logger.dart';
+import '../translation/logger.dart';
 
 /// Manages initialization and migration of dartdosh configuration files
 class InitManager {
