@@ -318,9 +318,30 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ Orqaga qaytarilmadi! Versiya topilmadi, Xo'jayiin!"
       ]
+    },
+    "firebase_upload_missing_app_id": {
+      "variants": [
+        "⚠️ Firebase App ID kiritilmagan, Xo'jayiin!"
+      ]
+    },
+    "firebase_upload_starting": {
+      "variants": [
+        "📤 APK Firebase App Distribution ga yuklanmoqda, Xo'jayiin..."
+      ]
+    },
+    "firebase_upload_success": {
+      "variants": [
+        "✅ APK muvaffaqiyatli Firebase ga yuklandi, Xo'jayiin!"
+      ]
+    },
+    "firebase_upload_failed": {
+      "variants": [
+        "❌ Firebase ga yuklashda xatolik, Xo'jayiin!"
+      ]
     }
   }
 }
+
 ''',
   'en': r'''
 {
@@ -635,9 +656,30 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ Downgrade failed! Version not found, Boss!"
       ]
+    },
+    "firebase_upload_missing_app_id": {
+      "variants": [
+        "⚠️ Firebase App ID missing, Boss!"
+      ]
+    },
+    "firebase_upload_starting": {
+      "variants": [
+        "📤 Uploading APK to Firebase App Distribution, Boss..."
+      ]
+    },
+    "firebase_upload_success": {
+      "variants": [
+        "✅ APK successfully uploaded to Firebase, Boss!"
+      ]
+    },
+    "firebase_upload_failed": {
+      "variants": [
+        "❌ Firebase upload failed, Boss!"
+      ]
     }
   }
 }
+
 ''',
   'ru': r'''
 {
@@ -952,9 +994,30 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ Откат не удался! Версия не найдена, Босс!"
       ]
+    },
+    "firebase_upload_missing_app_id": {
+      "variants": [
+        "⚠️ Firebase App ID не указан, Босс!"
+      ]
+    },
+    "firebase_upload_starting": {
+      "variants": [
+        "📤 Загрузка APK в Firebase App Distribution, Босс..."
+      ]
+    },
+    "firebase_upload_success": {
+      "variants": [
+        "✅ APK успешно загружен в Firebase, Босс!"
+      ]
+    },
+    "firebase_upload_failed": {
+      "variants": [
+        "❌ Ошибка загрузки в Firebase, Босс!"
+      ]
     }
   }
 }
+
 ''',
   'tr': r'''
 {
@@ -1292,5 +1355,6 @@ const Map<String, String> embeddedTranslations = {
     }
   }
 }
-''',
+
+'''
 };

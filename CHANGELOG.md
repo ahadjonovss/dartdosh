@@ -1,3 +1,10 @@
+## 0.7.6
+
+### Bug Fixes
+- 🐛 **Fixed Missing Firebase Upload Translation**: Fixed "Missing translation: firebase_upload_starting" error
+  - Regenerated embedded translations from JSON source files
+  - All Firebase upload messages now display correctly in all languages
+
 ## 0.7.5
 
 ### Bug Fixes
