@@ -1,5 +1,10 @@
 # DartDosh CLI – User Guide
 
+**📖 Read this in other languages:**
+[🇺🇿 O'zbekcha](docs/README.uz.md) | [🇷🇺 Русский](docs/README.ru.md) | [🇹🇷 Türkçe](docs/README.tr.md)
+
+---
+
 `DartDosh` is a powerful CLI tool for simplifying Flutter builds with automatic version management, multi-language support, and smart output handling.
 
 ## 🌍 Multi-Language Support
