@@ -1,3 +1,10 @@
+## 0.7.4
+
+### Documentation
+- 📚 **Fixed README Links**: Updated multi-language documentation links to use absolute GitHub URLs
+  - Links now work correctly on pub.dev
+  - All language switcher links point to GitHub repository
+
 ## 0.7.3
 
 ### Bug Fixes
