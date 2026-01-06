@@ -1,7 +1,7 @@
 # DartDosh CLI – User Guide
 
 **📖 Read this in other languages:**
-[🇺🇿 O'zbekcha](docs/README.uz.md) | [🇷🇺 Русский](docs/README.ru.md) | [🇹🇷 Türkçe](docs/README.tr.md)
+[🇺🇿 O'zbekcha](doc/README.uz.md) | [🇷🇺 Русский](doc/README.ru.md) | [🇹🇷 Türkçe](doc/README.tr.md)
 
 ---
 
