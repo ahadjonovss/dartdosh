@@ -672,8 +672,10 @@ class BuildManager {
         return; // Upload o'chirilgan bu environment uchun
       }
 
-      // Get build_config Firebase Distribution config for app_id and tester_groups
-      final buildConfigFirebase = config['firebase_distribution'] as Map<String, dynamic>?;
+      // Get build_config.json Firebase Distribution config for app_id and tester_groups
+      final buildConfigFile = File('${Directory.current.path}/dartdosh_config/build_config.json');
+      final buildConfig = jsonDecode(buildConfigFile.readAsStringSync());
+      final buildConfigFirebase = buildConfig['firebase_distribution'] as Map<String, dynamic>?;
 
       if (buildConfigFirebase == null) {
         return; // Config yo'q - skip
