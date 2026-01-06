@@ -43,7 +43,7 @@ class VersionManager {
     } catch (e) {
       // Fallback to hardcoded version if reading fails
     }
-    return '0.5.11'; // Fallback version
+    return '0.6.4'; // Fallback version
   }
 
   /// Show current version with fun message
@@ -215,8 +215,8 @@ class VersionManager {
 
     try {
       final result = await Process.run(
-        'dart',
-        ['pub', 'global', 'activate', packageName],
+        'pub',
+        ['global', 'activate', packageName],
         runInShell: true,
       );
 
