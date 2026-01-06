@@ -1,3 +1,12 @@
+## 0.6.4
+
+### Bug Fixes
+- 🐛 **Fixed Config Validation**: dartdosh init now properly validates nested fields
+  - Validates nested fields in `ipa_upload` and `firebase_distribution` config objects
+  - Adds missing fields like `enabled`, `apple_id`, `app_id`, `tester_groups`
+  - Ensures complete config structure even when parent object exists but is empty
+  - Reports all missing nested fields properly with detailed field paths
+
 ## 0.6.3
 
 ### Changes
