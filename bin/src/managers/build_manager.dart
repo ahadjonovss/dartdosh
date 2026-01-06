@@ -410,9 +410,9 @@ class BuildManager {
 
       if (target == 'apk') {
         final apkPath = _renameAndMoveApk(newName, outputPath);
-        // Upload APK to Firebase Distribution if enabled (same for non-env builds)
+        // Upload APK to Firebase Distribution if enabled (skipped for non-env builds)
         if (apkPath != null) {
-          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes, env);
+          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes, null);
         }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
