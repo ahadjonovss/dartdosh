@@ -1,0 +1,335 @@
+{
+  "version": "1.0.0",
+  "language": "tr",
+  "metadata": {
+    "name": "Türkçe",
+    "native_name": "Turkish",
+    "contributors": ["ahadjonovss"]
+  },
+  "progress_tasks": {
+    "starting": "Başlatılıyor...",
+    "gradle": "Gradle çalışıyor...",
+    "dependencies_downloading": "Bağımlılıklar indiriliyor...",
+    "dependencies_ready": "Bağımlılıklar hazır...",
+    "compiling": "Flutter kodu derleniyor...",
+    "bundling": "Bundle oluşturuluyor...",
+    "assembling": "APK/AAB derleniyor...",
+    "signing": "İmzalanıyor...",
+    "finishing": "Tamamlanıyor...",
+    "ready": "Hazır!"
+  },
+  "log_types": {
+    "start": {
+      "variants": [
+        "🚀 Başlatma: Build {target} ({env} modu), Patron!",
+        "✨ Hazır olun: {target} build başlatıldı ({env}), Patron!",
+        "🏁 İşlem başladı: {target} ({env}), Patron!"
+      ]
+    },
+    "info": {
+      "variants": []
+    },
+    "step": {
+      "variants": [
+        "🔧 {target} build aşaması: Flutter komutları çalışıyor, Patron...",
+        "⚙️ İşlem: Build aşamaları yürütülüyor, Patron...",
+        "🛠️ Adım: {target} build işlemi devam ediyor, Patron..."
+      ]
+    },
+    "success": {
+      "variants": [
+        "✅ {target} build başarıyla tamamlandı, Patron!",
+        "🎉 Uygulama hazır: {target} ({env}), Patron!",
+        "🏆 {target} build başarıyla bitti, Patron!"
+      ]
+    },
+    "error": {
+      "variants": [
+        "❌ {target} build hatası oluştu, Patron!",
+        "💥 Bir şeyler ters gitti: {target} ({env}), Patron!",
+        "⚠️ Build başarısız: {target} ({env}), Patron!"
+      ]
+    },
+    "finished": {
+      "variants": []
+    },
+    "build_config_is_not_exist": {
+      "variants": [
+        "⚠️ Build yapılandırması bulunamadı, varsayılan oluşturuluyor, Patron!",
+        "📝 build_config.json yok, varsayılan yapılandırma oluşturdum, Patron!",
+        "ℹ️ Yapılandırma oluşturuluyor, Patron!"
+      ]
+    },
+    "build_config_created": {
+      "variants": [
+        "\n📋 Patron, build_config.json oluşturdum!\n✅ Lütfen kontrol edin ve doğruysa komutu tekrar çalıştırın.\n💼 Hizmetinizdeyim, Patron!",
+        "\n📝 Build yapılandırması hazır, Patron!\n🔍 Yapılandırmayı kontrol edin, sonra tekrar çalıştırın.\n🚀 Komut bekliyorum, Patron!",
+        "\n✨ Varsayılan yapılandırma oluşturdum, Patron!\n📖 İnceleyin ve uygunsa komutu tekrar çalıştırın.\n⚡ Hazır bekliyorum, Patron!"
+      ]
+    },
+    "running": {
+      "variants": [
+        "🔄 Çalıştırılıyor: {command}, Patron!",
+        "⏳ Komut yürütülüyor: {command}, Patron!",
+        "🏃 İşlem: {command}, Patron!"
+      ]
+    },
+    "donation": {
+      "variants": [
+        "\n☕ Patron, dartdosh hoşunuza gittiyse, bana bir çay parası atın: https://www.tirikchilik.uz/ahadjonovss\n   Kahve içip daha harika araçlar yapacağım! 😄",
+        "\n💰 Patron, bu araç faydalıysa, sorun değil bağış yaparsınız: https://www.tirikchilik.uz/ahadjonovss\n   Bir şey yaparsanız, yeni özellikler çıkaracağım! 🚀",
+        "\n🎁 Patron, dartdosh yardımcı oluyor mu? O zaman bu linke bir göz atın: https://www.tirikchilik.uz/ahadjonovss\n   Sponsor olun, daha güçlü hale getirelim! 💪",
+        "\n🍕 Build hazır oldu, şimdi benim sıram! Pizza için yardım ederseniz: https://www.tirikchilik.uz/ahadjonovss\n   Kodlama ve pizza - en iyi kombinasyon! 🤩",
+        "\n🤑 Patron, bu aracı kullanarak zamanınızı kazandınız mı? O zaman bana da yardım edin: https://www.tirikchilik.uz/ahadjonovss\n   Bir kahve parası bile olsa moralim yükselir! ☕",
+        "\n💝 Hey Patron, dartdosh hoşunuza gitti mi? Sevindirdim mi? O zaman küçük bir bağış: https://www.tirikchilik.uz/ahadjonovss\n   Büyük para değil, gönülden gelen yeterli! 😊",
+        "\n🎯 Build başarılı! Şimdi beni de unutmayın: https://www.tirikchilik.uz/ahadjonovss\n   Desteğinizle daha harika araçlar yaratacağız! 🔥",
+        "\n🌟 Patron, açık kaynak geliştirici hayatı zor! Yardım elinizi uzatın: https://www.tirikchilik.uz/ahadjonovss\n   Bir çorba parası bile büyük lütuf! 🍜",
+        "\n🎊 Build hazır, siz de mutlusunuz, ben de! Şimdi bana da bir iltifat: https://www.tirikchilik.uz/ahadjonovss\n   Destek olursanız, sonraki sürüm daha hızlı çıkar! ⚡",
+        "\n😎 Patron, dartdosh zamanınızı mı kazandırıyor? O zaman benim zamanımı da takdir edin: https://www.tirikchilik.uz/ahadjonovss\n   Bir demlik çay parası lazım sadece! 🍵"
+      ]
+    },
+    "build_number_incremented": {
+      "variants": [
+        "✅ Build numarası güncellendi: {oldBuild} → {newBuild}, Patron!",
+        "🔢 Build numarası artırıldı: {oldBuild} → {newBuild}, Patron!",
+        "📈 Yeni build numarası: {newBuild} (önceki: {oldBuild}), Patron!"
+      ]
+    },
+    "file_saved": {
+      "variants": [
+        "✅ Build kaydedildi: {path}, Patron!",
+        "💾 Dosya hazır: {path}, Patron!",
+        "📦 Build başarıyla kopyalandı: {path}, Patron!"
+      ]
+    },
+    "output_dir_created": {
+      "variants": [
+        "📁 Çıktı dizini oluşturuldu: {path}, Patron!",
+        "🗂️ Yeni klasör oluşturuldu: {path}, Patron!",
+        "✨ Çıktı klasörü hazır: {path}, Patron!"
+      ]
+    },
+    "upload_starting": {
+      "variants": [
+        "📤 IPA dosyası App Store Connect'e yükleniyor, Patron...",
+        "🚀 Transporter başlatıldı, IPA yükleniyor, Patron...",
+        "⬆️ Yükleme işlemi başladı, Patron..."
+      ]
+    },
+    "upload_progress": {
+      "variants": [
+        "⏳ {progress}"
+      ]
+    },
+    "upload_success": {
+      "variants": [
+        "✅ IPA başarıyla App Store Connect'e yüklendi, Patron!",
+        "🎉 Yükleme hazır! IPA App Store'da, Patron!",
+        "🏆 Dosya başarıyla yüklendi, Patron!"
+      ]
+    },
+    "upload_failed": {
+      "variants": [
+        "❌ IPA yükleme hata ile tamamlandı, Patron!",
+        "💥 Yükleme başarısız, Patron!",
+        "⚠️ Dosya yüklerken sorun oluştu, Patron!"
+      ]
+    },
+    "upload_credentials_missing": {
+      "variants": [
+        "⚠️ Yükleme açık ama Apple ID veya şifre girilmemiş, Patron!",
+        "🔐 Kimlik bilgileri bulunamadı! build_config.json'a Apple ID ve şifre ekleyin, Patron!",
+        "⚡ Yükleme için Apple ID gerekli, Patron!"
+      ]
+    },
+    "total_time": {
+      "variants": [
+        "⏱️  Toplam süre: {time} saniye. Sizin için {time} saniye çalıştım, Patron! 💪",
+        "🎯 İşlem {time} saniyede tamamlandı. Zamanınızı kazandırdım, Patron! ⚡",
+        "✨ {time} saniyede her şey hazır! Size hizmet etmek bir onur, Patron! 🚀"
+      ]
+    },
+    "init_started": {
+      "variants": [
+        "🚀 Dartdosh yapılandırılıyor, Patron...",
+        "✨ Init işlemi başladı, Patron...",
+        "🔧 Yapılandırma kontrol ediliyor, Patron..."
+      ]
+    },
+    "config_created": {
+      "variants": [
+        "✅ Yeni config dosyaları oluşturuldu, Patron!",
+        "📝 Yapılandırma hazır, Patron!",
+        "🎉 Config dosyaları başarıyla oluşturuldu, Patron!"
+      ]
+    },
+    "config_validation_failed": {
+      "variants": [
+        "❌ Config dosyası kontrol edilirken hata oluştu, Patron!",
+        "💥 Doğrulama hatası, Patron!",
+        "⚠️ Config dosyası okunamadı, Patron!"
+      ]
+    },
+    "config_creation_failed": {
+      "variants": [
+        "❌ Config oluştururken hata oluştu, Patron!",
+        "💥 Dosyalar oluşturulamadı, Patron!",
+        "⚠️ Yapılandırma oluşturulamadı, Patron!"
+      ]
+    },
+    "migration_started": {
+      "variants": [
+        "🔄 Eski build_config.json bulundu, yeni yapıya geçiliyor, Patron...",
+        "📦 Migration başladı, Patron...",
+        "⚡ Eski config'den veriler kopyalanıyor, Patron..."
+      ]
+    },
+    "migration_completed": {
+      "variants": [
+        "✅ Migration başarılı! Tüm veriler yeni dosyaya kopyalandı, Patron!",
+        "🎉 Eski config yeni formata dönüştürüldü, Patron!",
+        "🏆 Migration hazır! Tüm verileri sakladım, Patron!"
+      ]
+    },
+    "migration_failed": {
+      "variants": [
+        "❌ Migration hata ile tamamlandı, Patron!",
+        "💥 Eski config okunurken sorun oluştu, Patron!",
+        "⚠️ Migration gerçekleştirilemedi, Patron!"
+      ]
+    },
+    "missing_field_added": {
+      "variants": [
+        "✅ Eksik alan eklendi: {field}, Patron!",
+        "🔧 Güncellendi: {field} ekledim, Patron!",
+        "📝 {field} - bu veri yoktu, ekledim, Patron!"
+      ]
+    },
+    "already_configured": {
+      "variants": [
+        "✅ Her şey tamam! Yapılandırma eksiksiz, Patron!",
+        "🎯 Her şey hazır, hiçbir şey eksik değil, Patron!",
+        "👌 Config tam, ek bir şey gerekli değil, Patron!"
+      ]
+    },
+    "init_completed": {
+      "variants": [
+        "\n✅ Config'ler dartdosh_config/ klasöründe oluşturuldu, Patron!\n📝 Lütfen önce kontrol edin, sonra kullanabilirsiniz!\n💡 Örneğin: dartdosh build apk -p",
+        "\n🎉 dartdosh_config/ klasöründe config'ler hazır, Patron!\n🔍 Önce dosyalara göz atın, sonra build başlatabilirsiniz!\n💡 Örnek: dartdosh build ipa -p",
+        "\n🏆 Config dosyalar dartdosh_config/ içinde oluşturuldu, Patron!\n👀 Kontrol edin ve kullanmaya başlayın!\n💡 Örneğin: dartdosh build aab -s"
+      ]
+    },
+    "config_not_found": {
+      "variants": [
+        "❌ Config dosyalar bulunamadı! Lütfen önce 'dartdosh init' çalıştırın, Patron!",
+        "⚠️ Yapılandırma yok! 'dartdosh init' komutunu çalıştırın, Patron!",
+        "📝 Config gerekli! Önce 'dartdosh init' yapın, Patron!"
+      ]
+    },
+    "version_show": {
+      "variants": [
+        "🎯 Sizde şu an DartDosh {version} versiyonu var, Patron!",
+        "✨ {version} versiyonu çalışıyor, Patron!",
+        "🚀 DartDosh {version} - harika versiyon, Patron!"
+      ]
+    },
+    "version_checking": {
+      "variants": [
+        "🔍 Güncellemeler kontrol ediliyor, Patron...",
+        "📡 Sunucuya bağlanılıyor, Patron...",
+        "🔎 Update var mı bakalım, Patron..."
+      ]
+    },
+    "version_update_available": {
+      "variants": [
+        "🎉 Patron, şimdi {latest} versiyonu çıkmış!",
+        "✨ Yeni {latest} versiyonu var, Patron!",
+        "🚀 Harika! {latest} versiyonu hazır, Patron!"
+      ]
+    },
+    "version_current_info": {
+      "variants": [
+        "📦 Sizde şu an {version} versiyonu var"
+      ]
+    },
+    "version_upgrade_hint": {
+      "variants": [
+        "💡 Güncellemek için bu komutu yazın: dartdosh upgrade"
+      ]
+    },
+    "version_up_to_date": {
+      "variants": [
+        "✅ Güncelleme yok, sizde en son versiyon var, Patron!",
+        "🎯 Güncellemeye gerek yok, en yeni versiyon çalışıyor, Patron!",
+        "👌 Her şey süper! Sizde en son versiyon var, Patron!"
+      ]
+    },
+    "version_server_error": {
+      "variants": [
+        "❌ Sunucuya bağlanılamadı, Patron!"
+      ]
+    },
+    "version_upgrading": {
+      "variants": [
+        "🚀 Upgrade başladı, Patron...",
+        "⬆️ Güncelleniyor, biraz sabır Patron...",
+        "✨ En yeni versiyona geçiliyor, Patron..."
+      ]
+    },
+    "version_upgrade_success": {
+      "variants": [
+        "🎉 {oldVersion} → {newVersion}. Artık övünebilirsiniz, Patron!",
+        "✅ Süper! {oldVersion}'dan {newVersion}'a güncellendi. Övünebilirsiniz, Patron!",
+        "🏆 Harika! Versiyon {newVersion}'a geçti. Arkadaşlarınıza söyleyin, Patron!",
+        "🚀 Hazır! {oldVersion} → {newVersion}. Artık herkesten öndesiniz, Patron!"
+      ]
+    },
+    "version_upgrade_failed": {
+      "variants": [
+        "❌ Güncellenemedi! İnterneti kontrol edin, Patron!"
+      ]
+    },
+    "version_downgrading": {
+      "variants": [
+        "⬇️ {version} versiyonuna geri dönülüyor, Patron..."
+      ]
+    },
+    "version_downgrading_previous": {
+      "variants": [
+        "⬇️ Önceki versiyona geri dönülüyor, Patron..."
+      ]
+    },
+    "version_downgrade_success": {
+      "variants": [
+        "✅ {oldVersion}'dan {newVersion}'a geri döndü, Patron!",
+        "🎯 Hazır! Versiyon {newVersion}'a ayarlandı, Patron!",
+        "👌 Downgrade tamamlandı! Şimdi {newVersion} versiyondasınız, Patron!"
+      ]
+    },
+    "version_downgrade_failed": {
+      "variants": [
+        "❌ Geri döndürülemedi! Versiyon bulunamadı, Patron!"
+      ]
+    },
+    "firebase_upload_missing_app_id": {
+      "variants": [
+        "⚠️ Firebase App ID girilmemiş, Patron!"
+      ]
+    },
+    "firebase_upload_starting": {
+      "variants": [
+        "📤 APK Firebase App Distribution'a yükleniyor, Patron..."
+      ]
+    },
+    "firebase_upload_success": {
+      "variants": [
+        "✅ APK başarıyla Firebase'e yüklendi, Patron!"
+      ]
+    },
+    "firebase_upload_failed": {
+      "variants": [
+        "❌ Firebase'e yüklerken hata oluştu, Patron!"
+      ]
+    }
+  }
+}

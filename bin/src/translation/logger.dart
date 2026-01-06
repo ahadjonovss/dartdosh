@@ -61,7 +61,7 @@ class Logger {
   static Map<String, dynamic>? _translations;
 
   static void setLanguage(String language) {
-    if (['uz', 'en', 'ru'].contains(language)) {
+    if (['uz', 'en', 'ru', 'tr'].contains(language)) {
       _currentLanguage = language;
       _translations = TranslationLoader.load(language);
     } else {
@@ -71,7 +71,7 @@ class Logger {
       print(
           '\x1B[33m⚠️  Warning: Language "$language" is not supported. Falling back to English.\x1B[0m');
       print(
-          '\x1B[33m   Supported languages: uz (Uzbek), en (English), ru (Russian)\x1B[0m\n');
+          '\x1B[33m   Supported languages: uz (Uzbek), en (English), ru (Russian), tr (Turkish)\x1B[0m\n');
     }
   }
 

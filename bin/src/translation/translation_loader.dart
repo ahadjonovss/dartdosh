@@ -8,7 +8,7 @@ import 'embedded_translations.dart';
 /// to embedded translations if files are not found.
 class TranslationLoader {
   static final Map<String, Map<String, dynamic>> _cache = {};
-  static const List<String> supportedLanguages = ['uz', 'en', 'ru'];
+  static const List<String> supportedLanguages = ['uz', 'en', 'ru', 'tr'];
 
   /// Load translation file for given language
   ///
