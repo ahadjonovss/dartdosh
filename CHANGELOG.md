@@ -1,3 +1,16 @@
+## 0.7.5
+
+### Bug Fixes
+- 🐛 **Critical Firebase Upload Fixes**: Fixed three major issues preventing Firebase Distribution from working
+  - **Release Notes Prompt**: Now correctly prompts for release notes on APK builds with environment-specific enabled check
+  - **Upload Logs**: Fixed missing upload starting log and added detailed progress logs (App ID, tester groups, command)
+  - **Infinite Hang**: Fixed async/await issue causing uploads to hang - now properly awaits upload completion
+  - All upload functions now properly awaited to ensure completion before proceeding
+
+### Improvements
+- 📊 **Enhanced Logging**: Added detailed Firebase upload logs showing App ID, tester groups, and exact command being executed
+- ⚡ **Better Async Handling**: Properly structured async operations for file renaming and upload functions
+
 ## 0.7.4
 
 ### Documentation

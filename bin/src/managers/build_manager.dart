@@ -46,15 +46,21 @@ class BuildManager {
 
     // For APK builds with Firebase Distribution enabled, ask for release notes
     String? releaseNotes;
-    if (target == 'apk') {
+    if (target == 'apk' && env != null) {
       final firebaseConfig =
           settings['firebase_distribution'] as Map<String, dynamic>?;
-      final uploadEnabled = firebaseConfig?['enabled'] as bool? ?? false;
 
-      if (uploadEnabled) {
-        stdout.write(
-            '📝 Release notes for Firebase Distribution (press Enter to skip): ');
-        releaseNotes = stdin.readLineSync()?.trim();
+      if (firebaseConfig != null) {
+        // Check environment-specific enabled setting
+        final envSettings =
+            firebaseConfig[env.toLowerCase()] as Map<String, dynamic>?;
+        final uploadEnabled = envSettings?['enabled'] as bool? ?? false;
+
+        if (uploadEnabled) {
+          stdout.write(
+              '📝 Release notes for Firebase Distribution (press Enter to skip): ');
+          releaseNotes = stdin.readLineSync()?.trim();
+        }
       }
     }
 
@@ -116,9 +122,9 @@ class BuildManager {
         Logger.log(LogType.success, target: target, env: envDisplay);
         // Always rename/move files, regardless of environment
         if (env != null) {
-          _renameAndMoveOutputFile(target, env, settings, releaseNotes);
+          await _renameAndMoveOutputFile(target, env, settings, releaseNotes);
         } else {
-          _renameAndMoveOutputFileNoEnv(target, settings, releaseNotes);
+          await _renameAndMoveOutputFileNoEnv(target, settings, releaseNotes);
         }
 
         // Stop stopwatch and show total time
@@ -320,8 +326,8 @@ class BuildManager {
   }
 
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
-  void _renameAndMoveOutputFile(String target, String env,
-      Map<String, dynamic> config, String? releaseNotes) {
+  Future<void> _renameAndMoveOutputFile(String target, String env,
+      Map<String, dynamic> config, String? releaseNotes) async {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -358,13 +364,14 @@ class BuildManager {
         final apkPath = _renameAndMoveApk(newName, outputPath);
         // Upload APK to Firebase Distribution if enabled
         if (apkPath != null) {
-          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes, env);
+          await _uploadApkToFirebaseIfEnabled(
+              apkPath, config, releaseNotes, env);
         }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
         // Upload IPA to App Store if enabled
         if (ipaPath != null) {
-          _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
+          await _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
@@ -375,8 +382,8 @@ class BuildManager {
   }
 
   // Environment bo'lmaganda fayllarni rename qilib output_path ga ko'chirish
-  void _renameAndMoveOutputFileNoEnv(
-      String target, Map<String, dynamic> config, String? releaseNotes) {
+  Future<void> _renameAndMoveOutputFileNoEnv(
+      String target, Map<String, dynamic> config, String? releaseNotes) async {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -412,13 +419,14 @@ class BuildManager {
         final apkPath = _renameAndMoveApk(newName, outputPath);
         // Upload APK to Firebase Distribution if enabled (skipped for non-env builds)
         if (apkPath != null) {
-          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes, null);
+          await _uploadApkToFirebaseIfEnabled(
+              apkPath, config, releaseNotes, null);
         }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
         // Upload IPA to App Store if enabled (same for non-env builds)
         if (ipaPath != null) {
-          _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
+          await _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
         _renameAndMoveAab(newName, outputPath);
@@ -656,16 +664,19 @@ class BuildManager {
       }
 
       // Get settings.json to check if Firebase Distribution is enabled for this environment
-      final settingsFile = File('${Directory.current.path}/dartdosh_config/settings.json');
+      final settingsFile =
+          File('${Directory.current.path}/dartdosh_config/settings.json');
       final settings = jsonDecode(settingsFile.readAsStringSync());
-      final firebaseSettings = settings['firebase_distribution'] as Map<String, dynamic>?;
+      final firebaseSettings =
+          settings['firebase_distribution'] as Map<String, dynamic>?;
 
       if (firebaseSettings == null) {
         return; // Settings yo'q - skip
       }
 
       // Get environment-specific enabled setting
-      final envSettings = firebaseSettings[env.toLowerCase()] as Map<String, dynamic>?;
+      final envSettings =
+          firebaseSettings[env.toLowerCase()] as Map<String, dynamic>?;
       final enabled = envSettings?['enabled'] as bool? ?? false;
 
       if (!enabled) {
@@ -673,16 +684,19 @@ class BuildManager {
       }
 
       // Get build_config.json Firebase Distribution config for app_id and tester_groups
-      final buildConfigFile = File('${Directory.current.path}/dartdosh_config/build_config.json');
+      final buildConfigFile =
+          File('${Directory.current.path}/dartdosh_config/build_config.json');
       final buildConfig = jsonDecode(buildConfigFile.readAsStringSync());
-      final buildConfigFirebase = buildConfig['firebase_distribution'] as Map<String, dynamic>?;
+      final buildConfigFirebase =
+          buildConfig['firebase_distribution'] as Map<String, dynamic>?;
 
       if (buildConfigFirebase == null) {
         return; // Config yo'q - skip
       }
 
       // Get environment-specific config (production, staging, development)
-      final envConfig = buildConfigFirebase[env.toLowerCase()] as Map<String, dynamic>?;
+      final envConfig =
+          buildConfigFirebase[env.toLowerCase()] as Map<String, dynamic>?;
 
       // If no environment-specific config found, skip
       if (envConfig == null) {
@@ -706,6 +720,13 @@ class BuildManager {
             progress: '📝 Release Notes: $releaseNotes');
       }
 
+      // Show app ID and tester groups
+      Logger.log(LogType.uploadProgress, progress: '🎯 App ID: $appId');
+      if (testerGroups.isNotEmpty) {
+        Logger.log(LogType.uploadProgress,
+            progress: '👥 Tester Groups: $testerGroups');
+      }
+
       // firebase appdistribution:distribute command
       final args = [
         'appdistribution:distribute',
@@ -723,6 +744,10 @@ class BuildManager {
       if (releaseNotes != null && releaseNotes.isNotEmpty) {
         args.addAll(['--release-notes', releaseNotes]);
       }
+
+      // Show command being executed
+      Logger.log(LogType.uploadProgress,
+          progress: '⚙️ Running: firebase ${args.join(' ')}');
 
       final result = await Process.run(
         'firebase',
