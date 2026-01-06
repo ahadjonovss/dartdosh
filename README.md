@@ -11,23 +11,6 @@
 - 🇷🇺 **Russian** (ru) - "Босс" style
 - 🇹🇷 **Turkish** (tr) - "Patron" style - **NEW!**
 
-Use `--language` or `-l` flag to switch languages:
-
-```bash
-dartdosh build apk -p --language tr    # Turkish
-dartdosh build apk -p -l uz            # Uzbek
-dartdosh build ipa -s -l en            # English
-dartdosh build aab -d -l ru            # Russian
-```
-
-Or set your preferred language in `dartdosh_config/settings.json`:
-
-```json
-{
-  "language": "tr"
-}
-```
-
 ## 📺 Video Tutorial
 
 [![DartDosh Tutorial](https://img.youtube.com/vi/QpNVwk4SVZA/maxresdefault.jpg)](https://youtu.be/QpNVwk4SVZA?si=kV7kTtHcnZLfv1ZP)
@@ -637,12 +620,25 @@ To disable automatic upload while keeping your credentials:
 * All variants work identically
 
 ### Language Support
-* **Supported**: `uz` (Uzbek), `en` (English), `ru` (Russian)
+* **Supported**: `uz` (Uzbek), `en` (English), `ru` (Russian), `tr` (Turkish)
 * **Default**: Uzbek (`uz`)
+* **Usage**: Use `--language` or `-l` flag:
+  ```bash
+  dartdosh build apk -p --language tr    # Turkish
+  dartdosh build apk -p -l uz            # Uzbek
+  dartdosh build ipa -s -l en            # English
+  dartdosh build aab -d -l ru            # Russian
+  ```
+* **Or set in config**: In `dartdosh_config/settings.json`:
+  ```json
+  {
+    "language": "tr"
+  }
+  ```
 * **Unsupported language**: Automatically falls back to English with a warning:
   ```
   ⚠️  Warning: Language "fr" is not supported. Falling back to English.
-     Supported languages: uz (Uzbek), en (English), ru (Russian)
+     Supported languages: uz (Uzbek), en (English), ru (Russian), tr (Turkish)
   ```
 
 ### Build Behavior
