@@ -30,7 +30,9 @@ class BuildManager {
     final settingsFile = File('${dartdoshDir.path}/settings.json');
 
     // Check if Dartdosh directory and files exist
-    if (!dartdoshDir.existsSync() || !buildConfigFile.existsSync() || !settingsFile.existsSync()) {
+    if (!dartdoshDir.existsSync() ||
+        !buildConfigFile.existsSync() ||
+        !settingsFile.existsSync()) {
       Logger.log(LogType.configNotFound);
       return; // Stop execution, tell user to run dartdosh init
     }
@@ -45,11 +47,13 @@ class BuildManager {
     // For APK builds with Firebase Distribution enabled, ask for release notes
     String? releaseNotes;
     if (target == 'apk') {
-      final firebaseConfig = settings['firebase_distribution'] as Map<String, dynamic>?;
+      final firebaseConfig =
+          settings['firebase_distribution'] as Map<String, dynamic>?;
       final uploadEnabled = firebaseConfig?['enabled'] as bool? ?? false;
 
       if (uploadEnabled) {
-        stdout.write('📝 Release notes for Firebase Distribution (press Enter to skip): ');
+        stdout.write(
+            '📝 Release notes for Firebase Distribution (press Enter to skip): ');
         releaseNotes = stdin.readLineSync()?.trim();
       }
     }
@@ -134,7 +138,6 @@ class BuildManager {
       stopwatch.stop();
     }
   }
-
 
   /// Handles process output with progress bar
   Future<int> _handleProcessOutput(
@@ -317,8 +320,8 @@ class BuildManager {
   }
 
   // Build tugagach fayllarni rename qilib output_path ga ko'chirish
-  void _renameAndMoveOutputFile(
-      String target, String env, Map<String, dynamic> config, String? releaseNotes) {
+  void _renameAndMoveOutputFile(String target, String env,
+      Map<String, dynamic> config, String? releaseNotes) {
     try {
       final versionInfo = _getVersionInfo();
       final version = versionInfo['version']!;
@@ -646,7 +649,8 @@ class BuildManager {
       String apkPath, Map<String, dynamic> config, String? releaseNotes) async {
     try {
       // Config dan firebase_distribution sozlamalarini olish
-      final firebaseConfig = config['firebase_distribution'] as Map<String, dynamic>?;
+      final firebaseConfig =
+          config['firebase_distribution'] as Map<String, dynamic>?;
 
       if (firebaseConfig == null) {
         return; // Config yo'q - skip
@@ -663,15 +667,18 @@ class BuildManager {
 
       // App ID tekshirish
       if (appId.isEmpty) {
-        Logger.log(LogType.uploadProgress, progress: '⚠️ Firebase App ID missing, Boss!');
+        Logger.log(LogType.uploadProgress,
+            progress: '⚠️ Firebase App ID missing, Boss!');
         return;
       }
 
-      Logger.log(LogType.uploadProgress, progress: '📤 Uploading APK to Firebase App Distribution, Boss...');
+      Logger.log(LogType.uploadProgress,
+          progress: '📤 Uploading APK to Firebase App Distribution, Boss...');
 
       // Show release notes if provided
       if (releaseNotes != null && releaseNotes.isNotEmpty) {
-        Logger.log(LogType.uploadProgress, progress: '📝 Release Notes: $releaseNotes');
+        Logger.log(LogType.uploadProgress,
+            progress: '📝 Release Notes: $releaseNotes');
       }
 
       // firebase appdistribution:distribute command
@@ -721,12 +728,15 @@ class BuildManager {
       }
 
       if (result.exitCode == 0) {
-        Logger.log(LogType.uploadProgress, progress: '✅ APK successfully uploaded to Firebase, Boss!');
+        Logger.log(LogType.uploadProgress,
+            progress: '✅ APK successfully uploaded to Firebase, Boss!');
       } else {
-        Logger.log(LogType.uploadProgress, progress: '❌ Firebase upload failed, Boss!');
+        Logger.log(LogType.uploadProgress,
+            progress: '❌ Firebase upload failed, Boss!');
       }
     } catch (e) {
-      Logger.log(LogType.uploadProgress, progress: '❌ Firebase upload failed, Boss!');
+      Logger.log(LogType.uploadProgress,
+          progress: '❌ Firebase upload failed, Boss!');
       Logger.log(LogType.uploadProgress, progress: 'Error: $e');
     }
   }

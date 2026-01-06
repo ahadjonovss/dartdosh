@@ -6,8 +6,10 @@ import 'logger.dart';
 /// Manages initialization and migration of dartdosh configuration files
 class InitManager {
   final dartdoshDir = Directory('${Directory.current.path}/dartdosh_config');
-  final buildConfigFile = File('${Directory.current.path}/dartdosh_config/build_config.json');
-  final settingsFile = File('${Directory.current.path}/dartdosh_config/settings.json');
+  final buildConfigFile =
+      File('${Directory.current.path}/dartdosh_config/build_config.json');
+  final settingsFile =
+      File('${Directory.current.path}/dartdosh_config/settings.json');
   final oldConfigFile = File('${Directory.current.path}/build_config.json');
 
   /// Initialize dartdosh configuration
@@ -21,7 +23,9 @@ class InitManager {
     }
 
     // Check if new config already exists
-    if (dartdoshDir.existsSync() && buildConfigFile.existsSync() && settingsFile.existsSync()) {
+    if (dartdoshDir.existsSync() &&
+        buildConfigFile.existsSync() &&
+        settingsFile.existsSync()) {
       await _validateExistingConfig();
       return;
     }
@@ -46,25 +50,21 @@ class InitManager {
       final buildConfig = {
         "apk": oldConfig['apk'] ?? _getDefaultBuildConfig('apk'),
         "ipa": oldConfig['ipa'] ?? _getDefaultBuildConfig('ipa'),
-        "appbundle": oldConfig['appbundle'] ?? _getDefaultBuildConfig('appbundle'),
+        "appbundle":
+            oldConfig['appbundle'] ?? _getDefaultBuildConfig('appbundle'),
       };
 
       // Extract user settings (user specific)
       final userSettings = {
         "language": oldConfig['language'] ?? 'uz',
         "project_name": oldConfig['project_name'] ?? _getProjectName(),
-        "auto_increment_build_number": oldConfig['auto_increment_build_number'] ?? false,
+        "auto_increment_build_number":
+            oldConfig['auto_increment_build_number'] ?? false,
         "output_path": oldConfig['output_path'] ?? _getDefaultOutputPath(),
-        "ipa_upload": oldConfig['ipa_upload'] ?? {
-          "enabled": false,
-          "apple_id": "",
-          "app_specific_password": ""
-        },
-        "firebase_distribution": oldConfig['firebase_distribution'] ?? {
-          "enabled": false,
-          "app_id": "",
-          "tester_groups": ""
-        }
+        "ipa_upload": oldConfig['ipa_upload'] ??
+            {"enabled": false, "apple_id": "", "app_specific_password": ""},
+        "firebase_distribution": oldConfig['firebase_distribution'] ??
+            {"enabled": false, "app_id": "", "tester_groups": ""}
       };
 
       // Set language for logs
@@ -72,8 +72,10 @@ class InitManager {
 
       // Write files
       const encoder = JsonEncoder.withIndent('  ');
-      await buildConfigFile.writeAsString(encoder.convert(buildConfig), flush: true);
-      await settingsFile.writeAsString(encoder.convert(userSettings), flush: true);
+      await buildConfigFile.writeAsString(encoder.convert(buildConfig),
+          flush: true);
+      await settingsFile.writeAsString(encoder.convert(userSettings),
+          flush: true);
 
       // Add to .gitignore
       await _addToGitignore('dartdosh_config/settings.json');
@@ -155,11 +157,13 @@ class InitManager {
         const encoder = JsonEncoder.withIndent('  ');
 
         if (buildConfigModified) {
-          await buildConfigFile.writeAsString(encoder.convert(buildConfig), flush: true);
+          await buildConfigFile.writeAsString(encoder.convert(buildConfig),
+              flush: true);
         }
 
         if (userSettingsModified) {
-          await settingsFile.writeAsString(encoder.convert(userSettings), flush: true);
+          await settingsFile.writeAsString(encoder.convert(userSettings),
+              flush: true);
         }
 
         // Report missing fields
@@ -215,8 +219,10 @@ class InitManager {
 
       // Write files
       const encoder = JsonEncoder.withIndent('  ');
-      await buildConfigFile.writeAsString(encoder.convert(buildConfig), flush: true);
-      await settingsFile.writeAsString(encoder.convert(userSettings), flush: true);
+      await buildConfigFile.writeAsString(encoder.convert(buildConfig),
+          flush: true);
+      await settingsFile.writeAsString(encoder.convert(userSettings),
+          flush: true);
 
       // Add to .gitignore
       await _addToGitignore('dartdosh_config/settings.json');
