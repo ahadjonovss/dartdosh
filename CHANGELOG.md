@@ -1,3 +1,12 @@
+## 0.7.3
+
+### Bug Fixes
+- 🐛 **Firebase Distribution Upload Fix**: Fixed critical bug where Firebase couldn't upload APKs
+  - Was incorrectly reading from `settings.json` instead of `build_config.json` for app_id and tester_groups
+  - Now properly reads team-shared config (app_id, tester_groups) from `build_config.json`
+  - Personal settings (enabled flag) still read from `settings.json`
+  - Resolves "Missing translation: firebase_upload_missing_app_id" error
+
 ## 0.7.2
 
 ### New Features
