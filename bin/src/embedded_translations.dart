@@ -1,0 +1,959 @@
+/// Embedded translations for dartdosh CLI
+///
+/// These translations are used as fallback when JSON files are not found.
+/// This ensures the CLI works even if translation files are missing.
+library;
+
+const Map<String, String> embeddedTranslations = {
+  'uz': r'''
+{
+  "version": "1.0.0",
+  "language": "uz",
+  "metadata": {
+    "name": "O'zbek tili",
+    "native_name": "Uzbek",
+    "contributors": ["ahadjonovss"]
+  },
+  "progress_tasks": {
+    "starting": "Boshlanyapti...",
+    "gradle": "Gradle ishlayapti...",
+    "dependencies_downloading": "Dependencylar yuklanmoqda...",
+    "dependencies_ready": "Dependencylar tayyor...",
+    "compiling": "Flutter kodi kompilyatsiya qilinyapti...",
+    "bundling": "Bundle yaratilmoqda...",
+    "assembling": "APK/AAB yig'ilmoqda...",
+    "signing": "Imzolanmoqda...",
+    "finishing": "Tugallanmoqda...",
+    "ready": "Tayyor!"
+  },
+  "log_types": {
+    "start": {
+      "variants": [
+        "🚀 Boshlash: Build {target} ({env} mode), Xo'jayiin!",
+        "✨ Tayyor tur: {target} build ishga tushdi ({env}), Xo'jayiin!",
+        "🏁 Jarayon boshlandi: {target} ({env}), Xo'jayiin!"
+      ]
+    },
+    "info": {
+      "variants": []
+    },
+    "step": {
+      "variants": [
+        "🔧 {target} build bosqichi: Flutter komandalar bajarilmoqda, Xo'jayiin...",
+        "⚙️ Jarayon: Build bosqichlari ishlamoqda, Xo'jayiin...",
+        "🛠️ Step: {target} build jarayoni davom etmoqda, Xo'jayiin..."
+      ]
+    },
+    "success": {
+      "variants": [
+        "✅ {target} build muvaffaqiyatli yakunlandi, Xo'jayiin!",
+        "🎉 Ilova tayyor: {target} ({env}), Xo'jayiin!",
+        "🏆 {target} build muvaffaqiyatli tugadi, Xo'jayiin!"
+      ]
+    },
+    "error": {
+      "variants": [
+        "❌ {target} build xatolik yuz berdi, Xo'jayiin!",
+        "💥 Nimadir noto'g'ri ketdi: {target} ({env}), Xo'jayiin!",
+        "⚠️ Build bajarilmadi: {target} ({env}), Xo'jayiin!"
+      ]
+    },
+    "finished": {
+      "variants": []
+    },
+    "build_config_is_not_exist": {
+      "variants": [
+        "⚠️ Build config topilmadi, default yaratilmoqda, Xo'jayiin!",
+        "📝 build_config.json yo'q, default config yaratdim, Xo'jayiin!",
+        "ℹ️ Konfiguratsiya yaratilmoqda, Xo'jayiin!"
+      ]
+    },
+    "build_config_created": {
+      "variants": [
+        "\n📋 Xo'jayiin, build_config.json yaratib qo'ydim!\n✅ Iltimos, tekshirib ko'ring va to'g'ri bo'lsa commandni qayta run qiling.\n💼 Xizmatizga tayyorman, Xo'jayiin!",
+        "\n📝 Build config tayyor, Xo'jayiin!\n🔍 Configni tekshirib, keyin qayta ishga tushiring.\n🚀 Buyruq kutmoqdaman, Xo'jayiin!",
+        "\n✨ Default config yaratdim, Xo'jayiin!\n📖 Ko'rib chiqing va mos bo'lsa, commandni qaytadan bajaring.\n⚡ Tayyor turaman, Xo'jayiin!"
+      ]
+    },
+    "running": {
+      "variants": [
+        "🔄 Ishga tushirilmoqda: {command}, Xo'jayiin!",
+        "⏳ Komanda bajarilmoqda: {command}, Xo'jayiin!",
+        "🏃 Jarayon: {command}, Xo'jayiin!"
+      ]
+    },
+    "donation": {
+      "variants": [
+        "\n☕ Xo'jayiin, agar dartdosh yoqsa, menga bir choy pul tashlang: https://www.tirikchilik.uz/ahadjonovss\n   Qahva ichib, yanada zo'r toollar yasayman! 😄",
+        "\n💰 Xo'jayiin, bu tool foydali bo'lsa, bir gap emas, donat qilaverasiz: https://www.tirikchilik.uz/ahadjonovss\n   Bir gap qilsangiz, yangi featurelar chiqaraman! 🚀",
+        "\n🎁 Xo'jayiin, dartdosh yordamchi bo'lyaptimi? Unda shu linkka bir nazar: https://www.tirikchilik.uz/ahadjonovss\n   Sponsor bo'ling, yanada kuchli qilib qo'yamiz! 💪",
+        "\n🍕 Build tayyor bo'ldi, endi mening navbat! Pizza uchun yordam bersangiz: https://www.tirikchilik.uz/ahadjonovss\n   Coding bilan pizza - eng zo'r kombinatsiya! 🤩",
+        "\n🤑 Xo'jayiin, bu tooldan foydalanib vaqtingizni tejadingizmi? Unda menga ham yordam qiling: https://www.tirikchilik.uz/ahadjonovss\n   Bitta kofe puli bo'lsa ham, ruhim ko'tariladi! ☕",
+        "\n💝 Ey Xo'jayiin, dartdosh sizga yoqdimi? Quvontirdimmi? Unda bir donationcha: https://www.tirikchilik.uz/ahadjonovss\n   Katta pul emas, dildan keladigani yetarli! 😊",
+        "\n🎯 Build muvaffaqiyatli! Endi meni ham unutmang: https://www.tirikchilik.uz/ahadjonovss\n   Sizning supportingiz bilan yanada zo'r toollar yaratamiz! 🔥",
+        "\n🌟 Xo'jayiin, open source developer hayoti qiyin-ku! Yordam qo'lingizni cho'zing: https://www.tirikchilik.uz/ahadjonovss\n   Bir lagmon puli ham katta gap! 🍜",
+        "\n🎊 Build tayyor, siz ham baxtli, men ham! Endi menga ham bir iltifoat: https://www.tirikchilik.uz/ahadjonovss\n   Support qilsangiz, keyingi versiya tezroq chiqadi! ⚡",
+        "\n😎 Xo'jayiin, dartdosh sizning vaqtingizni tejaydimi? Unda mening vaqtimni ham qadrlang: https://www.tirikchilik.uz/ahadjonovss\n   Bir choynak choy puli kerak xolos! 🍵"
+      ]
+    },
+    "build_number_incremented": {
+      "variants": [
+        "✅ Build number yangilandi: {oldBuild} → {newBuild}, Xo'jayiin!",
+        "🔢 Build raqami ko'tarildi: {oldBuild} → {newBuild}, Xo'jayiin!",
+        "📈 Yangi build number: {newBuild} (oldingi: {oldBuild}), Xo'jayiin!"
+      ]
+    },
+    "file_saved": {
+      "variants": [
+        "✅ Build saqlandi: {path}, Xo'jayiin!",
+        "💾 Fayl tayyor: {path}, Xo'jayiin!",
+        "📦 Build muvaffaqiyatli ko'chirildi: {path}, Xo'jayiin!"
+      ]
+    },
+    "output_dir_created": {
+      "variants": [
+        "📁 Output directory yaratildi: {path}, Xo'jayiin!",
+        "🗂️ Yangi papka tuzildi: {path}, Xo'jayiin!",
+        "✨ Output papka tayyor: {path}, Xo'jayiin!"
+      ]
+    },
+    "upload_starting": {
+      "variants": [
+        "📤 IPA fayl App Store Connect ga yuklanmoqda, Xo'jayiin...",
+        "🚀 Transporter ishga tushdi, IPA yuklanmoqda, Xo'jayiin...",
+        "⬆️ Upload jarayoni boshlandi, Xo'jayiin..."
+      ]
+    },
+    "upload_progress": {
+      "variants": [
+        "⏳ {progress}"
+      ]
+    },
+    "upload_success": {
+      "variants": [
+        "✅ IPA muvaffaqiyatli App Store Connect ga yuklandi, Xo'jayiin!",
+        "🎉 Upload tayyor! IPA App Store da, Xo'jayiin!",
+        "🏆 Fayl muvaffaqiyatli yuklandi, Xo'jayiin!"
+      ]
+    },
+    "upload_failed": {
+      "variants": [
+        "❌ IPA upload xatolik bilan yakunlandi, Xo'jayiin!",
+        "💥 Upload muvaffaqiyatsiz, Xo'jayiin!",
+        "⚠️ Faylni yuklashda muammo, Xo'jayiin!"
+      ]
+    },
+    "upload_credentials_missing": {
+      "variants": [
+        "⚠️ Upload yoqilgan, lekin Apple ID yoki parol kiritilmagan, Xo'jayiin!",
+        "🔐 Credentials topilmadi! build_config.json ga Apple ID va parol qo'shing, Xo'jayiin!",
+        "⚡ Yuklash uchun Apple ID kerak, Xo'jayiin!"
+      ]
+    },
+    "total_time": {
+      "variants": [
+        "⏱️  Umumiy vaqt: {time} soniya. Siz uchun {time} soniya mehnat qildim, Xo'jayiin! 💪",
+        "🎯 Jarayon {time} soniyada tugadi. Vaqtingizni tejadim, Xo'jayiin! ⚡",
+        "✨ {time} soniyada hammasi tayyor! Sizga xizmat qilish baxt, Xo'jayiin! 🚀"
+      ]
+    },
+    "init_started": {
+      "variants": [
+        "🚀 Dartdosh konfiguratsiya qilinmoqda, Xo'jayiin...",
+        "✨ Init jarayoni boshlandi, Xo'jayiin...",
+        "🔧 Configuratsiya tekshirilmoqda, Xo'jayiin..."
+      ]
+    },
+    "config_created": {
+      "variants": [
+        "✅ Yangi config fayllar yaratildi, Xo'jayiin!",
+        "📝 Konfiguratsiya tayyor, Xo'jayiin!",
+        "🎉 Config fayllar muvaffaqiyatli yaratildi, Xo'jayiin!"
+      ]
+    },
+    "config_validation_failed": {
+      "variants": [
+        "❌ Config faylni tekshirishda xatolik, Xo'jayiin!",
+        "💥 Validatsiya xatosi, Xo'jayiin!",
+        "⚠️ Config faylni o'qib bo'lmadi, Xo'jayiin!"
+      ]
+    },
+    "config_creation_failed": {
+      "variants": [
+        "❌ Config yaratishda xatolik, Xo'jayiin!",
+        "💥 Fayllarni yaratib bo'lmadi, Xo'jayiin!",
+        "⚠️ Konfiguratsiya yaratilmadi, Xo'jayiin!"
+      ]
+    },
+    "migration_started": {
+      "variants": [
+        "🔄 Eski build_config.json topildi, yangi strukturaga o'tkazilmoqda, Xo'jayiin...",
+        "📦 Migration boshlandi, Xo'jayiin...",
+        "⚡ Eski configdan ma'lumotlar ko'chirilmoqda, Xo'jayiin..."
+      ]
+    },
+    "migration_completed": {
+      "variants": [
+        "✅ Migration muvaffaqiyatli! Barcha ma'lumotlar yangi faylga ko'chirildi, Xo'jayiin!",
+        "🎉 Eski config yangi formatga o'tkazildi, Xo'jayiin!",
+        "🏆 Migration tayyor! Hamma data saqlab qoldim, Xo'jayiin!"
+      ]
+    },
+    "migration_failed": {
+      "variants": [
+        "❌ Migration xatolik bilan yakunlandi, Xo'jayiin!",
+        "💥 Eski configni o'qishda muammo, Xo'jayiin!",
+        "⚠️ Migration amalga oshmadi, Xo'jayiin!"
+      ]
+    },
+    "missing_field_added": {
+      "variants": [
+        "✅ Yetishmayotgan maydon qo'shildi: {field}, Xo'jayiin!",
+        "🔧 Yangilandi: {field} qo'shib qo'ydim, Xo'jayiin!",
+        "📝 {field} - mana bu data yo'q ekan, qo'shib qo'ydim, Xo'jayiin!"
+      ]
+    },
+    "already_configured": {
+      "variants": [
+        "✅ Sizda hammasi bor ekan! Konfiguratsiya to'liq, Xo'jayiin!",
+        "🎯 Hammasi tayyor, hech narsa etishmayapti, Xo'jayiin!",
+        "👌 Config to'liq, qo'shimcha narsa kerak emas, Xo'jayiin!"
+      ]
+    },
+    "init_completed": {
+      "variants": [
+        "\n✅ Configlar dartdosh_config/ papkasida yaratildi, Xo'jayiin!\n📝 Iltimos avval bir tekshiring, keyin bemalol ishlatishingiz mumkin!\n💡 Masalan: dartdosh build apk -p",
+        "\n🎉 dartdosh_config/ papkasida configlar tayyor, Xo'jayiin!\n🔍 Birinchi fayllarni ko'zdan kechiring, keyin build boshlashingiz mumkin!\n💡 Misol: dartdosh build ipa -p",
+        "\n🏆 Config fayllar dartdosh_config/ da create qilindi, Xo'jayiin!\n👀 Tekshirib ko'ring va ishlatishni boshlang!\n💡 Masalan: dartdosh build aab -s"
+      ]
+    },
+    "config_not_found": {
+      "variants": [
+        "❌ Config fayllar topilmadi! Iltimos avval 'dartdosh init' ni run qiling, Xo'jayiin!",
+        "⚠️ Konfiguratsiya yo'q! 'dartdosh init' commandini ishga tushiring, Xo'jayiin!",
+        "📝 Config kerak! Birinchi 'dartdosh init' qiling, Xo'jayiin!"
+      ]
+    },
+    "version_show": {
+      "variants": [
+        "🎯 Sizdahoz DartDosh {version} versiya ekan, Xo'jayiin!",
+        "✨ {version} versiya ishlamoqda, Xo'jayiin!",
+        "🚀 DartDosh {version} - ajoyib versiya, Xo'jayiin!"
+      ]
+    },
+    "version_checking": {
+      "variants": [
+        "🔍 Yangilanishlar tekshirilmoqda, Xo'jayiin...",
+        "📡 Serverga ulanmoqda, Xo'jayiin...",
+        "🔎 Update bor yo'qligini ko'raylik, Xo'jayiin..."
+      ]
+    },
+    "version_update_available": {
+      "variants": [
+        "🎉 Xo'jayiin, hozir {latest} versiya chiqibti!",
+        "✨ Yangi {latest} versiya bor ekan, Xo'jayiin!",
+        "🚀 Ajoyib! {latest} versiya tayyor, Xo'jayiin!"
+      ]
+    },
+    "version_current_info": {
+      "variants": [
+        "📦 Sizda hozir {version} versiya bor"
+      ]
+    },
+    "version_upgrade_hint": {
+      "variants": [
+        "💡 Yangilash uchun mana bu commandni yozing: dartdosh upgrade"
+      ]
+    },
+    "version_up_to_date": {
+      "variants": [
+        "✅ Update yo'q ekan, sizda eng oxirgi versiya, Xo'jayiin!",
+        "🎯 Yangilanish kerak emas, eng yangi versiya ishlamoqda, Xo'jayiin!",
+        "👌 Hammasi zo'r! Sizda eng so'nggi versiya bor, Xo'jayiin!"
+      ]
+    },
+    "version_server_error": {
+      "variants": [
+        "❌ Serverga ulanib bo'lmadi, Xo'jayiin!"
+      ]
+    },
+    "version_upgrading": {
+      "variants": [
+        "🚀 Upgrade boshlandi, Xo'jayiin...",
+        "⬆️ Yangilanmoqda, biroz sabr qiling Xo'jayiin...",
+        "✨ Eng yangi versiyaga o'tilmoqda, Xo'jayiin..."
+      ]
+    },
+    "version_upgrade_success": {
+      "variants": [
+        "🎉 {oldVersion} → {newVersion}. Endi bemalol maqtanib yursangiz bo'ladi, Xo'jayiin!",
+        "✅ Zo'r! {oldVersion} dan {newVersion} ga yangilandi. Maqtaning mumkin endi, Xo'jayiin!",
+        "🏆 Ajoyib! Versiya {newVersion} ga o'tdi. Do'stlaringizga aytib yurasiz, Xo'jayiin!",
+        "🚀 Tayyor! {oldVersion} → {newVersion}. Endi hammasidan oldinda turibsiz, Xo'jayiin!"
+      ]
+    },
+    "version_upgrade_failed": {
+      "variants": [
+        "❌ Yangilanmadi! Internetni tekshiring, Xo'jayiin!"
+      ]
+    },
+    "version_downgrading": {
+      "variants": [
+        "⬇️ {version} versiyaga qaytilmoqda, Xo'jayiin..."
+      ]
+    },
+    "version_downgrading_previous": {
+      "variants": [
+        "⬇️ Oldingi versiyaga qaytilmoqda, Xo'jayiin..."
+      ]
+    },
+    "version_downgrade_success": {
+      "variants": [
+        "✅ {oldVersion} dan {newVersion} ga qaytarildi, Xo'jayiin!",
+        "🎯 Tayyor! Versiya {newVersion} ga o'rnatildi, Xo'jayiin!",
+        "👌 Downgrade tugadi! Endi {newVersion} versiyada, Xo'jayiin!"
+      ]
+    },
+    "version_downgrade_failed": {
+      "variants": [
+        "❌ Orqaga qaytarilmadi! Versiya topilmadi, Xo'jayiin!"
+      ]
+    }
+  }
+}
+''',
+  'en': r'''
+{
+  "version": "1.0.0",
+  "language": "en",
+  "metadata": {
+    "name": "English",
+    "native_name": "English",
+    "contributors": ["ahadjonovss"]
+  },
+  "progress_tasks": {
+    "starting": "Starting...",
+    "gradle": "Running Gradle...",
+    "dependencies_downloading": "Downloading dependencies...",
+    "dependencies_ready": "Dependencies ready...",
+    "compiling": "Compiling Flutter code...",
+    "bundling": "Creating bundle...",
+    "assembling": "Assembling APK/AAB...",
+    "signing": "Signing...",
+    "finishing": "Finishing...",
+    "ready": "Ready!"
+  },
+  "log_types": {
+    "start": {
+      "variants": [
+        "🚀 Starting: Build {target} ({env} mode), Boss!",
+        "✨ Ready: {target} build started ({env}), Boss!",
+        "🏁 Process started: {target} ({env}), Boss!"
+      ]
+    },
+    "info": {
+      "variants": []
+    },
+    "step": {
+      "variants": [
+        "🔧 {target} build step: Running Flutter commands, Boss...",
+        "⚙️ Process: Build steps in progress, Boss...",
+        "🛠️ Step: {target} build process ongoing, Boss..."
+      ]
+    },
+    "success": {
+      "variants": [
+        "✅ {target} build completed successfully, Boss!",
+        "🎉 App ready: {target} ({env}), Boss!",
+        "🏆 {target} build finished successfully, Boss!"
+      ]
+    },
+    "error": {
+      "variants": [
+        "❌ {target} build failed, Boss!",
+        "💥 Something went wrong: {target} ({env}), Boss!",
+        "⚠️ Build failed: {target} ({env}), Boss!"
+      ]
+    },
+    "finished": {
+      "variants": []
+    },
+    "build_config_is_not_exist": {
+      "variants": [
+        "⚠️ Build config not found, creating default, Boss!",
+        "📝 build_config.json missing, created default config, Boss!",
+        "ℹ️ Creating configuration, Boss!"
+      ]
+    },
+    "build_config_created": {
+      "variants": [
+        "\n📋 Boss, I created build_config.json for you!\n✅ Please review it and if correct, run the command again.\n💼 Ready to serve, Boss!",
+        "\n📝 Build config ready, Boss!\n🔍 Check the config, then run again.\n🚀 Awaiting your command, Boss!",
+        "\n✨ Default config created, Boss!\n📖 Review it and if suitable, execute the command again.\n⚡ Standing by, Boss!"
+      ]
+    },
+    "running": {
+      "variants": [
+        "🔄 Running: {command}, Boss!",
+        "⏳ Executing command: {command}, Boss!",
+        "🏃 Process: {command}, Boss!"
+      ]
+    },
+    "donation": {
+      "variants": [
+        "\n☕ Boss, if you like dartdosh, buy me a coffee: https://www.tirikchilik.uz/ahadjonovss\n   I'll make even better tools! 😄",
+        "\n💰 Boss, if this tool is useful, consider donating: https://www.tirikchilik.uz/ahadjonovss\n   Your support brings new features! 🚀",
+        "\n🎁 Boss, is dartdosh helpful? Check out this link: https://www.tirikchilik.uz/ahadjonovss\n   Become a sponsor, let's make it even better! 💪",
+        "\n🍕 Build ready, now it's my turn! Help me get pizza: https://www.tirikchilik.uz/ahadjonovss\n   Coding with pizza - best combo! 🤩",
+        "\n🤑 Boss, did this tool save you time? Help me too: https://www.tirikchilik.uz/ahadjonovss\n   Even a coffee would brighten my day! ☕",
+        "\n💝 Hey Boss, do you like dartdosh? Made you happy? Then donate: https://www.tirikchilik.uz/ahadjonovss\n   Not much needed, whatever comes from heart! 😊",
+        "\n🎯 Build successful! Don't forget about me: https://www.tirikchilik.uz/ahadjonovss\n   Your support helps create better tools! 🔥",
+        "\n🌟 Boss, open source dev life is tough! Lend a hand: https://www.tirikchilik.uz/ahadjonovss\n   Even small support means a lot! 🍜",
+        "\n🎊 Build ready, you're happy, me too! Now treat me: https://www.tirikchilik.uz/ahadjonovss\n   Support brings faster updates! ⚡",
+        "\n😎 Boss, does dartdosh save your time? Value mine too: https://www.tirikchilik.uz/ahadjonovss\n   Just enough for tea! 🍵"
+      ]
+    },
+    "build_number_incremented": {
+      "variants": [
+        "✅ Build number updated: {oldBuild} → {newBuild}, Boss!",
+        "🔢 Build number incremented: {oldBuild} → {newBuild}, Boss!",
+        "📈 New build number: {newBuild} (previous: {oldBuild}), Boss!"
+      ]
+    },
+    "file_saved": {
+      "variants": [
+        "✅ Build saved: {path}, Boss!",
+        "💾 File ready: {path}, Boss!",
+        "📦 Build successfully moved: {path}, Boss!"
+      ]
+    },
+    "output_dir_created": {
+      "variants": [
+        "📁 Output directory created: {path}, Boss!",
+        "🗂️ New folder created: {path}, Boss!",
+        "✨ Output folder ready: {path}, Boss!"
+      ]
+    },
+    "upload_starting": {
+      "variants": [
+        "📤 Uploading IPA to App Store Connect, Boss...",
+        "🚀 Transporter started, uploading IPA, Boss...",
+        "⬆️ Upload process initiated, Boss..."
+      ]
+    },
+    "upload_progress": {
+      "variants": [
+        "⏳ {progress}"
+      ]
+    },
+    "upload_success": {
+      "variants": [
+        "✅ IPA successfully uploaded to App Store Connect, Boss!",
+        "🎉 Upload complete! IPA is on App Store, Boss!",
+        "🏆 File uploaded successfully, Boss!"
+      ]
+    },
+    "upload_failed": {
+      "variants": [
+        "❌ IPA upload failed, Boss!",
+        "💥 Upload unsuccessful, Boss!",
+        "⚠️ Problem uploading file, Boss!"
+      ]
+    },
+    "upload_credentials_missing": {
+      "variants": [
+        "⚠️ Upload enabled but Apple ID or password missing, Boss!",
+        "🔐 Credentials not found! Add Apple ID and password to build_config.json, Boss!",
+        "⚡ Apple ID required for upload, Boss!"
+      ]
+    },
+    "total_time": {
+      "variants": [
+        "⏱️  Total time: {time} seconds. I worked {time} seconds for you, Boss! 💪",
+        "🎯 Process completed in {time} seconds. Saved your time, Boss! ⚡",
+        "✨ Everything ready in {time} seconds! Happy to serve you, Boss! 🚀"
+      ]
+    },
+    "init_started": {
+      "variants": [
+        "🚀 Configuring dartdosh, Boss...",
+        "✨ Init process started, Boss...",
+        "🔧 Checking configuration, Boss..."
+      ]
+    },
+    "config_created": {
+      "variants": [
+        "✅ New config files created, Boss!",
+        "📝 Configuration ready, Boss!",
+        "🎉 Config files successfully created, Boss!"
+      ]
+    },
+    "config_validation_failed": {
+      "variants": [
+        "❌ Error validating config file, Boss!",
+        "💥 Validation error, Boss!",
+        "⚠️ Could not read config file, Boss!"
+      ]
+    },
+    "config_creation_failed": {
+      "variants": [
+        "❌ Error creating config, Boss!",
+        "💥 Could not create files, Boss!",
+        "⚠️ Configuration not created, Boss!"
+      ]
+    },
+    "migration_started": {
+      "variants": [
+        "🔄 Old build_config.json found, migrating to new structure, Boss...",
+        "📦 Migration started, Boss...",
+        "⚡ Copying data from old config, Boss..."
+      ]
+    },
+    "migration_completed": {
+      "variants": [
+        "✅ Migration successful! All data moved to new file, Boss!",
+        "🎉 Old config migrated to new format, Boss!",
+        "🏆 Migration done! Saved all data, Boss!"
+      ]
+    },
+    "migration_failed": {
+      "variants": [
+        "❌ Migration failed, Boss!",
+        "💥 Error reading old config, Boss!",
+        "⚠️ Migration unsuccessful, Boss!"
+      ]
+    },
+    "missing_field_added": {
+      "variants": [
+        "✅ Missing field added: {field}, Boss!",
+        "🔧 Updated: added {field}, Boss!",
+        "📝 {field} - this data was missing, added it, Boss!"
+      ]
+    },
+    "already_configured": {
+      "variants": [
+        "✅ You have everything! Configuration complete, Boss!",
+        "🎯 All ready, nothing missing, Boss!",
+        "👌 Config complete, no additional data needed, Boss!"
+      ]
+    },
+    "init_completed": {
+      "variants": [
+        "\n✅ Config files created in dartdosh_config/ folder, Boss!\n📝 Please check them first, then feel free to use!\n💡 Example: dartdosh build apk -p",
+        "\n🎉 Configs ready in dartdosh_config/ folder, Boss!\n🔍 First review the files, then start building!\n💡 Example: dartdosh build ipa -p",
+        "\n🏆 Config files created in dartdosh_config/, Boss!\n👀 Check them out and start using!\n💡 Example: dartdosh build aab -s"
+      ]
+    },
+    "config_not_found": {
+      "variants": [
+        "❌ Config files not found! Please run 'dartdosh init' first, Boss!",
+        "⚠️ No configuration! Run 'dartdosh init' command, Boss!",
+        "📝 Config needed! First run 'dartdosh init', Boss!"
+      ]
+    },
+    "version_show": {
+      "variants": [
+        "🎯 You have DartDosh version {version}, Boss!",
+        "✨ Version {version} is running, Boss!",
+        "🚀 DartDosh {version} - awesome version, Boss!"
+      ]
+    },
+    "version_checking": {
+      "variants": [
+        "🔍 Checking for updates, Boss...",
+        "📡 Connecting to server, Boss...",
+        "🔎 Let's see if there's an update, Boss..."
+      ]
+    },
+    "version_update_available": {
+      "variants": [
+        "🎉 Boss, version {latest} is out now!",
+        "✨ New version {latest} available, Boss!",
+        "🚀 Great! Version {latest} is ready, Boss!"
+      ]
+    },
+    "version_current_info": {
+      "variants": [
+        "📦 You currently have version {version}"
+      ]
+    },
+    "version_upgrade_hint": {
+      "variants": [
+        "💡 To upgrade, write this command: dartdosh upgrade"
+      ]
+    },
+    "version_up_to_date": {
+      "variants": [
+        "✅ No update, you have the latest version, Boss!",
+        "🎯 No update needed, latest version running, Boss!",
+        "👌 All good! You have the latest version, Boss!"
+      ]
+    },
+    "version_server_error": {
+      "variants": [
+        "❌ Could not connect to server, Boss!"
+      ]
+    },
+    "version_upgrading": {
+      "variants": [
+        "🚀 Upgrade started, Boss...",
+        "⬆️ Upgrading, please wait Boss...",
+        "✨ Moving to latest version, Boss..."
+      ]
+    },
+    "version_upgrade_success": {
+      "variants": [
+        "🎉 {oldVersion} → {newVersion}. Now you can brag about it, Boss!",
+        "✅ Great! Upgraded from {oldVersion} to {newVersion}. You can show off now, Boss!",
+        "🏆 Awesome! Version is now {newVersion}. Tell your friends, Boss!",
+        "🚀 Done! {oldVersion} → {newVersion}. Now you're ahead of everyone, Boss!"
+      ]
+    },
+    "version_upgrade_failed": {
+      "variants": [
+        "❌ Upgrade failed! Check your internet, Boss!"
+      ]
+    },
+    "version_downgrading": {
+      "variants": [
+        "⬇️ Downgrading to {version}, Boss..."
+      ]
+    },
+    "version_downgrading_previous": {
+      "variants": [
+        "⬇️ Downgrading to previous version, Boss..."
+      ]
+    },
+    "version_downgrade_success": {
+      "variants": [
+        "✅ Downgraded from {oldVersion} to {newVersion}, Boss!",
+        "🎯 Done! Version set to {newVersion}, Boss!",
+        "👌 Downgrade complete! Now on version {newVersion}, Boss!"
+      ]
+    },
+    "version_downgrade_failed": {
+      "variants": [
+        "❌ Downgrade failed! Version not found, Boss!"
+      ]
+    }
+  }
+}
+''',
+  'ru': r'''
+{
+  "version": "1.0.0",
+  "language": "ru",
+  "metadata": {
+    "name": "Русский язык",
+    "native_name": "Russian",
+    "contributors": ["ahadjonovss"]
+  },
+  "progress_tasks": {
+    "starting": "Начинается...",
+    "gradle": "Запуск Gradle...",
+    "dependencies_downloading": "Загрузка зависимостей...",
+    "dependencies_ready": "Зависимости готовы...",
+    "compiling": "Компиляция кода Flutter...",
+    "bundling": "Создание bundle...",
+    "assembling": "Сборка APK/AAB...",
+    "signing": "Подписывается...",
+    "finishing": "Завершается...",
+    "ready": "Готово!"
+  },
+  "log_types": {
+    "start": {
+      "variants": [
+        "🚀 Начало: Сборка {target} (режим {env}), Босс!",
+        "✨ Готово: запущена сборка {target} ({env}), Босс!",
+        "🏁 Процесс начат: {target} ({env}), Босс!"
+      ]
+    },
+    "info": {
+      "variants": []
+    },
+    "step": {
+      "variants": [
+        "🔧 Шаг сборки {target}: выполняются команды Flutter, Босс...",
+        "⚙️ Процесс: идут этапы сборки, Босс...",
+        "🛠️ Шаг: процесс сборки {target} продолжается, Босс..."
+      ]
+    },
+    "success": {
+      "variants": [
+        "✅ Сборка {target} успешно завершена, Босс!",
+        "🎉 Приложение готово: {target} ({env}), Босс!",
+        "🏆 Сборка {target} успешно завершена, Босс!"
+      ]
+    },
+    "error": {
+      "variants": [
+        "❌ Ошибка сборки {target}, Босс!",
+        "💥 Что-то пошло не так: {target} ({env}), Босс!",
+        "⚠️ Сборка не удалась: {target} ({env}), Босс!"
+      ]
+    },
+    "finished": {
+      "variants": []
+    },
+    "build_config_is_not_exist": {
+      "variants": [
+        "⚠️ Конфиг сборки не найден, создаю стандартный, Босс!",
+        "📝 build_config.json отсутствует, создал стандартный конфиг, Босс!",
+        "ℹ️ Создаю конфигурацию, Босс!"
+      ]
+    },
+    "build_config_created": {
+      "variants": [
+        "\n📋 Босс, создал build_config.json для тебя!\n✅ Пожалуйста, проверь и если всё верно, запусти команду снова.\n💼 Готов служить, Босс!",
+        "\n📝 Build config готов, Босс!\n🔍 Проверь конфиг, затем запусти снова.\n🚀 Жду твоей команды, Босс!",
+        "\n✨ Стандартный конфиг создан, Босс!\n📖 Просмотри и если подходит, выполни команду снова.\n⚡ На готове, Босс!"
+      ]
+    },
+    "running": {
+      "variants": [
+        "🔄 Запуск: {command}, Босс!",
+        "⏳ Выполняется команда: {command}, Босс!",
+        "🏃 Процесс: {command}, Босс!"
+      ]
+    },
+    "donation": {
+      "variants": [
+        "\n☕ Босс, если dartdosh нравится, купи мне кофе: https://www.tirikchilik.uz/ahadjonovss\n   Сделаю ещё лучшие инструменты! 😄",
+        "\n💰 Босс, если инструмент полезен, поддержи донатом: https://www.tirikchilik.uz/ahadjonovss\n   Твоя поддержка приносит новые фичи! 🚀",
+        "\n🎁 Босс, dartdosh помогает? Загляни по ссылке: https://www.tirikchilik.uz/ahadjonovss\n   Стань спонсором, сделаем ещё круче! 💪",
+        "\n🍕 Сборка готова, теперь моя очередь! Помоги с пиццей: https://www.tirikchilik.uz/ahadjonovss\n   Код с пиццей - лучшее комбо! 🤩",
+        "\n🤑 Босс, инструмент сэкономил время? Помоги и мне: https://www.tirikchilik.uz/ahadjonovss\n   Даже кофе поднимет настроение! ☕",
+        "\n💝 Эй Босс, нравится dartdosh? Порадовал? Тогда задонать: https://www.tirikchilik.uz/ahadjonovss\n   Много не нужно, сколько от души! 😊",
+        "\n🎯 Сборка успешна! Не забудь про меня: https://www.tirikchilik.uz/ahadjonovss\n   Твоя поддержка создаёт лучшие инструменты! 🔥",
+        "\n🌟 Босс, жизнь open source разработчика тяжела! Протяни руку: https://www.tirikchilik.uz/ahadjonovss\n   Даже малая поддержка важна! 🍜",
+        "\n🎊 Сборка готова, ты счастлив, я тоже! Теперь угости меня: https://www.tirikchilik.uz/ahadjonovss\n   Поддержка ускоряет обновления! ⚡",
+        "\n😎 Босс, dartdosh экономит время? Цени и моё: https://www.tirikchilik.uz/ahadjonovss\n   Хватит на чай! 🍵"
+      ]
+    },
+    "build_number_incremented": {
+      "variants": [
+        "✅ Build number обновлён: {oldBuild} → {newBuild}, Босс!",
+        "🔢 Build number увеличен: {oldBuild} → {newBuild}, Босс!",
+        "📈 Новый build number: {newBuild} (предыдущий: {oldBuild}), Босс!"
+      ]
+    },
+    "file_saved": {
+      "variants": [
+        "✅ Сборка сохранена: {path}, Босс!",
+        "💾 Файл готов: {path}, Босс!",
+        "📦 Сборка успешно перемещена: {path}, Босс!"
+      ]
+    },
+    "output_dir_created": {
+      "variants": [
+        "📁 Выходная папка создана: {path}, Босс!",
+        "🗂️ Новая папка создана: {path}, Босс!",
+        "✨ Выходная папка готова: {path}, Босс!"
+      ]
+    },
+    "upload_starting": {
+      "variants": [
+        "📤 Загрузка IPA в App Store Connect, Босс...",
+        "🚀 Transporter запущен, загружается IPA, Босс...",
+        "⬆️ Процесс загрузки начат, Босс..."
+      ]
+    },
+    "upload_progress": {
+      "variants": [
+        "⏳ {progress}"
+      ]
+    },
+    "upload_success": {
+      "variants": [
+        "✅ IPA успешно загружен в App Store Connect, Босс!",
+        "🎉 Загрузка завершена! IPA в App Store, Босс!",
+        "🏆 Файл успешно загружен, Босс!"
+      ]
+    },
+    "upload_failed": {
+      "variants": [
+        "❌ Загрузка IPA не удалась, Босс!",
+        "💥 Загрузка неудачна, Босс!",
+        "⚠️ Проблема с загрузкой файла, Босс!"
+      ]
+    },
+    "upload_credentials_missing": {
+      "variants": [
+        "⚠️ Загрузка включена, но Apple ID или пароль отсутствуют, Босс!",
+        "🔐 Учётные данные не найдены! Добавьте Apple ID и пароль в build_config.json, Босс!",
+        "⚡ Для загрузки требуется Apple ID, Босс!"
+      ]
+    },
+    "total_time": {
+      "variants": [
+        "⏱️  Общее время: {time} секунд. Я работал {time} секунд для вас, Босс! 💪",
+        "🎯 Процесс завершён за {time} секунд. Сэкономил ваше время, Босс! ⚡",
+        "✨ Всё готово за {time} секунд! Рад служить вам, Босс! 🚀"
+      ]
+    },
+    "init_started": {
+      "variants": [
+        "🚀 Настройка dartdosh, Босс...",
+        "✨ Процесс init начат, Босс...",
+        "🔧 Проверка конфигурации, Босс..."
+      ]
+    },
+    "config_created": {
+      "variants": [
+        "✅ Созданы новые файлы конфигурации, Босс!",
+        "📝 Конфигурация готова, Босс!",
+        "🎉 Файлы конфигурации успешно созданы, Босс!"
+      ]
+    },
+    "config_validation_failed": {
+      "variants": [
+        "❌ Ошибка проверки файла конфигурации, Босс!",
+        "💥 Ошибка валидации, Босс!",
+        "⚠️ Не удалось прочитать файл конфигурации, Босс!"
+      ]
+    },
+    "config_creation_failed": {
+      "variants": [
+        "❌ Ошибка создания конфигурации, Босс!",
+        "💥 Не удалось создать файлы, Босс!",
+        "⚠️ Конфигурация не создана, Босс!"
+      ]
+    },
+    "migration_started": {
+      "variants": [
+        "🔄 Найден старый build_config.json, переход на новую структуру, Босс...",
+        "📦 Начата миграция, Босс...",
+        "⚡ Копирование данных из старой конфигурации, Босс..."
+      ]
+    },
+    "migration_completed": {
+      "variants": [
+        "✅ Миграция успешна! Все данные перенесены в новый файл, Босс!",
+        "🎉 Старая конфигурация перенесена в новый формат, Босс!",
+        "🏆 Миграция завершена! Сохранил все данные, Босс!"
+      ]
+    },
+    "migration_failed": {
+      "variants": [
+        "❌ Миграция не удалась, Босс!",
+        "💥 Ошибка чтения старой конфигурации, Босс!",
+        "⚠️ Миграция неуспешна, Босс!"
+      ]
+    },
+    "missing_field_added": {
+      "variants": [
+        "✅ Добавлено отсутствующее поле: {field}, Босс!",
+        "🔧 Обновлено: добавлено {field}, Босс!",
+        "📝 {field} - эти данные отсутствовали, добавил, Босс!"
+      ]
+    },
+    "already_configured": {
+      "variants": [
+        "✅ У вас всё есть! Конфигурация полная, Босс!",
+        "🎯 Всё готово, ничего не отсутствует, Босс!",
+        "👌 Конфигурация полная, дополнительные данные не нужны, Босс!"
+      ]
+    },
+    "init_completed": {
+      "variants": [
+        "\n✅ Файлы конфигурации созданы в папке dartdosh_config/, Босс!\n📝 Пожалуйста, сначала проверьте их, потом используйте!\n💡 Пример: dartdosh build apk -p",
+        "\n🎉 Конфигурации готовы в папке dartdosh_config/, Босс!\n🔍 Сначала просмотрите файлы, затем начинайте сборку!\n💡 Пример: dartdosh build ipa -p",
+        "\n🏆 Файлы конфигурации созданы в dartdosh_config/, Босс!\n👀 Проверьте их и начинайте использовать!\n💡 Пример: dartdosh build aab -s"
+      ]
+    },
+    "config_not_found": {
+      "variants": [
+        "❌ Файлы конфигурации не найдены! Пожалуйста, сначала выполните 'dartdosh init', Босс!",
+        "⚠️ Нет конфигурации! Запустите команду 'dartdosh init', Босс!",
+        "📝 Нужна конфигурация! Сначала выполните 'dartdosh init', Босс!"
+      ]
+    },
+    "version_show": {
+      "variants": [
+        "🎯 У вас DartDosh версия {version}, Босс!",
+        "✨ Версия {version} работает, Босс!",
+        "🚀 DartDosh {version} - отличная версия, Босс!"
+      ]
+    },
+    "version_checking": {
+      "variants": [
+        "🔍 Проверка обновлений, Босс...",
+        "📡 Подключение к серверу, Босс...",
+        "🔎 Посмотрим, есть ли обновление, Босс..."
+      ]
+    },
+    "version_update_available": {
+      "variants": [
+        "🎉 Босс, вышла версия {latest}!",
+        "✨ Новая версия {latest} доступна, Босс!",
+        "🚀 Отлично! Версия {latest} готова, Босс!"
+      ]
+    },
+    "version_current_info": {
+      "variants": [
+        "📦 Сейчас у вас версия {version}"
+      ]
+    },
+    "version_upgrade_hint": {
+      "variants": [
+        "💡 Для обновления напишите эту команду: dartdosh upgrade"
+      ]
+    },
+    "version_up_to_date": {
+      "variants": [
+        "✅ Нет обновлений, у вас последняя версия, Босс!",
+        "🎯 Обновление не нужно, последняя версия работает, Босс!",
+        "👌 Всё отлично! У вас последняя версия, Босс!"
+      ]
+    },
+    "version_server_error": {
+      "variants": [
+        "❌ Не удалось подключиться к серверу, Босс!"
+      ]
+    },
+    "version_upgrading": {
+      "variants": [
+        "🚀 Обновление начато, Босс...",
+        "⬆️ Обновляем, подождите Босс...",
+        "✨ Переход на последнюю версию, Босс..."
+      ]
+    },
+    "version_upgrade_success": {
+      "variants": [
+        "🎉 {oldVersion} → {newVersion}. Теперь можете хвастаться, Босс!",
+        "✅ Отлично! Обновлено с {oldVersion} на {newVersion}. Можете показать, Босс!",
+        "🏆 Супер! Версия теперь {newVersion}. Расскажите друзьям, Босс!",
+        "🚀 Готово! {oldVersion} → {newVersion}. Теперь вы впереди всех, Босс!"
+      ]
+    },
+    "version_upgrade_failed": {
+      "variants": [
+        "❌ Обновление не удалось! Проверьте интернет, Босс!"
+      ]
+    },
+    "version_downgrading": {
+      "variants": [
+        "⬇️ Откат к версии {version}, Босс..."
+      ]
+    },
+    "version_downgrading_previous": {
+      "variants": [
+        "⬇️ Откат к предыдущей версии, Босс..."
+      ]
+    },
+    "version_downgrade_success": {
+      "variants": [
+        "✅ Откат с {oldVersion} на {newVersion}, Босс!",
+        "🎯 Готово! Версия установлена на {newVersion}, Босс!",
+        "👌 Откат завершён! Теперь версия {newVersion}, Босс!"
+      ]
+    },
+    "version_downgrade_failed": {
+      "variants": [
+        "❌ Откат не удался! Версия не найдена, Босс!"
+      ]
+    }
+  }
+}
+''',
+};

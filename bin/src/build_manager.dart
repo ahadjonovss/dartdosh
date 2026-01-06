@@ -667,13 +667,11 @@ class BuildManager {
 
       // App ID tekshirish
       if (appId.isEmpty) {
-        Logger.log(LogType.uploadProgress,
-            progress: '⚠️ Firebase App ID missing, Boss!');
+        Logger.log(LogType.firebaseUploadMissingAppId);
         return;
       }
 
-      Logger.log(LogType.uploadProgress,
-          progress: '📤 Uploading APK to Firebase App Distribution, Boss...');
+      Logger.log(LogType.firebaseUploadStarting);
 
       // Show release notes if provided
       if (releaseNotes != null && releaseNotes.isNotEmpty) {
@@ -728,15 +726,12 @@ class BuildManager {
       }
 
       if (result.exitCode == 0) {
-        Logger.log(LogType.uploadProgress,
-            progress: '✅ APK successfully uploaded to Firebase, Boss!');
+        Logger.log(LogType.firebaseUploadSuccess);
       } else {
-        Logger.log(LogType.uploadProgress,
-            progress: '❌ Firebase upload failed, Boss!');
+        Logger.log(LogType.firebaseUploadFailed);
       }
     } catch (e) {
-      Logger.log(LogType.uploadProgress,
-          progress: '❌ Firebase upload failed, Boss!');
+      Logger.log(LogType.firebaseUploadFailed);
       Logger.log(LogType.uploadProgress, progress: 'Error: $e');
     }
   }

@@ -1,3 +1,35 @@
+## 0.7.0
+
+### Major Changes - Refactoring
+- 🔧 **Centralized Translation System**: All translations moved to JSON files
+  - Created separate JSON files for each language (uz.json, en.json, ru.json)
+  - Removed 500+ lines of hardcoded translations from logger.dart
+  - Removed 200+ lines of inline translations from version_manager.dart
+  - New TranslationLoader class with caching and fallback support
+  - Embedded translations as fallback for reliability
+
+### New Features
+- ✨ **Easy Language Addition**: Adding new languages now takes minutes instead of hours
+  - Copy existing JSON file
+  - Translate values
+  - Add language code to supported list
+  - Done!
+
+### Improvements
+- 📦 **Smaller Codebase**: 64% reduction in logger.dart size (646 → 230 lines)
+- 📦 **Smaller VersionManager**: 55% reduction in size (350 → 157 lines)
+- 🎯 **Better Maintainability**: All translations in one place, easier to manage
+- 🚀 **Performance**: Translation caching prevents repeated file reads
+- 🔄 **Separation of Concerns**: Logic separated from translation data
+
+### Technical Changes
+- Added TranslationLoader class for JSON-based translation loading
+- Added embedded_translations.dart as fallback
+- New LogType enums for version manager and Firebase operations
+- Refactored Logger to use TranslationLoader
+- Refactored VersionManager to use Logger system
+- Fixed hardcoded Firebase upload messages in BuildManager
+
 ## 0.6.5
 
 ### Bug Fixes
