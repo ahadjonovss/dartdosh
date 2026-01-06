@@ -660,6 +660,8 @@ class BuildManager {
     try {
       // If no environment specified, skip
       if (env == null) {
+        Logger.log(LogType.uploadProgress,
+            progress: '⚠️ Firebase upload skipped: No environment specified');
         return;
       }
 
@@ -671,6 +673,9 @@ class BuildManager {
           settings['firebase_distribution'] as Map<String, dynamic>?;
 
       if (firebaseSettings == null) {
+        Logger.log(LogType.uploadProgress,
+            progress:
+                '⚠️ Firebase upload skipped: No firebase_distribution in settings.json');
         return; // Settings yo'q - skip
       }
 
@@ -680,6 +685,9 @@ class BuildManager {
       final enabled = envSettings?['enabled'] as bool? ?? false;
 
       if (!enabled) {
+        Logger.log(LogType.uploadProgress,
+            progress:
+                '⚠️ Firebase upload disabled for environment: ${env.toLowerCase()}');
         return; // Upload o'chirilgan bu environment uchun
       }
 
@@ -691,6 +699,9 @@ class BuildManager {
           buildConfig['firebase_distribution'] as Map<String, dynamic>?;
 
       if (buildConfigFirebase == null) {
+        Logger.log(LogType.uploadProgress,
+            progress:
+                '⚠️ Firebase upload skipped: No firebase_distribution in build_config.json');
         return; // Config yo'q - skip
       }
 
@@ -700,6 +711,9 @@ class BuildManager {
 
       // If no environment-specific config found, skip
       if (envConfig == null) {
+        Logger.log(LogType.uploadProgress,
+            progress:
+                '⚠️ Firebase upload skipped: No config for environment ${env.toLowerCase()} in build_config.json');
         return;
       }
 
@@ -709,6 +723,9 @@ class BuildManager {
       // App ID tekshirish
       if (appId.isEmpty) {
         Logger.log(LogType.firebaseUploadMissingAppId);
+        Logger.log(LogType.uploadProgress,
+            progress:
+                '⚠️ Environment: $env - App ID is empty in build_config.json');
         return;
       }
 
@@ -784,9 +801,12 @@ class BuildManager {
       } else {
         Logger.log(LogType.firebaseUploadFailed);
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       Logger.log(LogType.firebaseUploadFailed);
-      Logger.log(LogType.uploadProgress, progress: 'Error: $e');
+      Logger.log(LogType.uploadProgress, progress: '❌ Error: $e');
+      Logger.log(LogType.uploadProgress,
+          progress:
+              '📋 Stack trace: ${stackTrace.toString().split('\n').take(3).join('\n')}');
     }
   }
 }
