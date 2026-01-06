@@ -13,5 +13,19 @@
     "production": "flutter build appbundle --release --flavor production",
     "staging": "flutter build appbundle --release --flavor staging",
     "development": "flutter build appbundle --debug --flavor development"
+  },
+  "firebase_distribution": {
+    "production": {
+      "app_id": "1:123456789:android:prodabc123",
+      "tester_groups": "production-testers,management"
+    },
+    "staging": {
+      "app_id": "1:123456789:android:stagabc123",
+      "tester_groups": "qa-team,staging-testers"
+    },
+    "development": {
+      "app_id": "1:123456789:android:devabc123",
+      "tester_groups": "developers,internal-testers"
+    }
   }
 }

@@ -9,8 +9,14 @@
     "app_specific_password": "abcd-efgh-ijkl-mnop"
   },
   "firebase_distribution": {
-    "enabled": true,
-    "app_id": "1:123456789:android:abc123def456",
-    "tester_groups": "qa-team,developers"
+    "production": {
+      "enabled": false
+    },
+    "staging": {
+      "enabled": true
+    },
+    "development": {
+      "enabled": true
+    }
   }
 }

@@ -2,6 +2,32 @@
 
 `DartDosh` is a powerful CLI tool for simplifying Flutter builds with automatic version management, multi-language support, and smart output handling.
 
+## 🌍 Multi-Language Support
+
+**DartDosh now supports 4 languages!**
+
+- 🇺🇿 **Uzbek** (uz) - "Xo'jayiin" style - Default
+- 🇬🇧 **English** (en) - "Boss" style
+- 🇷🇺 **Russian** (ru) - "Босс" style
+- 🇹🇷 **Turkish** (tr) - "Patron" style - **NEW!**
+
+Use `--language` or `-l` flag to switch languages:
+
+```bash
+dartdosh build apk -p --language tr    # Turkish
+dartdosh build apk -p -l uz            # Uzbek
+dartdosh build ipa -s -l en            # English
+dartdosh build aab -d -l ru            # Russian
+```
+
+Or set your preferred language in `dartdosh_config/settings.json`:
+
+```json
+{
+  "language": "tr"
+}
+```
+
 ## 📺 Video Tutorial
 
 [![DartDosh Tutorial](https://img.youtube.com/vi/QpNVwk4SVZA/maxresdefault.jpg)](https://youtu.be/QpNVwk4SVZA?si=kV7kTtHcnZLfv1ZP)
@@ -102,6 +128,20 @@ Build commands for your team. Everyone uses the same commands:
     "production": "flutter build appbundle --release --flavor production",
     "staging": "flutter build appbundle --release --flavor staging",
     "development": "flutter build appbundle --debug --flavor development"
+  },
+  "firebase_distribution": {
+    "production": {
+      "app_id": "1:123456789:android:prodabc123",
+      "tester_groups": "production-testers,management"
+    },
+    "staging": {
+      "app_id": "1:123456789:android:stagabc123",
+      "tester_groups": "qa-team,staging-testers"
+    },
+    "development": {
+      "app_id": "1:123456789:android:devabc123",
+      "tester_groups": "developers,internal-testers"
+    }
   }
 }
 ```
@@ -122,9 +162,15 @@ Your personal settings. Each developer has their own:
     "app_specific_password": "abcd-efgh-ijkl-mnop"
   },
   "firebase_distribution": {
-    "enabled": true,
-    "app_id": "1:123456789:android:abc123def456",
-    "tester_groups": "qa-team,developers"
+    "production": {
+      "enabled": false
+    },
+    "staging": {
+      "enabled": true
+    },
+    "development": {
+      "enabled": true
+    }
   }
 }
 ```
@@ -138,7 +184,7 @@ Your personal settings. Each developer has their own:
 **Settings Parameters:**
 
 * `language`: Interface language
-  - `uz` (Uzbek), `en` (English), `ru` (Russian)
+  - `uz` (Uzbek), `en` (English), `ru` (Russian), `tr` (Turkish)
   - Default: `uz`
 
 * `project_name`: Project name for organizing builds
@@ -158,10 +204,10 @@ Your personal settings. Each developer has their own:
   - `app_specific_password`: Get from appleid.apple.com
   - macOS only
 
-* `firebase_distribution`: Auto upload APK to Firebase App Distribution
-  - `enabled`: true/false
-  - `app_id`: Firebase App ID (e.g., `1:123456789:android:abc123`)
-  - `tester_groups`: Comma-separated groups (e.g., `qa-team,developers`)
+* `firebase_distribution`: Auto upload APK to Firebase App Distribution (per environment)
+  - Each environment (production, staging, development) has:
+    - `enabled`: true/false - Enable/disable upload for this environment
+  - App ID and tester groups are configured in `build_config.json`
   - Requires Firebase CLI installed
 
 **How to get App-Specific Password:**

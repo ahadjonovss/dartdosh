@@ -358,7 +358,7 @@ class BuildManager {
         final apkPath = _renameAndMoveApk(newName, outputPath);
         // Upload APK to Firebase Distribution if enabled
         if (apkPath != null) {
-          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes);
+          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes, env);
         }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
@@ -412,7 +412,7 @@ class BuildManager {
         final apkPath = _renameAndMoveApk(newName, outputPath);
         // Upload APK to Firebase Distribution if enabled (same for non-env builds)
         if (apkPath != null) {
-          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes);
+          _uploadApkToFirebaseIfEnabled(apkPath, config, releaseNotes, env);
         }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);
@@ -635,6 +635,8 @@ class BuildManager {
 
       if (result.exitCode == 0) {
         Logger.log(LogType.uploadSuccess);
+        // Show donation message after successful upload
+        Logger.log(LogType.donation);
       } else {
         Logger.log(LogType.uploadFailed);
       }
@@ -645,25 +647,48 @@ class BuildManager {
   }
 
   // APK faylni Firebase App Distribution ga yuklash
-  Future<void> _uploadApkToFirebaseIfEnabled(
-      String apkPath, Map<String, dynamic> config, String? releaseNotes) async {
+  Future<void> _uploadApkToFirebaseIfEnabled(String apkPath,
+      Map<String, dynamic> config, String? releaseNotes, String? env) async {
     try {
-      // Config dan firebase_distribution sozlamalarini olish
-      final firebaseConfig =
-          config['firebase_distribution'] as Map<String, dynamic>?;
+      // If no environment specified, skip
+      if (env == null) {
+        return;
+      }
 
-      if (firebaseConfig == null) {
+      // Get settings.json to check if Firebase Distribution is enabled for this environment
+      final settingsFile = File('${Directory.current.path}/dartdosh_config/settings.json');
+      final settings = jsonDecode(settingsFile.readAsStringSync());
+      final firebaseSettings = settings['firebase_distribution'] as Map<String, dynamic>?;
+
+      if (firebaseSettings == null) {
+        return; // Settings yo'q - skip
+      }
+
+      // Get environment-specific enabled setting
+      final envSettings = firebaseSettings[env.toLowerCase()] as Map<String, dynamic>?;
+      final enabled = envSettings?['enabled'] as bool? ?? false;
+
+      if (!enabled) {
+        return; // Upload o'chirilgan bu environment uchun
+      }
+
+      // Get build_config Firebase Distribution config for app_id and tester_groups
+      final buildConfigFirebase = config['firebase_distribution'] as Map<String, dynamic>?;
+
+      if (buildConfigFirebase == null) {
         return; // Config yo'q - skip
       }
 
-      final enabled = firebaseConfig['enabled'] as bool? ?? false;
+      // Get environment-specific config (production, staging, development)
+      final envConfig = buildConfigFirebase[env.toLowerCase()] as Map<String, dynamic>?;
 
-      if (!enabled) {
-        return; // Upload o'chirilgan
+      // If no environment-specific config found, skip
+      if (envConfig == null) {
+        return;
       }
 
-      final appId = firebaseConfig['app_id'] as String? ?? '';
-      final testerGroups = firebaseConfig['tester_groups'] as String? ?? '';
+      final appId = envConfig['app_id'] as String? ?? '';
+      final testerGroups = envConfig['tester_groups'] as String? ?? '';
 
       // App ID tekshirish
       if (appId.isEmpty) {
@@ -727,6 +752,8 @@ class BuildManager {
 
       if (result.exitCode == 0) {
         Logger.log(LogType.firebaseUploadSuccess);
+        // Show donation message after successful upload
+        Logger.log(LogType.donation);
       } else {
         Logger.log(LogType.firebaseUploadFailed);
       }
