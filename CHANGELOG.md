@@ -1,3 +1,12 @@
+## 0.7.7
+
+### Improvements
+- ✅ **Smart Migration Logic**: Improved `dartdosh init` to preserve existing configuration
+  - No longer overwrites existing config files
+  - Only adds missing fields during migration/validation
+  - Automatically deletes old `build_config.json` after successful migration
+  - Better nested field validation for firebase_distribution
+
 ## 0.7.6
 
 ### Bug Fixes

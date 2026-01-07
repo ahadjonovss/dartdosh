@@ -80,6 +80,18 @@ class InitManager {
       // Add to .gitignore
       await _addToGitignore('dartdosh_config/settings.json');
 
+      // Delete old config file after successful migration
+      if (oldConfigFile.existsSync()) {
+        try {
+          oldConfigFile.deleteSync();
+          Logger.log(LogType.uploadProgress,
+              progress: '🗑️ Eski build_config.json o\'chirildi');
+        } catch (e) {
+          Logger.log(LogType.uploadProgress,
+              progress: '⚠️ Eski faylni o\'chirib bo\'lmadi: $e');
+        }
+      }
+
       Logger.log(LogType.migrationCompleted);
       Logger.log(LogType.initCompleted);
     } catch (e) {
@@ -116,6 +128,20 @@ class InitManager {
             _getDefaultFirebaseDistributionBuildConfig();
         buildConfigModified = true;
         missingFields.add('build_config.firebase_distribution');
+      } else {
+        // Check nested firebase_distribution environments
+        final firebaseConfig =
+            buildConfig['firebase_distribution'] as Map<String, dynamic>?;
+        if (firebaseConfig != null) {
+          final defaultFirebase = _getDefaultFirebaseDistributionBuildConfig();
+          defaultFirebase.forEach((env, config) {
+            if (!firebaseConfig.containsKey(env)) {
+              firebaseConfig[env] = config;
+              buildConfigModified = true;
+              missingFields.add('build_config.firebase_distribution.$env');
+            }
+          });
+        }
       }
 
       // Check user settings
