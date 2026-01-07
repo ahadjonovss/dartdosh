@@ -766,35 +766,64 @@ class BuildManager {
       Logger.log(LogType.uploadProgress,
           progress: '⚙️ Running: firebase ${args.join(' ')}');
 
-      final result = await Process.run(
+      // Start process for real-time progress monitoring
+      final process = await Process.start(
         'firebase',
         args,
         runInShell: true,
       );
 
-      // Show upload output using Logger
-      final stdout = result.stdout.toString();
-      final stderr = result.stderr.toString();
+      int uploadProgress = 0;
+      bool uploadComplete = false;
 
-      // Log stdout if not empty
-      if (stdout.isNotEmpty) {
-        for (final line in stdout.split('\n')) {
-          if (line.trim().isNotEmpty) {
+      // Listen to stdout for upload progress
+      process.stdout.transform(utf8.decoder).listen((data) {
+        final lines = data.split('\n');
+        for (final line in lines) {
+          if (line.trim().isEmpty) continue;
+
+          // Parse Firebase CLI output for progress indicators
+          if (line.contains('Uploading') || line.contains('uploading')) {
+            if (uploadProgress < 50) {
+              uploadProgress = 50;
+              Logger.log(LogType.uploadProgress,
+                  progress: '📤 50% - Yuklanmoqda...');
+            }
+          } else if (line.contains('Processing') ||
+              line.contains('processing')) {
+            if (uploadProgress < 75) {
+              uploadProgress = 75;
+              Logger.log(LogType.uploadProgress,
+                  progress: '⚙️ 75% - Firebase qayta ishlamoqda...');
+            }
+          } else if (line.contains('success') || line.contains('Success')) {
+            uploadProgress = 100;
+            uploadComplete = true;
+          }
+
+          // Show Firebase output
+          if (line.contains('http') ||
+              line.contains('View') ||
+              uploadComplete) {
             Logger.log(LogType.uploadProgress, progress: line.trim());
           }
         }
-      }
+      });
 
-      // Log stderr if not empty
-      if (stderr.isNotEmpty) {
-        for (final line in stderr.split('\n')) {
+      // Listen to stderr
+      process.stderr.transform(utf8.decoder).listen((data) {
+        final lines = data.split('\n');
+        for (final line in lines) {
           if (line.trim().isNotEmpty) {
-            Logger.log(LogType.uploadProgress, progress: line.trim());
+            Logger.log(LogType.uploadProgress, progress: '⚠️ ${line.trim()}');
           }
         }
-      }
+      });
 
-      if (result.exitCode == 0) {
+      final exitCode = await process.exitCode;
+
+      if (exitCode == 0) {
+        Logger.log(LogType.uploadProgress, progress: '✅ 100% - Tayyor!');
         Logger.log(LogType.firebaseUploadSuccess);
         // Show donation message after successful upload
         Logger.log(LogType.donation);

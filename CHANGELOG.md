@@ -5,6 +5,13 @@
   - Regenerated embedded translations from JSON source files
   - All Firebase upload messages now display correctly in all languages
 
+### New Features
+- 📊 **Real-time Firebase Upload Progress**: Added live progress monitoring for Firebase Distribution uploads
+  - Shows progress percentage (50%, 75%, 100%)
+  - Displays status messages during upload process
+  - Real-time feedback for uploading and processing stages
+  - Better user experience with visual progress indicators
+
 ## 0.7.5
 
 ### Bug Fixes
