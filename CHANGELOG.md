@@ -1,3 +1,14 @@
+## 0.7.8
+
+### Documentation
+- 📚 **Enhanced --dart-define-from-file Documentation**: Added comprehensive usage guide
+  - Direct command line usage examples
+  - build_config.json configuration method (recommended for teams)
+  - Benefits comparison between approaches
+  - Example config file structure
+  - Positioned prominently for new user visibility
+  - Updated all language READMEs (English, Uzbek, Russian, Turkish)
+
 ## 0.7.7
 
 ### Improvements
