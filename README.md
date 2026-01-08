@@ -51,6 +51,63 @@ dartdosh build ipa --split         # flutter build ipa --split-per-abi
 
 ---
 
+## 🔧 Using --dart-define-from-file
+
+DartDosh fully supports Flutter's `--dart-define-from-file` for loading configuration from JSON files. You can use it in **two ways**:
+
+### Method 1: Direct Command Line
+
+Pass the flag directly when building:
+
+```bash
+# Load config from file
+dartdosh build apk -p --dart-define-from-file=config/prod.json
+dartdosh build ipa -s --dart-define-from-file=config/staging.json
+
+# Combine with other flags
+dartdosh build apk -p --dart-define-from-file=config/prod.json --obfuscate
+```
+
+### Method 2: Configure in build_config.json (Recommended for Teams)
+
+Add `--dart-define-from-file` to your build commands in `dartdosh_config/build_config.json`:
+
+```json
+{
+  "apk": {
+    "production": "flutter build apk --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build apk --release --flavor staging --dart-define-from-file=config/staging.json"
+  },
+  "ipa": {
+    "production": "flutter build ipa --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build ipa --release --flavor staging --dart-define-from-file=config/staging.json"
+  }
+}
+```
+
+**Then simply run:**
+```bash
+dartdosh build apk -p    # Automatically uses config/prod.json
+dartdosh build ipa -s    # Automatically uses config/staging.json
+```
+
+**Why use Method 2?**
+- ✅ Team consistency - Everyone uses the same config files
+- ✅ No need to remember file paths
+- ✅ One command for all environments
+- ✅ Easier to maintain in teams
+
+**Example config file** (`config/prod.json`):
+```json
+{
+  "API_URL": "https://api.production.com",
+  "API_KEY": "prod-key-12345",
+  "ENABLE_ANALYTICS": "true"
+}
+```
+
+---
+
 ## Requirements
 
 * Dart SDK ≥ 3.0

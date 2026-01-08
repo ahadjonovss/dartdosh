@@ -51,6 +51,63 @@ dartdosh build ipa --split         # flutter build ipa --split-per-abi
 
 ---
 
+## 🔧 Использование --dart-define-from-file
+
+DartDosh полностью поддерживает флаг Flutter `--dart-define-from-file` для загрузки конфигурации из JSON файлов. Вы можете использовать его **двумя способами**:
+
+### Способ 1: Напрямую в командной строке
+
+Передайте флаг непосредственно при сборке:
+
+```bash
+# Загрузить конфигурацию из файла
+dartdosh build apk -p --dart-define-from-file=config/prod.json
+dartdosh build ipa -s --dart-define-from-file=config/staging.json
+
+# Комбинировать с другими флагами
+dartdosh build apk -p --dart-define-from-file=config/prod.json --obfuscate
+```
+
+### Способ 2: Настроить в build_config.json (Рекомендуется для команд)
+
+Добавьте `--dart-define-from-file` к вашим командам сборки в `dartdosh_config/build_config.json`:
+
+```json
+{
+  "apk": {
+    "production": "flutter build apk --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build apk --release --flavor staging --dart-define-from-file=config/staging.json"
+  },
+  "ipa": {
+    "production": "flutter build ipa --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build ipa --release --flavor staging --dart-define-from-file=config/staging.json"
+  }
+}
+```
+
+**Затем просто запустите:**
+```bash
+dartdosh build apk -p    # Автоматически использует config/prod.json
+dartdosh build ipa -s    # Автоматически использует config/staging.json
+```
+
+**Почему использовать Способ 2?**
+- ✅ Единообразие в команде - Все используют одни и те же конфигурационные файлы
+- ✅ Не нужно запоминать пути к файлам
+- ✅ Одна команда для всех окружений
+- ✅ Проще поддерживать в командах
+
+**Пример конфигурационного файла** (`config/prod.json`):
+```json
+{
+  "API_URL": "https://api.production.com",
+  "API_KEY": "prod-key-12345",
+  "ENABLE_ANALYTICS": "true"
+}
+```
+
+---
+
 ## Требования
 
 * Dart SDK ≥ 3.0

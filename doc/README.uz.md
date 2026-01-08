@@ -51,6 +51,63 @@ dartdosh build ipa --split         # flutter build ipa --split-per-abi
 
 ---
 
+## 🔧 --dart-define-from-file Ishlatish
+
+DartDosh Flutter'ning `--dart-define-from-file` flagini to'liq qo'llab-quvvatlaydi - JSON fayllardan konfiguratsiya yuklash uchun. Uni **ikki usulda** ishlatishingiz mumkin:
+
+### 1-Usul: Bevosita Buyruq Qatori Orqali
+
+Flagni to'g'ridan-to'g'ri build paytida bering:
+
+```bash
+# Fayldan config yuklash
+dartdosh build apk -p --dart-define-from-file=config/prod.json
+dartdosh build ipa -s --dart-define-from-file=config/staging.json
+
+# Boshqa flaglar bilan birga
+dartdosh build apk -p --dart-define-from-file=config/prod.json --obfuscate
+```
+
+### 2-Usul: build_config.json'da Sozlash (Jamoalar Uchun Tavsiya Etiladi)
+
+`dartdosh_config/build_config.json` faylidagi build buyruqlariga `--dart-define-from-file` qo'shing:
+
+```json
+{
+  "apk": {
+    "production": "flutter build apk --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build apk --release --flavor staging --dart-define-from-file=config/staging.json"
+  },
+  "ipa": {
+    "production": "flutter build ipa --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build ipa --release --flavor staging --dart-define-from-file=config/staging.json"
+  }
+}
+```
+
+**Keyin oddiy ishga tushiring:**
+```bash
+dartdosh build apk -p    # Avtomatik config/prod.json ishlatadi
+dartdosh build ipa -s    # Avtomatik config/staging.json ishlatadi
+```
+
+**Nega 2-Usulni Ishlatasiz?**
+- ✅ Jamoa birligi - Hamma bir xil config fayllardan foydalanadi
+- ✅ Fayl yo'llarini eslab qolish shart emas
+- ✅ Barcha muhitlar uchun bitta buyruq
+- ✅ Jamoalarda boshqarish osonroq
+
+**Config fayl namunasi** (`config/prod.json`):
+```json
+{
+  "API_URL": "https://api.production.com",
+  "API_KEY": "prod-key-12345",
+  "ENABLE_ANALYTICS": "true"
+}
+```
+
+---
+
 ## Talablar
 
 * Dart SDK ≥ 3.0

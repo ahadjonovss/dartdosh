@@ -51,6 +51,63 @@ dartdosh build ipa --split         # flutter build ipa --split-per-abi
 
 ---
 
+## 🔧 --dart-define-from-file Kullanımı
+
+DartDosh, JSON dosyalarından yapılandırma yüklemek için Flutter'ın `--dart-define-from-file` bayrağını tam olarak destekler. **İki şekilde** kullanabilirsiniz:
+
+### Yöntem 1: Doğrudan Komut Satırı
+
+Bayrağı build sırasında doğrudan iletin:
+
+```bash
+# Dosyadan config yükle
+dartdosh build apk -p --dart-define-from-file=config/prod.json
+dartdosh build ipa -s --dart-define-from-file=config/staging.json
+
+# Diğer bayraklarla birleştir
+dartdosh build apk -p --dart-define-from-file=config/prod.json --obfuscate
+```
+
+### Yöntem 2: build_config.json'da Yapılandırma (Takımlar İçin Önerilir)
+
+`dartdosh_config/build_config.json` dosyasındaki build komutlarınıza `--dart-define-from-file` ekleyin:
+
+```json
+{
+  "apk": {
+    "production": "flutter build apk --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build apk --release --flavor staging --dart-define-from-file=config/staging.json"
+  },
+  "ipa": {
+    "production": "flutter build ipa --release --flavor production --dart-define-from-file=config/prod.json",
+    "staging": "flutter build ipa --release --flavor staging --dart-define-from-file=config/staging.json"
+  }
+}
+```
+
+**Sonra sadece çalıştırın:**
+```bash
+dartdosh build apk -p    # Otomatik olarak config/prod.json kullanır
+dartdosh build ipa -s    # Otomatik olarak config/staging.json kullanır
+```
+
+**Neden Yöntem 2 Kullanılır?**
+- ✅ Takım tutarlılığı - Herkes aynı config dosyalarını kullanır
+- ✅ Dosya yollarını hatırlamaya gerek yok
+- ✅ Tüm ortamlar için tek komut
+- ✅ Takımlarda bakımı daha kolay
+
+**Örnek config dosyası** (`config/prod.json`):
+```json
+{
+  "API_URL": "https://api.production.com",
+  "API_KEY": "prod-key-12345",
+  "ENABLE_ANALYTICS": "true"
+}
+```
+
+---
+
 ## Gereksinimler
 
 * Dart SDK ≥ 3.0
