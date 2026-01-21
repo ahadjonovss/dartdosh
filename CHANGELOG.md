@@ -1,3 +1,11 @@
+## 0.7.9
+
+### Bug Fixes
+- 🐛 **Fixed APK File Selection Bug**: Fixed issue where wrong APK file was copied after build
+  - Now correctly selects APK based on actual build environment (dev/prod/staging)
+  - Supports both short (`dev`, `prod`, `stg`) and full (`development`, `production`, `staging`) flavor names
+  - Prevents copying old prod APK when building dev, and vice versa
+
 ## 0.7.8
 
 ### Documentation

@@ -361,7 +361,7 @@ class BuildManager {
       }
 
       if (target == 'apk') {
-        final apkPath = _renameAndMoveApk(newName, outputPath);
+        final apkPath = _renameAndMoveApk(newName, outputPath, env);
         // Upload APK to Firebase Distribution if enabled
         if (apkPath != null) {
           await _uploadApkToFirebaseIfEnabled(
@@ -416,7 +416,7 @@ class BuildManager {
       }
 
       if (target == 'apk') {
-        final apkPath = _renameAndMoveApk(newName, outputPath);
+        final apkPath = _renameAndMoveApkNoEnv(newName, outputPath);
         // Upload APK to Firebase Distribution if enabled (skipped for non-env builds)
         if (apkPath != null) {
           await _uploadApkToFirebaseIfEnabled(
@@ -436,17 +436,72 @@ class BuildManager {
     }
   }
 
-  String? _renameAndMoveApk(String newName, String? outputPath) {
+  // APK rename for builds without environment (plain flutter build)
+  String? _renameAndMoveApkNoEnv(String newName, String? outputPath) {
     final apkPaths = [
-      'build/app/outputs/flutter-apk/app-production-release.apk',
-      'build/app/outputs/flutter-apk/app-staging-release.apk',
-      'build/app/outputs/flutter-apk/app-development-debug.apk',
       'build/app/outputs/flutter-apk/app-release.apk',
-      'build/app/outputs/apk/productionRelease/app-production-release.apk',
-      'build/app/outputs/apk/stagingRelease/app-staging-release.apk',
-      'build/app/outputs/apk/developmentDebug/app-development-debug.apk',
       'build/app/outputs/apk/release/app-release.apk',
     ];
+
+    for (final path in apkPaths) {
+      final file = File('${Directory.current.path}/$path');
+      if (file.existsSync()) {
+        final fileName = '$newName.apk';
+        String finalPath;
+
+        if (outputPath != null && outputPath.isNotEmpty) {
+          final destinationPath = '$outputPath/$fileName';
+          file.copySync(destinationPath);
+          Logger.log(LogType.fileSaved, path: destinationPath);
+          finalPath = destinationPath;
+        } else {
+          final newPath = '${file.parent.path}/$fileName';
+          file.renameSync(newPath);
+          Logger.log(LogType.fileSaved, path: fileName);
+          finalPath = newPath;
+        }
+        return finalPath;
+      }
+    }
+    return null;
+  }
+
+  String? _renameAndMoveApk(String newName, String? outputPath, String env) {
+    // Build environment-specific APK paths based on actual env
+    final envLower = env.toLowerCase();
+    final List<String> apkPaths = [];
+
+    // Add environment-specific paths first (priority)
+    if (envLower == 'production' || envLower == 'prod') {
+      apkPaths.addAll([
+        'build/app/outputs/flutter-apk/app-prod-release.apk',
+        'build/app/outputs/flutter-apk/app-production-release.apk',
+        'build/app/outputs/apk/prodRelease/app-prod-release.apk',
+        'build/app/outputs/apk/productionRelease/app-production-release.apk',
+      ]);
+    } else if (envLower == 'development' || envLower == 'dev') {
+      apkPaths.addAll([
+        'build/app/outputs/flutter-apk/app-dev-release.apk',
+        'build/app/outputs/flutter-apk/app-dev-debug.apk',
+        'build/app/outputs/flutter-apk/app-development-release.apk',
+        'build/app/outputs/flutter-apk/app-development-debug.apk',
+        'build/app/outputs/apk/devRelease/app-dev-release.apk',
+        'build/app/outputs/apk/devDebug/app-dev-debug.apk',
+        'build/app/outputs/apk/developmentRelease/app-development-release.apk',
+        'build/app/outputs/apk/developmentDebug/app-development-debug.apk',
+      ]);
+    } else if (envLower == 'staging' || envLower == 'stg') {
+      apkPaths.addAll([
+        'build/app/outputs/flutter-apk/app-staging-release.apk',
+        'build/app/outputs/flutter-apk/app-stg-release.apk',
+        'build/app/outputs/apk/stagingRelease/app-staging-release.apk',
+        'build/app/outputs/apk/stgRelease/app-stg-release.apk',
+      ]);
+    }
+
+    // Fallback to generic release APK
+    apkPaths.add('build/app/outputs/flutter-apk/app-release.apk');
+    apkPaths.add('build/app/outputs/apk/release/app-release.apk');
 
     for (final path in apkPaths) {
       final file = File('${Directory.current.path}/$path');
