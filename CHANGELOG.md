@@ -1,3 +1,11 @@
+## 0.8.2
+
+### Documentation
+- 📚 **Restructured docs into modular files**: Each feature now has its own dedicated doc page (`doc/en/`)
+- 📝 **Added English documentation index** (`doc/README.en.md`) with links to all modules
+- ✈️ **Telegram setup guide updated**: Added `@dartdosh_manager_bot` as the official bot to add as Admin
+- 🏠 **Simplified README landing page**: Clean FAQ-style table of contents linking to GitHub docs
+
 ## 0.8.1
 
 ### Bug Fixes

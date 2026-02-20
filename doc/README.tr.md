@@ -187,6 +187,11 @@ Takımınız için build komutları. Herkes aynı komutları kullanır:
       "app_id": "1:123456789:android:devabc123",
       "tester_groups": "developers,internal-testers"
     }
+  },
+  "telegram": {
+    "production": { "chat_id": "-1001234567890" },
+    "staging":    { "chat_id": "-1002222222222" },
+    "development":{ "chat_id": "" }
   }
 }
 ```
@@ -216,6 +221,9 @@ Kişisel ayarlarınız. Her geliştirici kendine ait ayarlara sahiptir:
     "development": {
       "enabled": true
     }
+  },
+  "telegram": {
+    "enabled": false
   }
 }
 ```
@@ -255,6 +263,12 @@ Kişisel ayarlarınız. Her geliştirici kendine ait ayarlara sahiptir:
   - App ID ve test grupları `build_config.json` dosyasında yapılandırılır
   - Firebase CLI kurulu olmalıdır
 
+* `telegram`: APK'yı Telegram kanalına otomatik yükleme
+  - `enabled`: true/false - Yüklemeyi etkinleştir/devre dışı bırak
+  - Kanal ID'si `build_config.json` dosyasında `telegram.<env>.chat_id` altında belirtilir
+  - MTProto protokolü kullanır — 2GB'a kadar dosyaları destekler
+  - Python 3 kurulu olmalıdır; `telethon` kütüphanesi otomatik olarak kurulur
+
 **App-Specific Password Nasıl Alınır:**
 1. https://appleid.apple.com adresine gidin
 2. Güvenlik → Şifre Oluştur
@@ -267,6 +281,16 @@ Kişisel ayarlarınız. Her geliştirici kendine ait ayarlara sahiptir:
 3. App ID'yi Firebase Console → Proje Ayarları'ndan alın
 4. Test gruplarını Firebase Console → App Distribution'da ekleyin
 5. `settings.json` dosyasında etkinleştirin ve yapılandırın
+
+**Telegram Yüklemesi Nasıl Ayarlanır:**
+1. Bir Telegram kanalı oluşturun veya mevcut birini kullanın
+2. dartdosh botunu kanala **Yönetici** olarak ekleyin
+3. Kanalınızın **Chat ID**'sini alın:
+   - Kanalınızdan herhangi bir mesajı [@userinfobot](https://t.me/userinfobot)'a iletin
+   - Bot kanal ID'siyle yanıt verir (örneğin: `-1001234567890`)
+4. `build_config.json` dosyasında `telegram.<env>.chat_id` alanına Chat ID'yi girin
+5. `settings.json` dosyasında `telegram` altında `"enabled": true` yapın
+6. Bilgisayarınıza **Python 3** kurun — `telethon` ilk çalıştırmada otomatik olarak kurulur
 
 ---
 

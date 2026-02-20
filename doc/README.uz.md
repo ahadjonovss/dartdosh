@@ -187,6 +187,11 @@ Jamoangiz uchun build buyruqlari. Hamma bir xil buyruqlardan foydalanadi:
       "app_id": "1:123456789:android:devabc123",
       "tester_groups": "developers,internal-testers"
     }
+  },
+  "telegram": {
+    "production": { "chat_id": "-1001234567890" },
+    "staging":    { "chat_id": "-1002222222222" },
+    "development":{ "chat_id": "" }
   }
 }
 ```
@@ -216,6 +221,9 @@ Sizning shaxsiy sozlamalaringiz. Har bir dasturchi o'zinikiga ega:
     "development": {
       "enabled": true
     }
+  },
+  "telegram": {
+    "enabled": false
   }
 }
 ```
@@ -255,6 +263,12 @@ Sizning shaxsiy sozlamalaringiz. Har bir dasturchi o'zinikiga ega:
   - App ID va tester guruhlari `build_config.json`da konfiguratsiya qilinadi
   - Firebase CLI o'rnatilgan bo'lishi kerak
 
+* `telegram`: APK'ni Telegram kanaliga avtomatik yuklash
+  - `enabled`: true/false - Yuklashni yoqish/o'chirish
+  - Kanal ID'si `build_config.json`da `telegram.<env>.chat_id` ostida belgilanadi
+  - MTProto protokolidan foydalanadi — 2GB gacha fayllarni qo'llab-quvvatlaydi
+  - Python 3 o'rnatilgan bo'lishi kerak; `telethon` kutubxonasi avtomatik o'rnatiladi
+
 **App-Specific Password Qanday Olish Kerak:**
 1. https://appleid.apple.com'ga o'ting
 2. Xavfsizlik → Parol Yaratish
@@ -267,6 +281,16 @@ Sizning shaxsiy sozlamalaringiz. Har bir dasturchi o'zinikiga ega:
 3. App ID'ni Firebase Console → Project Settings'dan oling
 4. Firebase Console → App Distribution'da tester guruhlarini qo'shing
 5. `settings.json`da yoqing va konfiguratsiya qiling
+
+**Telegram Upload'ni Qanday Sozlash Kerak:**
+1. Telegram kanali yarating yoki mavjud birini ishlating
+2. dartdosh botini kanalingizga **Admin** sifatida qo'shing
+3. Kanalingizning **Chat ID**sini oling:
+   - Kanalingizdan istalgan xabarni [@userinfobot](https://t.me/userinfobot) ga forward qiling
+   - U ID bilan javob beradi (masalan: `-1001234567890`)
+4. `build_config.json`da `telegram.<env>.chat_id` ostiga Chat ID'ni kiriting
+5. `settings.json`da `telegram` ostida `"enabled": true` qiling
+6. **Python 3** o'rnatilgan bo'lishi kerak — `telethon` birinchi ishga tushganda avtomatik o'rnatiladi
 
 ---
 

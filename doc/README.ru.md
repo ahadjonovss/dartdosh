@@ -187,6 +187,11 @@ dartdosh init
       "app_id": "1:123456789:android:devabc123",
       "tester_groups": "developers,internal-testers"
     }
+  },
+  "telegram": {
+    "production": { "chat_id": "-1001234567890" },
+    "staging":    { "chat_id": "-1002222222222" },
+    "development":{ "chat_id": "" }
   }
 }
 ```
@@ -216,6 +221,9 @@ dartdosh init
     "development": {
       "enabled": true
     }
+  },
+  "telegram": {
+    "enabled": false
   }
 }
 ```
@@ -255,6 +263,12 @@ dartdosh init
   - App ID и группы тестировщиков настраиваются в `build_config.json`
   - Требуется установленный Firebase CLI
 
+* `telegram`: Автоматическая загрузка APK в Telegram-канал
+  - `enabled`: true/false - Включить/выключить загрузку
+  - ID канала задаётся в `build_config.json` в разделе `telegram.<env>.chat_id`
+  - Использует протокол MTProto — поддерживает файлы до 2GB
+  - Требуется Python 3; библиотека `telethon` устанавливается автоматически
+
 **Как получить пароль для приложения:**
 1. Перейдите на https://appleid.apple.com
 2. Безопасность → Создать пароль
@@ -267,6 +281,16 @@ dartdosh init
 3. Получите App ID из Firebase Console → Project Settings
 4. Добавьте группы тестировщиков в Firebase Console → App Distribution
 5. Включите и настройте в `settings.json`
+
+**Как настроить загрузку в Telegram:**
+1. Создайте Telegram-канал или используйте существующий
+2. Добавьте бота dartdosh в канал как **Администратора**
+3. Получите **Chat ID** вашего канала:
+   - Перешлите любое сообщение из канала боту [@userinfobot](https://t.me/userinfobot)
+   - Бот ответит с ID канала (например: `-1001234567890`)
+4. Укажите Chat ID в `build_config.json` в поле `telegram.<env>.chat_id`
+5. Установите `"enabled": true` в `settings.json` в разделе `telegram`
+6. Установите **Python 3** на компьютер — `telethon` устанавливается автоматически при первом запуске
 
 ---
 
