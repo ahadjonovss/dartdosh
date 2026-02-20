@@ -1,3 +1,9 @@
+## 0.8.3
+
+### Documentation
+- 📚 **Added numbered doc files**: `doc/en/` files now use numeric prefixes (01-, 02-, ...) for logical ordering in file explorers
+- 🔗 **Updated all doc links**: README.md FAQ links and internal cross-links updated to match new filenames
+
 ## 0.8.2
 
 ### Documentation
