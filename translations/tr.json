@@ -369,6 +369,33 @@
         "❌ telethon bulunamadı! Çalıştırın: pip install telethon, Patron!",
         "⚠️ Telegram yüklemesi telethon gerektirir. Kurun: pip3 install telethon, Patron!"
       ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ {target} temizleniyor...",
+        "🧹 {target} derleme dosyaları siliniyor, Patron...",
+        "♻️ {target} temizleniyor, Patron..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Tamam! {file} dosya silindi, {path} boşaltıldı, Patron!",
+        "🎉 Temizlendi! {file} dosya kaldırıldı, {path} kazanıldı, Patron!",
+        "🏆 {file} dosya silindi — {path} boşaltıldı, Patron!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ Silinecek dosya yok, Patron!",
+        "✨ Zaten temiz — dosya bulunamadı, Patron!",
+        "👌 Burada kaldırılacak bir şey yok, Patron!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ build_config.json'da output_path yapılandırılmamış, Patron!",
+        "⚠️ output_path ayarlanmamış — önce build_config.json'a ekleyin, Patron!"
+      ]
     }
   }
 }

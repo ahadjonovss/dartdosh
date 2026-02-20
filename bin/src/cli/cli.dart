@@ -1,6 +1,7 @@
 import '../managers/build_manager.dart';
 import '../managers/version_manager.dart';
 import '../managers/init_manager.dart';
+import '../managers/clean_manager.dart';
 
 /// Command-line interface handler for DartDosh commands.
 ///
@@ -48,6 +49,14 @@ class CLI {
     if (arguments[0] == 'downgrade') {
       final version = arguments.length > 1 ? arguments[1] : null;
       await VersionManager.downgrade(version);
+      return;
+    }
+
+    // Handle clean command
+    if (arguments[0] == 'clean') {
+      final target = arguments.length > 1 ? arguments[1] : 'all';
+      final env = parseEnv(arguments);
+      await CleanManager().execute(target, env);
       return;
     }
 

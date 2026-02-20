@@ -60,6 +60,11 @@ enum LogType {
   telegramUploadMissingChatId,
   telegramUploadPythonNotFound,
   telegramUploadTelethonNotFound,
+  // Clean command logs
+  cleanStarted,
+  cleanSuccess,
+  cleanNothingToDelete,
+  cleanOutputPathNotConfigured,
 }
 
 class Logger {
@@ -241,7 +246,17 @@ class Logger {
       case LogType.telegramUploadMissingChatId:
       case LogType.telegramUploadPythonNotFound:
       case LogType.telegramUploadTelethonNotFound:
+      case LogType.cleanOutputPathNotConfigured:
         return '31';
+
+      // Green (32)
+      case LogType.cleanSuccess:
+        return '32';
+
+      // Yellow (33)
+      case LogType.cleanStarted:
+      case LogType.cleanNothingToDelete:
+        return '33';
     }
   }
 }

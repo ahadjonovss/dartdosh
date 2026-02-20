@@ -369,6 +369,33 @@
         "❌ telethon topilmadi! Buyruq: pip install telethon, Xo'jayiin!",
         "⚠️ Telegram upload telethon talab qiladi. O'rnating: pip3 install telethon, Xo'jayiin!"
       ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ {target} fayllar tozalanmoqda...",
+        "🧹 {target} build fayllar o'chirilmoqda, Xo'jayiin...",
+        "♻️ {target} tozalanmoqda, Xo'jayiin..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Tayyor! {file} ta fayl o'chirildi, {path} bo'shadi, Xo'jayiin!",
+        "🎉 Tozalandi! {file} ta fayl o'chirildi, {path} tejaldi, Xo'jayiin!",
+        "🏆 {file} ta fayl o'chirildi — {path} bo'shatildi, Xo'jayiin!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ O'chiriladigan fayl yo'q, Xo'jayiin!",
+        "✨ Allaqachon toza — fayl topilmadi, Xo'jayiin!",
+        "👌 Bu yerda o'chiriladigan narsa yo'q, Xo'jayiin!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ build_config.json da output_path ko'rsatilmagan, Xo'jayiin!",
+        "⚠️ output_path yo'q — avval build_config.json ga qo'shing, Xo'jayiin!"
+      ]
     }
   }
 }

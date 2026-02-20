@@ -377,6 +377,33 @@ const Map<String, String> embeddedTranslations = {
         "❌ telethon topilmadi! Buyruq: pip install telethon, Xo'jayiin!",
         "⚠️ Telegram upload telethon talab qiladi. O'rnating: pip3 install telethon, Xo'jayiin!"
       ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ {target} fayllar tozalanmoqda...",
+        "🧹 {target} build fayllar o'chirilmoqda, Xo'jayiin...",
+        "♻️ {target} tozalanmoqda, Xo'jayiin..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Tayyor! {file} ta fayl o'chirildi, {path} bo'shadi, Xo'jayiin!",
+        "🎉 Tozalandi! {file} ta fayl o'chirildi, {path} tejaldi, Xo'jayiin!",
+        "🏆 {file} ta fayl o'chirildi — {path} bo'shatildi, Xo'jayiin!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ O'chiriladigan fayl yo'q, Xo'jayiin!",
+        "✨ Allaqachon toza — fayl topilmadi, Xo'jayiin!",
+        "👌 Bu yerda o'chiriladigan narsa yo'q, Xo'jayiin!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ build_config.json da output_path ko'rsatilmagan, Xo'jayiin!",
+        "⚠️ output_path yo'q — avval build_config.json ga qo'shing, Xo'jayiin!"
+      ]
     }
   }
 }
@@ -753,6 +780,33 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ telethon not found! Run: pip install telethon, Boss!",
         "⚠️ Telegram upload requires telethon. Install it with: pip3 install telethon, Boss!"
+      ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ Cleaning {target}...",
+        "🧹 Removing {target} build files, Boss...",
+        "♻️ Clearing {target}, Boss..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Done! {file} file(s) deleted, {path} freed, Boss!",
+        "🎉 Cleaned up! Removed {file} file(s), saved {path}, Boss!",
+        "🏆 {file} file(s) deleted — {path} freed, Boss!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ Nothing to delete, Boss!",
+        "✨ Already clean — no files found, Boss!",
+        "👌 Nothing here to remove, Boss!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ output_path is not configured in build_config.json, Boss!",
+        "⚠️ No output_path set — add it to build_config.json first, Boss!"
       ]
     }
   }
@@ -1131,6 +1185,33 @@ const Map<String, String> embeddedTranslations = {
         "❌ telethon не найден! Выполните: pip install telethon, Босс!",
         "⚠️ Загрузка в Telegram требует telethon. Установите: pip3 install telethon, Босс!"
       ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ Очистка {target}...",
+        "🧹 Удаление файлов {target}, Босс...",
+        "♻️ Очищаю {target}, Босс..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Готово! Удалено {file} файл(ов), освобождено {path}, Босс!",
+        "🎉 Очищено! Удалено {file} файл(ов), сэкономлено {path}, Босс!",
+        "🏆 {file} файл(ов) удалено — освобождено {path}, Босс!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ Нечего удалять, Босс!",
+        "✨ Уже чисто — файлы не найдены, Босс!",
+        "👌 Здесь нечего удалять, Босс!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ output_path не настроен в build_config.json, Босс!",
+        "⚠️ output_path не задан — сначала добавьте его в build_config.json, Босс!"
+      ]
     }
   }
 }
@@ -1507,6 +1588,33 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ telethon bulunamadı! Çalıştırın: pip install telethon, Patron!",
         "⚠️ Telegram yüklemesi telethon gerektirir. Kurun: pip3 install telethon, Patron!"
+      ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ {target} temizleniyor...",
+        "🧹 {target} derleme dosyaları siliniyor, Patron...",
+        "♻️ {target} temizleniyor, Patron..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Tamam! {file} dosya silindi, {path} boşaltıldı, Patron!",
+        "🎉 Temizlendi! {file} dosya kaldırıldı, {path} kazanıldı, Patron!",
+        "🏆 {file} dosya silindi — {path} boşaltıldı, Patron!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ Silinecek dosya yok, Patron!",
+        "✨ Zaten temiz — dosya bulunamadı, Patron!",
+        "👌 Burada kaldırılacak bir şey yok, Patron!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ build_config.json'da output_path yapılandırılmamış, Patron!",
+        "⚠️ output_path ayarlanmamış — önce build_config.json'a ekleyin, Patron!"
       ]
     }
   }

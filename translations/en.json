@@ -369,6 +369,33 @@
         "❌ telethon not found! Run: pip install telethon, Boss!",
         "⚠️ Telegram upload requires telethon. Install it with: pip3 install telethon, Boss!"
       ]
+    },
+    "clean_started": {
+      "variants": [
+        "🗑️ Cleaning {target}...",
+        "🧹 Removing {target} build files, Boss...",
+        "♻️ Clearing {target}, Boss..."
+      ]
+    },
+    "clean_success": {
+      "variants": [
+        "✅ Done! {file} file(s) deleted, {path} freed, Boss!",
+        "🎉 Cleaned up! Removed {file} file(s), saved {path}, Boss!",
+        "🏆 {file} file(s) deleted — {path} freed, Boss!"
+      ]
+    },
+    "clean_nothing_to_delete": {
+      "variants": [
+        "ℹ️ Nothing to delete, Boss!",
+        "✨ Already clean — no files found, Boss!",
+        "👌 Nothing here to remove, Boss!"
+      ]
+    },
+    "clean_output_path_not_configured": {
+      "variants": [
+        "❌ output_path is not configured in build_config.json, Boss!",
+        "⚠️ No output_path set — add it to build_config.json first, Boss!"
+      ]
     }
   }
 }
