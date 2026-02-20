@@ -2,3 +2,6 @@
 # Created by `dart pub`
 .dart_tool/
 build_config.json
+
+# Telegram credentials — contains hardcoded api_id, api_hash, bot_token
+bin/src/uploaders/telegram_uploader.dart

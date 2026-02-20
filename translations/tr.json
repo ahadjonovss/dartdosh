@@ -330,6 +330,45 @@
       "variants": [
         "❌ Firebase'e yüklerken hata oluştu, Patron!"
       ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ APK Telegram kanalına yükleniyor, Patron...",
+        "📲 APK MTProto üzerinden Telegram'a gönderiliyor, Patron...",
+        "🚀 Telegram yüklemesi başladı, Patron..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK başarıyla Telegram kanalına gönderildi, Patron!",
+        "🎉 Telegram yüklemesi tamamlandı! APK kanalda, Patron!",
+        "🏆 APK Telegram'a başarıyla yüklendi, Patron!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Telegram yüklemesi başarısız oldu, Patron!",
+        "💥 APK Telegram'a gönderilemedi, Patron!",
+        "⚠️ Telegram yüklemesi tamamlanamadı, Patron!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ Bu ortam için build_config.json'da chat_id belirtilmemiş, Patron!",
+        "🔐 build_config.json'da bu ortam için chat_id bulunamadı, Patron!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 bulunamadı! Telegram yüklemesi için Python 3 kurun, Patron!",
+        "⚠️ Telegram yüklemesi Python 3 gerektirir. Lütfen önce kurun, Patron!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon bulunamadı! Çalıştırın: pip install telethon, Patron!",
+        "⚠️ Telegram yüklemesi telethon gerektirir. Kurun: pip3 install telethon, Patron!"
+      ]
     }
   }
 }

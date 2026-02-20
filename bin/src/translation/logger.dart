@@ -53,6 +53,13 @@ enum LogType {
   firebaseUploadStarting,
   firebaseUploadSuccess,
   firebaseUploadFailed,
+  // Telegram distribution logs
+  telegramUploadStarting,
+  telegramUploadSuccess,
+  telegramUploadFailed,
+  telegramUploadMissingChatId,
+  telegramUploadPythonNotFound,
+  telegramUploadTelethonNotFound,
 }
 
 class Logger {
@@ -222,7 +229,19 @@ class Logger {
       case LogType.versionDowngradingPrevious:
       case LogType.firebaseUploadMissingAppId:
       case LogType.firebaseUploadStarting:
+      case LogType.telegramUploadStarting:
         return '33';
+
+      // Green (32)
+      case LogType.telegramUploadSuccess:
+        return '32';
+
+      // Red (31)
+      case LogType.telegramUploadFailed:
+      case LogType.telegramUploadMissingChatId:
+      case LogType.telegramUploadPythonNotFound:
+      case LogType.telegramUploadTelethonNotFound:
+        return '31';
     }
   }
 }

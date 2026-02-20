@@ -330,6 +330,45 @@
       "variants": [
         "❌ Firebase ga yuklashda xatolik, Xo'jayiin!"
       ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ APK Telegram kanaliga yuklanmoqda, Xo'jayiin...",
+        "📲 APK MTProto orqali Telegram ga jo'natilmoqda, Xo'jayiin...",
+        "🚀 Telegram yuklanishi boshlandi, Xo'jayiin..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK muvaffaqiyatli Telegram kanaliga yuklandi, Xo'jayiin!",
+        "🎉 Telegram yuklanishi tugadi! APK kanalda, Xo'jayiin!",
+        "🏆 APK Telegram ga muvaffaqiyatli yuklandi, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Telegram ga yuklashda xatolik, Xo'jayiin!",
+        "💥 APK ni Telegram ga yuborib bo'lmadi, Xo'jayiin!",
+        "⚠️ Telegram yuklanishi muvaffaqiyatsiz, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ Bu environment uchun build_config.json da chat_id ko'rsatilmagan, Xo'jayiin!",
+        "🔐 build_config.json da bu environment uchun chat_id topilmadi, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 topilmadi! Telegram upload uchun Python 3 o'rnating, Xo'jayiin!",
+        "⚠️ Telegram upload Python 3 talab qiladi. Avval o'rnating, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon topilmadi! Buyruq: pip install telethon, Xo'jayiin!",
+        "⚠️ Telegram upload telethon talab qiladi. O'rnating: pip3 install telethon, Xo'jayiin!"
+      ]
     }
   }
 }

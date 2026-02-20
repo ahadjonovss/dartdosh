@@ -27,5 +27,16 @@
       "app_id": "1:123456789:android:devabc123",
       "tester_groups": "developers,internal-testers"
     }
+  },
+  "telegram": {
+    "production": {
+      "chat_id": "-1001234567890"
+    },
+    "staging": {
+      "chat_id": "-1002222222222"
+    },
+    "development": {
+      "chat_id": "-1003333333333"
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:yaml/yaml.dart';
 import '../translation/logger.dart';
+import '../uploaders/telegram_uploader.dart';
 
 /// Manages Flutter build operations with automatic version management.
 ///
@@ -44,23 +45,23 @@ class BuildManager {
     final language = settings['language'] as String? ?? 'uz';
     Logger.setLanguage(language);
 
-    // For APK builds with Firebase Distribution enabled, ask for release notes
+    // For APK builds, ask for release notes if Firebase or Telegram upload is enabled
     String? releaseNotes;
     if (target == 'apk' && env != null) {
       final firebaseConfig =
           settings['firebase_distribution'] as Map<String, dynamic>?;
+      final telegramConfig =
+          settings['telegram'] as Map<String, dynamic>?;
 
-      if (firebaseConfig != null) {
-        // Check environment-specific enabled setting
-        final envSettings =
-            firebaseConfig[env.toLowerCase()] as Map<String, dynamic>?;
-        final uploadEnabled = envSettings?['enabled'] as bool? ?? false;
+      final firebaseEnabled = (firebaseConfig?[env.toLowerCase()]
+              as Map<String, dynamic>?)?['enabled'] as bool? ??
+          false;
+      final telegramEnabled = telegramConfig?['enabled'] as bool? ?? false;
 
-        if (uploadEnabled) {
-          stdout.write(
-              '📝 Release notes for Firebase Distribution (press Enter to skip): ');
-          releaseNotes = stdin.readLineSync()?.trim();
-        }
+      if (firebaseEnabled || telegramEnabled) {
+        stdout.write(
+            '📝 Release notes (Firebase/Telegram) (press Enter to skip): ');
+        releaseNotes = stdin.readLineSync()?.trim();
       }
     }
 
@@ -362,10 +363,12 @@ class BuildManager {
 
       if (target == 'apk') {
         final apkPath = _renameAndMoveApk(newName, outputPath, env);
-        // Upload APK to Firebase Distribution if enabled
         if (apkPath != null) {
+          // Upload APK to Firebase Distribution if enabled
           await _uploadApkToFirebaseIfEnabled(
               apkPath, config, releaseNotes, env);
+          // Upload APK to Telegram channel if enabled
+          await TelegramUploader().upload(apkPath, releaseNotes, env);
         }
       } else if (target == 'ipa' || target == 'ios') {
         final ipaPath = _renameAndMoveIpa(newName, outputPath);

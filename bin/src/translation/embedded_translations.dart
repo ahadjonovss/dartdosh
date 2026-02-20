@@ -338,6 +338,45 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ Firebase ga yuklashda xatolik, Xo'jayiin!"
       ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ APK Telegram kanaliga yuklanmoqda, Xo'jayiin...",
+        "📲 APK MTProto orqali Telegram ga jo'natilmoqda, Xo'jayiin...",
+        "🚀 Telegram yuklanishi boshlandi, Xo'jayiin..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK muvaffaqiyatli Telegram kanaliga yuklandi, Xo'jayiin!",
+        "🎉 Telegram yuklanishi tugadi! APK kanalda, Xo'jayiin!",
+        "🏆 APK Telegram ga muvaffaqiyatli yuklandi, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Telegram ga yuklashda xatolik, Xo'jayiin!",
+        "💥 APK ni Telegram ga yuborib bo'lmadi, Xo'jayiin!",
+        "⚠️ Telegram yuklanishi muvaffaqiyatsiz, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ Bu environment uchun build_config.json da chat_id ko'rsatilmagan, Xo'jayiin!",
+        "🔐 build_config.json da bu environment uchun chat_id topilmadi, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 topilmadi! Telegram upload uchun Python 3 o'rnating, Xo'jayiin!",
+        "⚠️ Telegram upload Python 3 talab qiladi. Avval o'rnating, Xo'jayiin!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon topilmadi! Buyruq: pip install telethon, Xo'jayiin!",
+        "⚠️ Telegram upload telethon talab qiladi. O'rnating: pip3 install telethon, Xo'jayiin!"
+      ]
     }
   }
 }
@@ -675,6 +714,45 @@ const Map<String, String> embeddedTranslations = {
     "firebase_upload_failed": {
       "variants": [
         "❌ Firebase upload failed, Boss!"
+      ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ Uploading APK to Telegram channel, Boss...",
+        "📲 Sending APK via Telegram MTProto, Boss...",
+        "🚀 Telegram upload started, Boss..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK successfully sent to Telegram channel, Boss!",
+        "🎉 Telegram upload complete! APK is in the channel, Boss!",
+        "🏆 APK uploaded to Telegram successfully, Boss!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Telegram upload failed, Boss!",
+        "💥 Could not send APK to Telegram, Boss!",
+        "⚠️ Telegram upload unsuccessful, Boss!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ Telegram chat_id missing for this environment in build_config.json, Boss!",
+        "🔐 No chat_id configured for this environment in build_config.json, Boss!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 not found! Install Python 3 to use Telegram upload, Boss!",
+        "⚠️ Telegram upload requires Python 3. Please install it first, Boss!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon not found! Run: pip install telethon, Boss!",
+        "⚠️ Telegram upload requires telethon. Install it with: pip3 install telethon, Boss!"
       ]
     }
   }
@@ -1014,6 +1092,45 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ Ошибка загрузки в Firebase, Босс!"
       ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ Загрузка APK в Telegram-канал, Босс...",
+        "📲 Отправка APK через Telegram MTProto, Босс...",
+        "🚀 Загрузка в Telegram началась, Босс..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK успешно отправлен в Telegram-канал, Босс!",
+        "🎉 Загрузка завершена! APK в канале, Босс!",
+        "🏆 APK успешно загружен в Telegram, Босс!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Ошибка загрузки в Telegram, Босс!",
+        "💥 Не удалось отправить APK в Telegram, Босс!",
+        "⚠️ Загрузка в Telegram не удалась, Босс!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ chat_id для этого окружения не указан в build_config.json, Босс!",
+        "🔐 Не найден chat_id для данного окружения в build_config.json, Босс!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 не найден! Установите Python 3 для загрузки в Telegram, Босс!",
+        "⚠️ Загрузка в Telegram требует Python 3. Сначала установите его, Босс!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon не найден! Выполните: pip install telethon, Босс!",
+        "⚠️ Загрузка в Telegram требует telethon. Установите: pip3 install telethon, Босс!"
+      ]
     }
   }
 }
@@ -1351,6 +1468,45 @@ const Map<String, String> embeddedTranslations = {
     "firebase_upload_failed": {
       "variants": [
         "❌ Firebase'e yüklerken hata oluştu, Patron!"
+      ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ APK Telegram kanalına yükleniyor, Patron...",
+        "📲 APK MTProto üzerinden Telegram'a gönderiliyor, Patron...",
+        "🚀 Telegram yüklemesi başladı, Patron..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK başarıyla Telegram kanalına gönderildi, Patron!",
+        "🎉 Telegram yüklemesi tamamlandı! APK kanalda, Patron!",
+        "🏆 APK Telegram'a başarıyla yüklendi, Patron!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Telegram yüklemesi başarısız oldu, Patron!",
+        "💥 APK Telegram'a gönderilemedi, Patron!",
+        "⚠️ Telegram yüklemesi tamamlanamadı, Patron!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ Bu ortam için build_config.json'da chat_id belirtilmemiş, Patron!",
+        "🔐 build_config.json'da bu ortam için chat_id bulunamadı, Patron!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 bulunamadı! Telegram yüklemesi için Python 3 kurun, Patron!",
+        "⚠️ Telegram yüklemesi Python 3 gerektirir. Lütfen önce kurun, Patron!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon bulunamadı! Çalıştırın: pip install telethon, Patron!",
+        "⚠️ Telegram yüklemesi telethon gerektirir. Kurun: pip3 install telethon, Patron!"
       ]
     }
   }

@@ -144,6 +144,26 @@ class InitManager {
         }
       }
 
+      // Check telegram in build_config
+      if (!buildConfig.containsKey('telegram')) {
+        buildConfig['telegram'] = _getDefaultTelegramBuildConfig();
+        buildConfigModified = true;
+        missingFields.add('build_config.telegram');
+      } else {
+        final telegramConfig =
+            buildConfig['telegram'] as Map<String, dynamic>?;
+        if (telegramConfig != null) {
+          final defaultTelegram = _getDefaultTelegramBuildConfig();
+          defaultTelegram.forEach((env, config) {
+            if (!telegramConfig.containsKey(env)) {
+              telegramConfig[env] = config;
+              buildConfigModified = true;
+              missingFields.add('build_config.telegram.$env');
+            }
+          });
+        }
+      }
+
       // Check user settings
       final requiredUserFields = {
         'language': 'uz',
@@ -156,6 +176,7 @@ class InitManager {
           "app_specific_password": ""
         },
         'firebase_distribution': _getDefaultFirebaseDistributionSettings(),
+        'telegram': _getDefaultTelegramSettings(),
       };
 
       requiredUserFields.forEach((key, defaultValue) {
@@ -228,6 +249,7 @@ class InitManager {
         "ipa": _getDefaultBuildConfig('ipa'),
         "appbundle": _getDefaultBuildConfig('appbundle'),
         "firebase_distribution": _getDefaultFirebaseDistributionBuildConfig(),
+        "telegram": _getDefaultTelegramBuildConfig(),
       };
 
       // User settings (user specific)
@@ -242,6 +264,7 @@ class InitManager {
           "app_specific_password": ""
         },
         "firebase_distribution": _getDefaultFirebaseDistributionSettings(),
+        "telegram": _getDefaultTelegramSettings(),
       };
 
       // Write files
@@ -294,6 +317,23 @@ class InitManager {
       "production": {"enabled": false},
       "staging": {"enabled": true},
       "development": {"enabled": true}
+    };
+  }
+
+  /// Get default Telegram build config (team shared) — chat_id per environment
+  Map<String, dynamic> _getDefaultTelegramBuildConfig() {
+    return {
+      "production": {"chat_id": ""},
+      "staging": {"chat_id": ""},
+      "development": {"chat_id": ""}
+    };
+  }
+
+  /// Get default Telegram settings (user specific).
+  /// Only enabled flag — credentials are managed by the dartdosh team.
+  Map<String, dynamic> _getDefaultTelegramSettings() {
+    return {
+      "enabled": false,
     };
   }
 

@@ -330,6 +330,45 @@
       "variants": [
         "❌ Firebase upload failed, Boss!"
       ]
+    },
+    "telegram_upload_starting": {
+      "variants": [
+        "✈️ Uploading APK to Telegram channel, Boss...",
+        "📲 Sending APK via Telegram MTProto, Boss...",
+        "🚀 Telegram upload started, Boss..."
+      ]
+    },
+    "telegram_upload_success": {
+      "variants": [
+        "✅ APK successfully sent to Telegram channel, Boss!",
+        "🎉 Telegram upload complete! APK is in the channel, Boss!",
+        "🏆 APK uploaded to Telegram successfully, Boss!"
+      ]
+    },
+    "telegram_upload_failed": {
+      "variants": [
+        "❌ Telegram upload failed, Boss!",
+        "💥 Could not send APK to Telegram, Boss!",
+        "⚠️ Telegram upload unsuccessful, Boss!"
+      ]
+    },
+    "telegram_upload_missing_chat_id": {
+      "variants": [
+        "⚠️ Telegram chat_id missing for this environment in build_config.json, Boss!",
+        "🔐 No chat_id configured for this environment in build_config.json, Boss!"
+      ]
+    },
+    "telegram_upload_python_not_found": {
+      "variants": [
+        "❌ Python 3 not found! Install Python 3 to use Telegram upload, Boss!",
+        "⚠️ Telegram upload requires Python 3. Please install it first, Boss!"
+      ]
+    },
+    "telegram_upload_telethon_not_found": {
+      "variants": [
+        "❌ telethon not found! Run: pip install telethon, Boss!",
+        "⚠️ Telegram upload requires telethon. Install it with: pip3 install telethon, Boss!"
+      ]
     }
   }
 }
