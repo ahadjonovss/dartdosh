@@ -27,6 +27,7 @@ dart pub global activate dartdosh
 | How do I send APK to a Telegram channel? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/07-telegram.md) |
 | How do I use --dart-define-from-file? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/08-dart-define.md) |
 | How do I change the UI language? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/09-language.md) |
+| How do I clean up old build files? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/10-clean.md) |
 | 🇺🇿 O'zbek tilida o'qish | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/README.uz.md) |
 | 🇷🇺 Читать на русском | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/README.ru.md) |
 | 🇹🇷 Türkçe okumak | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/README.tr.md) |

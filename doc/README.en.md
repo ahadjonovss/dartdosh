@@ -18,3 +18,4 @@
 | ✈️ Telegram Channel Upload | [en/07-telegram.md](en/07-telegram.md) |
 | 🔧 Using --dart-define-from-file | [en/08-dart-define.md](en/08-dart-define.md) |
 | 🌍 Language Support | [en/09-language.md](en/09-language.md) |
+| 🧹 Cleaning Build Output Files | [en/10-clean.md](en/10-clean.md) |
