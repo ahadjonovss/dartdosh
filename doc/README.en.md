@@ -9,12 +9,12 @@
 
 | | |
 |--|--|
-| 🚀 Getting Started | [en/getting-started.md](en/getting-started.md) |
-| ⚙️ Configuration | [en/configuration.md](en/configuration.md) |
-| 🔨 Build Commands | [en/build-commands.md](en/build-commands.md) |
-| 🔢 Version Management & File Naming | [en/version-management.md](en/version-management.md) |
-| 🍎 iOS Build & App Store Upload | [en/ios-appstore.md](en/ios-appstore.md) |
-| 🔥 Firebase App Distribution | [en/firebase.md](en/firebase.md) |
-| ✈️ Telegram Channel Upload | [en/telegram.md](en/telegram.md) |
-| 🔧 Using --dart-define-from-file | [en/dart-define.md](en/dart-define.md) |
-| 🌍 Language Support | [en/language.md](en/language.md) |
+| 🚀 Getting Started | [en/01-getting-started.md](en/01-getting-started.md) |
+| ⚙️ Configuration | [en/02-configuration.md](en/02-configuration.md) |
+| 🔨 Build Commands | [en/03-build-commands.md](en/03-build-commands.md) |
+| 🔢 Version Management & File Naming | [en/04-version-management.md](en/04-version-management.md) |
+| 🍎 iOS Build & App Store Upload | [en/05-ios-appstore.md](en/05-ios-appstore.md) |
+| 🔥 Firebase App Distribution | [en/06-firebase.md](en/06-firebase.md) |
+| ✈️ Telegram Channel Upload | [en/07-telegram.md](en/07-telegram.md) |
+| 🔧 Using --dart-define-from-file | [en/08-dart-define.md](en/08-dart-define.md) |
+| 🌍 Language Support | [en/09-language.md](en/09-language.md) |

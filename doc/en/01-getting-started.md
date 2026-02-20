@@ -67,4 +67,4 @@ That's it — DartDosh handles version management, file naming, and uploads auto
 
 ---
 
-**Next:** [Configure build commands and settings →](configuration.md)
+**Next:** [Configure build commands and settings →](02-configuration.md)
