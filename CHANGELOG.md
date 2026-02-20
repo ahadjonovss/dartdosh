@@ -1,3 +1,12 @@
+## 0.8.4
+
+### New Features
+- 🧹 **New `dartdosh clean` command**: Remove accumulated build output files with a single command
+  - `dartdosh clean all` — removes everything in the output folder
+  - `dartdosh clean apk/ipa/aab` — removes files for a specific target
+  - `dartdosh clean apk -d/-p/-s` — removes only environment-specific files
+  - Reports number of files deleted and space freed
+
 ## 0.8.3
 
 ### Documentation
