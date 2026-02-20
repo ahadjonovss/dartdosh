@@ -1,3 +1,8 @@
+## 0.8.1
+
+### Bug Fixes
+- 🐛 **Fixed missing telegram_uploader.dart in published package**: File was incorrectly gitignored causing build failure on install
+
 ## 0.8.0
 
 ### New Features
