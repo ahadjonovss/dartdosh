@@ -1,3 +1,15 @@
+## 0.8.0
+
+### New Features
+- 🚀 **Telegram Channel Upload**: APK files can now be uploaded directly to Telegram channels via MTProto protocol
+  - Bypasses Telegram Bot API's 50MB limit — supports files up to 2GB
+  - Auto-installs required `telethon` Python package if not present
+  - Users only need to add the bot as admin to their channel and set `chat_id`
+  - Configure per environment in `build_config.json` (`telegram.<env>.chat_id`)
+  - Enable/disable in `settings.json` (`telegram.enabled`)
+  - Works alongside Firebase Distribution (both can be enabled simultaneously)
+  - `dartdosh init` now generates `telegram` sections in config files automatically
+
 ## 0.7.9
 
 ### Bug Fixes
