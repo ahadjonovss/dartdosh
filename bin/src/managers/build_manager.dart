@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:yaml/yaml.dart';
 import '../translation/logger.dart';
 import '../uploaders/telegram_uploader.dart';
+import '../uploaders/play_store_uploader.dart';
 
 /// Manages Flutter build operations with automatic version management.
 ///
@@ -45,22 +46,30 @@ class BuildManager {
     final language = settings['language'] as String? ?? 'uz';
     Logger.setLanguage(language);
 
-    // For APK builds, ask for release notes if Firebase or Telegram upload is enabled
+    // Ask for release notes if any upload service is enabled
     String? releaseNotes;
-    if (target == 'apk' && env != null) {
+    if (env != null) {
       final firebaseConfig =
           settings['firebase_distribution'] as Map<String, dynamic>?;
       final telegramConfig =
           settings['telegram'] as Map<String, dynamic>?;
+      final playStoreConfig =
+          settings['play_store'] as Map<String, dynamic>?;
 
-      final firebaseEnabled = (firebaseConfig?[env.toLowerCase()]
-              as Map<String, dynamic>?)?['enabled'] as bool? ??
-          false;
-      final telegramEnabled = telegramConfig?['enabled'] as bool? ?? false;
+      final firebaseEnabled = target == 'apk' &&
+          ((firebaseConfig?[env.toLowerCase()] as Map<String, dynamic>?)?[
+                  'enabled'] as bool? ??
+              false);
+      final telegramEnabled =
+          target == 'apk' && (telegramConfig?['enabled'] as bool? ?? false);
+      final playStoreEnabled = (target == 'appbundle' || target == 'aab') &&
+          (playStoreConfig?['enabled'] as bool? ?? false);
 
-      if (firebaseEnabled || telegramEnabled) {
-        stdout.write(
-            '📝 Release notes (Firebase/Telegram) (press Enter to skip): ');
+      if (firebaseEnabled || telegramEnabled || playStoreEnabled) {
+        final label = playStoreEnabled
+            ? 'Play Store'
+            : 'Firebase/Telegram';
+        stdout.write('📝 Release notes ($label) (press Enter to skip): ');
         releaseNotes = stdin.readLineSync()?.trim();
       }
     }
@@ -377,7 +386,10 @@ class BuildManager {
           await _uploadIpaIfEnabled(ipaPath, config, releaseNotes);
         }
       } else if (target == 'appbundle' || target == 'aab') {
-        _renameAndMoveAab(newName, outputPath);
+        final aabPath = _renameAndMoveAab(newName, outputPath);
+        if (aabPath != null) {
+          await PlayStoreUploader().upload(aabPath, env);
+        }
       }
     } catch (e) {
       // Xatolik bo'lsa davom ettirish
@@ -600,7 +612,7 @@ class BuildManager {
     return null;
   }
 
-  void _renameAndMoveAab(String newName, String? outputPath) {
+  String? _renameAndMoveAab(String newName, String? outputPath) {
     final aabPaths = [
       'build/app/outputs/bundle/productionRelease/app-production-release.aab',
       'build/app/outputs/bundle/stagingRelease/app-staging-release.aab',
@@ -618,15 +630,17 @@ class BuildManager {
           final destinationPath = '$outputPath/$fileName';
           file.copySync(destinationPath);
           Logger.log(LogType.fileSaved, path: destinationPath);
+          return destinationPath;
         } else {
           // Faqat rename qilish
           final newPath = '${file.parent.path}/$fileName';
           file.renameSync(newPath);
           Logger.log(LogType.fileSaved, path: fileName);
+          return newPath;
         }
-        return;
       }
     }
+    return null;
   }
 
   // IPA faylni App Store Connect ga yuklash

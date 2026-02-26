@@ -396,6 +396,33 @@
         "❌ output_path is not configured in build_config.json, Boss!",
         "⚠️ No output_path set — add it to build_config.json first, Boss!"
       ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 Uploading AAB to Google Play ({env} → {target} track), Boss...",
+        "📦 Sending AAB to Play Store ({target} track), Boss...",
+        "🏪 Play Store upload started for {env}, Boss..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB successfully uploaded to Play Store ({target} track), Boss!",
+        "🎉 Play Store upload complete! ({env} → {target}), Boss!",
+        "🏆 AAB is live on Play Store ({target} track), Boss!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Play Store upload failed, Boss!",
+        "💥 Could not upload AAB to Play Store, Boss!",
+        "⚠️ Play Store upload unsuccessful, Boss!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Play Store config missing — check package_name and service_account_json in settings.json, Boss!",
+        "❌ Play Store upload skipped: incomplete configuration in settings.json, Boss!"
+      ]
     }
   }
 }

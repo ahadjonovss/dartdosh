@@ -65,6 +65,11 @@ enum LogType {
   cleanSuccess,
   cleanNothingToDelete,
   cleanOutputPathNotConfigured,
+  // Play Store upload logs
+  playStoreUploadStarting,
+  playStoreUploadSuccess,
+  playStoreUploadFailed,
+  playStoreUploadMissingConfig,
 }
 
 class Logger {
@@ -256,7 +261,17 @@ class Logger {
       // Yellow (33)
       case LogType.cleanStarted:
       case LogType.cleanNothingToDelete:
+      case LogType.playStoreUploadStarting:
         return '33';
+
+      // Green (32)
+      case LogType.playStoreUploadSuccess:
+        return '32';
+
+      // Red (31)
+      case LogType.playStoreUploadFailed:
+      case LogType.playStoreUploadMissingConfig:
+        return '31';
     }
   }
 }

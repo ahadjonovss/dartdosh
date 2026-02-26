@@ -396,6 +396,33 @@
         "❌ build_config.json'da output_path yapılandırılmamış, Patron!",
         "⚠️ output_path ayarlanmamış — önce build_config.json'a ekleyin, Patron!"
       ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 AAB Google Play'e yükleniyor ({env} → {target} parça), Patron...",
+        "📦 AAB Play Store'a gönderiliyor ({target} parça), Patron...",
+        "🏪 Play Store yüklemesi başladı ({env}), Patron..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB başarıyla Play Store'a yüklendi ({target} parça), Patron!",
+        "🎉 Play Store yüklemesi tamamlandı! ({env} → {target}), Patron!",
+        "🏆 AAB Play Store'da yayında ({target} parça), Patron!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Play Store'a yükleme başarısız oldu, Patron!",
+        "💥 AAB Play Store'a yüklenemedi, Patron!",
+        "⚠️ Play Store yüklemesi tamamlanamadı, Patron!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Play Store yapılandırması eksik — settings.json'da package_name ve service_account_json'u kontrol edin, Patron!",
+        "❌ Play Store yüklemesi atlandı: settings.json'da yapılandırma eksik, Patron!"
+      ]
     }
   }
 }

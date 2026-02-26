@@ -396,6 +396,33 @@
         "❌ output_path не настроен в build_config.json, Босс!",
         "⚠️ output_path не задан — сначала добавьте его в build_config.json, Босс!"
       ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 Загрузка AAB в Google Play ({env} → трек {target}), Босс...",
+        "📦 Отправка AAB в Play Store (трек {target}), Босс...",
+        "🏪 Загрузка в Play Store начата для {env}, Босс..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB успешно загружен в Play Store (трек {target}), Босс!",
+        "🎉 Загрузка в Play Store завершена! ({env} → {target}), Босс!",
+        "🏆 AAB опубликован в Play Store (трек {target}), Босс!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Загрузка в Play Store не удалась, Босс!",
+        "💥 Не удалось загрузить AAB в Play Store, Босс!",
+        "⚠️ Загрузка в Play Store завершилась с ошибкой, Босс!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Конфигурация Play Store неполная — проверьте package_name и service_account_json в settings.json, Босс!",
+        "❌ Загрузка в Play Store пропущена: неполная конфигурация в settings.json, Босс!"
+      ]
     }
   }
 }

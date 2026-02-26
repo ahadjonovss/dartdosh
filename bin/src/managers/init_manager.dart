@@ -164,6 +164,25 @@ class InitManager {
         }
       }
 
+      // Check play_store in build_config
+      if (!buildConfig.containsKey('play_store')) {
+        buildConfig['play_store'] = _getDefaultPlayStoreBuildConfig();
+        buildConfigModified = true;
+        missingFields.add('build_config.play_store');
+      } else {
+        final psConfig = buildConfig['play_store'] as Map<String, dynamic>?;
+        if (psConfig != null) {
+          final defaultPs = _getDefaultPlayStoreBuildConfig();
+          defaultPs.forEach((env, config) {
+            if (!psConfig.containsKey(env)) {
+              psConfig[env] = config;
+              buildConfigModified = true;
+              missingFields.add('build_config.play_store.$env');
+            }
+          });
+        }
+      }
+
       // Check user settings
       final requiredUserFields = {
         'language': 'uz',
@@ -177,6 +196,7 @@ class InitManager {
         },
         'firebase_distribution': _getDefaultFirebaseDistributionSettings(),
         'telegram': _getDefaultTelegramSettings(),
+        'play_store': _getDefaultPlayStoreSettings(),
       };
 
       requiredUserFields.forEach((key, defaultValue) {
@@ -250,6 +270,7 @@ class InitManager {
         "appbundle": _getDefaultBuildConfig('appbundle'),
         "firebase_distribution": _getDefaultFirebaseDistributionBuildConfig(),
         "telegram": _getDefaultTelegramBuildConfig(),
+        "play_store": _getDefaultPlayStoreBuildConfig(),
       };
 
       // User settings (user specific)
@@ -265,6 +286,7 @@ class InitManager {
         },
         "firebase_distribution": _getDefaultFirebaseDistributionSettings(),
         "telegram": _getDefaultTelegramSettings(),
+        "play_store": _getDefaultPlayStoreSettings(),
       };
 
       // Write files
@@ -334,6 +356,24 @@ class InitManager {
   Map<String, dynamic> _getDefaultTelegramSettings() {
     return {
       "enabled": false,
+    };
+  }
+
+  /// Get default Play Store build config (team shared) — track per environment
+  Map<String, dynamic> _getDefaultPlayStoreBuildConfig() {
+    return {
+      "production": {"track": "production"},
+      "staging": {"track": "beta"},
+      "development": {"track": "internal"},
+    };
+  }
+
+  /// Get default Play Store settings (user specific)
+  Map<String, dynamic> _getDefaultPlayStoreSettings() {
+    return {
+      "enabled": false,
+      "package_name": "",
+      "service_account_json": "dartdosh_config/play_store_key.json",
     };
   }
 

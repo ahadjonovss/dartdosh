@@ -404,6 +404,33 @@ const Map<String, String> embeddedTranslations = {
         "❌ build_config.json da output_path ko'rsatilmagan, Xo'jayiin!",
         "⚠️ output_path yo'q — avval build_config.json ga qo'shing, Xo'jayiin!"
       ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 AAB Google Play ga yuklanmoqda ({env} → {target} track), Xo'jayiin...",
+        "📦 AAB Play Store ga jo'natilmoqda ({target} track), Xo'jayiin...",
+        "🏪 Play Store upload boshlandi ({env}), Xo'jayiin..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB muvaffaqiyatli Play Store ga yuklandi ({target} track), Xo'jayiin!",
+        "🎉 Play Store upload yakunlandi! ({env} → {target}), Xo'jayiin!",
+        "🏆 AAB Play Store da joylashtirildi ({target} track), Xo'jayiin!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Play Store ga yuklash muvaffaqiyatsiz bo'ldi, Xo'jayiin!",
+        "💥 AAB ni Play Store ga yuklab bo'lmadi, Xo'jayiin!",
+        "⚠️ Play Store upload amalga oshmadi, Xo'jayiin!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Play Store sozlamalari to'liq emas — settings.json da package_name va service_account_json ni tekshiring, Xo'jayiin!",
+        "❌ Play Store upload o'tkazib yuborildi: settings.json da sozlamalar yetishmaydi, Xo'jayiin!"
+      ]
     }
   }
 }
@@ -807,6 +834,33 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ output_path is not configured in build_config.json, Boss!",
         "⚠️ No output_path set — add it to build_config.json first, Boss!"
+      ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 Uploading AAB to Google Play ({env} → {target} track), Boss...",
+        "📦 Sending AAB to Play Store ({target} track), Boss...",
+        "🏪 Play Store upload started for {env}, Boss..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB successfully uploaded to Play Store ({target} track), Boss!",
+        "🎉 Play Store upload complete! ({env} → {target}), Boss!",
+        "🏆 AAB is live on Play Store ({target} track), Boss!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Play Store upload failed, Boss!",
+        "💥 Could not upload AAB to Play Store, Boss!",
+        "⚠️ Play Store upload unsuccessful, Boss!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Play Store config missing — check package_name and service_account_json in settings.json, Boss!",
+        "❌ Play Store upload skipped: incomplete configuration in settings.json, Boss!"
       ]
     }
   }
@@ -1212,6 +1266,33 @@ const Map<String, String> embeddedTranslations = {
         "❌ output_path не настроен в build_config.json, Босс!",
         "⚠️ output_path не задан — сначала добавьте его в build_config.json, Босс!"
       ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 Загрузка AAB в Google Play ({env} → трек {target}), Босс...",
+        "📦 Отправка AAB в Play Store (трек {target}), Босс...",
+        "🏪 Загрузка в Play Store начата для {env}, Босс..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB успешно загружен в Play Store (трек {target}), Босс!",
+        "🎉 Загрузка в Play Store завершена! ({env} → {target}), Босс!",
+        "🏆 AAB опубликован в Play Store (трек {target}), Босс!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Загрузка в Play Store не удалась, Босс!",
+        "💥 Не удалось загрузить AAB в Play Store, Босс!",
+        "⚠️ Загрузка в Play Store завершилась с ошибкой, Босс!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Конфигурация Play Store неполная — проверьте package_name и service_account_json в settings.json, Босс!",
+        "❌ Загрузка в Play Store пропущена: неполная конфигурация в settings.json, Босс!"
+      ]
     }
   }
 }
@@ -1615,6 +1696,33 @@ const Map<String, String> embeddedTranslations = {
       "variants": [
         "❌ build_config.json'da output_path yapılandırılmamış, Patron!",
         "⚠️ output_path ayarlanmamış — önce build_config.json'a ekleyin, Patron!"
+      ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 AAB Google Play'e yükleniyor ({env} → {target} parça), Patron...",
+        "📦 AAB Play Store'a gönderiliyor ({target} parça), Patron...",
+        "🏪 Play Store yüklemesi başladı ({env}), Patron..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB başarıyla Play Store'a yüklendi ({target} parça), Patron!",
+        "🎉 Play Store yüklemesi tamamlandı! ({env} → {target}), Patron!",
+        "🏆 AAB Play Store'da yayında ({target} parça), Patron!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Play Store'a yükleme başarısız oldu, Patron!",
+        "💥 AAB Play Store'a yüklenemedi, Patron!",
+        "⚠️ Play Store yüklemesi tamamlanamadı, Patron!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Play Store yapılandırması eksik — settings.json'da package_name ve service_account_json'u kontrol edin, Patron!",
+        "❌ Play Store yüklemesi atlandı: settings.json'da yapılandırma eksik, Patron!"
       ]
     }
   }

@@ -396,6 +396,33 @@
         "❌ build_config.json da output_path ko'rsatilmagan, Xo'jayiin!",
         "⚠️ output_path yo'q — avval build_config.json ga qo'shing, Xo'jayiin!"
       ]
+    },
+    "play_store_upload_starting": {
+      "variants": [
+        "🚀 AAB Google Play ga yuklanmoqda ({env} → {target} track), Xo'jayiin...",
+        "📦 AAB Play Store ga jo'natilmoqda ({target} track), Xo'jayiin...",
+        "🏪 Play Store upload boshlandi ({env}), Xo'jayiin..."
+      ]
+    },
+    "play_store_upload_success": {
+      "variants": [
+        "✅ AAB muvaffaqiyatli Play Store ga yuklandi ({target} track), Xo'jayiin!",
+        "🎉 Play Store upload yakunlandi! ({env} → {target}), Xo'jayiin!",
+        "🏆 AAB Play Store da joylashtirildi ({target} track), Xo'jayiin!"
+      ]
+    },
+    "play_store_upload_failed": {
+      "variants": [
+        "❌ Play Store ga yuklash muvaffaqiyatsiz bo'ldi, Xo'jayiin!",
+        "💥 AAB ni Play Store ga yuklab bo'lmadi, Xo'jayiin!",
+        "⚠️ Play Store upload amalga oshmadi, Xo'jayiin!"
+      ]
+    },
+    "play_store_upload_missing_config": {
+      "variants": [
+        "⚠️ Play Store sozlamalari to'liq emas — settings.json da package_name va service_account_json ni tekshiring, Xo'jayiin!",
+        "❌ Play Store upload o'tkazib yuborildi: settings.json da sozlamalar yetishmaydi, Xo'jayiin!"
+      ]
     }
   }
 }
