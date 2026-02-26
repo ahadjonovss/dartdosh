@@ -1,3 +1,15 @@
+## 0.8.5
+
+### New Features
+- 🏪 **Google Play Store upload**: AAB files now auto-upload to Play Store after build
+  - Auth via service account JSON — no extra tools required
+  - Per-environment track config: `internal`, `beta`, `production`
+  - `google-api-python-client` auto-installed if missing
+  - `dartdosh init` now generates `play_store` section in config files
+
+### Documentation
+- 📄 Added `doc/en/11-play-store.md` with full setup guide and usage examples
+
 ## 0.8.4
 
 ### New Features

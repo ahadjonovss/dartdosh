@@ -16,6 +16,7 @@
 | 🍎 iOS Build & App Store Upload | [en/05-ios-appstore.md](en/05-ios-appstore.md) |
 | 🔥 Firebase App Distribution | [en/06-firebase.md](en/06-firebase.md) |
 | ✈️ Telegram Channel Upload | [en/07-telegram.md](en/07-telegram.md) |
+| 🏪 Google Play Store Upload | [en/11-play-store.md](en/11-play-store.md) |
 | 🔧 Using --dart-define-from-file | [en/08-dart-define.md](en/08-dart-define.md) |
 | 🌍 Language Support | [en/09-language.md](en/09-language.md) |
 | 🧹 Cleaning Build Output Files | [en/10-clean.md](en/10-clean.md) |

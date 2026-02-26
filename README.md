@@ -1,5 +1,7 @@
 # DartDosh
 
+▶️ **[Watch the tutorial on YouTube](https://youtu.be/QpNVwk4SVZA?si=kV7kTtHcnZLfv1ZP)**
+
 [![DartDosh Tutorial](https://img.youtube.com/vi/QpNVwk4SVZA/maxresdefault.jpg)](https://youtu.be/QpNVwk4SVZA?si=kV7kTtHcnZLfv1ZP)
 
 A CLI tool for Flutter developers that automates the boring parts of building and distributing apps — version management, file naming, and uploading to Firebase, Telegram, or App Store Connect — all with a single command.
@@ -25,6 +27,7 @@ dart pub global activate dartdosh
 | How do I auto-upload IPA to App Store Connect? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/05-ios-appstore.md) |
 | How do I upload APK to Firebase App Distribution? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/06-firebase.md) |
 | How do I send APK to a Telegram channel? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/07-telegram.md) |
+| How do I upload AAB to Google Play Store? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/11-play-store.md) |
 | How do I use --dart-define-from-file? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/08-dart-define.md) |
 | How do I change the UI language? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/09-language.md) |
 | How do I clean up old build files? | [GitHub →](https://github.com/ahadjonovss/dartdosh/blob/main/doc/en/10-clean.md) |
